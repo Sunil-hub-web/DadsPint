@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/ten"
+                android:text="Enter mobile number to continue"
+                android:textSize="15dp"
+                android:textColor="@color/skyblue"
+                android:textStyle="bold"
+                android:fontFamily="@font/sans_regular" />
+
+            <!-- <TextView
+                 android:id="@+id/text1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_marginTop="5dp"
+                 android:text="chance to get rewarded"
+                 android:textColor="@color/some_color3"
+                 android:textSize="15dp"
+                 android:fontFamily="@font/sans_regular"></TextView>-->
+
+            <LinearLayout
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/layoutback"
+                android:elevation="5dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/ten"
+                    android:hint="Enter Mobile No"
+                    app:boxStrokeColor="#03A9F4"
+                    app:hintTextColor="#2196F3">
+
+                    <EditText
+                        android:id="@+id/edit_MobileNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fifty"
+                        android:inputType="number"
+                        android:padding="@dimen/ten"
+                        android:textColor="#03A9F4"
+                        android:textSize="@dimen/edittextsize"
+                        android:maxLength="10"
+                        android:fontFamily="@font/sans_regular"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_signin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="@dimen/ten"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="Send OTP"
+                    app:cornerRadius="@dimen/five"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:backgroundTint="@color/bluedrack"
+                    android:textStyle="bold"></com.google.android.material.button.MaterialButton>
+
+            </LinearLayout>
+
+            <!--<RelativeLayout
+                android:id="@+id/r"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp">
+
+                &lt;!&ndash; <TextView
+                     android:id="@+id/login1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="By signing in you agree to our "
+                     android:textStyle="bold"
+                     android:textColor="#817F7F"
+                     android:textSize="@dimen/textsize"/>
+
+                 <TextView
+                     android:id="@+id/login"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/condition"
+                     android:textStyle="bold"
+                     android:textColor="#F44336"
+                     android:textSize="@dimen/textsize"
+                     android:layout_toRightOf="@id/login1"/>&ndash;&gt;
+
+
+            </RelativeLayout>-->
+
+          <!--  <RelativeLayout
+                android:id="@+id/r1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/login2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forgot Your Password"
+                    android:textColor="@color/skyblue"
+                    android:textSize="@dimen/textsize"
+                    android:fontFamily="@font/sans_regular"/>
+
+                <TextView
+                    android:id="@+id/text_ClickHere"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/login2"
+                    android:fontFamily="@font/sans_bold"
+                    android:text=" Click Here"
+                    android:textColor="@color/bluedrack"
+                    android:textSize="@dimen/textsize"
+                    android:textStyle="bold"/>
+
+
+            </RelativeLayout>-->
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

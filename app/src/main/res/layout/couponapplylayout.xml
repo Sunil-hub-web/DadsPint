@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/backimage"
+            android:layout_width="@dimen/forty"
+            android:layout_height="@dimen/forty"
+            android:src="@drawable/back_arrow"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/ten"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="COUPON DISCOUNT"
+            android:textColor="@color/blue600"
+            android:textSize="@dimen/edittextsize"
+            android:fontFamily="@font/sans_bold"
+            android:layout_marginBottom="@dimen/fifteen"/>
+
+        <EditText
+            android:id="@+id/edit_couponecode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textfieldback"
+            android:padding="@dimen/twelve"
+            android:hint="Enter Coupon Code"
+            android:layout_margin="@dimen/ten"></EditText>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_ApplyCoupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginRight="@dimen/ten"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:padding="@dimen/fifteen"
+            android:text="Apply Coupon"
+            app:backgroundTint="@color/bluedrack"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15dp"></com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fifty"
+        android:id="@+id/realBack">
+
+
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="@dimen/forty"
+            android:layout_height="@dimen/forty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginRight="@dimen/five"
+            android:onClick="Clickmenu"
+            android:src="@drawable/sort"
+            app:tint="@color/blue600">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/backimage"
+            android:layout_width="@dimen/forty"
+            android:layout_height="@dimen/forty"
+            android:src="@drawable/back_arrow"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+
+        <!--  <ImageView
+            android:id="@+id/imagecart"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:src="@drawable/cartimage"
+            android:layout_marginTop="@dimen/five"
+            android:layout_toLeftOf="@id/menu"
+            android:layout_marginRight="@dimen/twenty"
+            android:onClick="Cartpage">
+
+        </ImageView>-->
+
+        <ImageView
+            android:id="@+id/image_search"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:onClick="Serachpage"
+            android:src="@drawable/search"
+            app:tint="@color/colorAccent">
+
+        </ImageView>
+
+        <!--  <ImageView
+            android:id="@+id/logo"
+            android:layout_width="@dimen/sixty"
+            android:layout_height="@dimen/twenty"
+            android:src="@drawable/logo"
+            android:onClick="Serachpage"
+            android:layout_marginRight="@dimen/five"
+            android:layout_toRightOf="@id/menu"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY">
+
+        </ImageView>-->
+
+        <RelativeLayout
+            android:id="@+id/rle_click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <!-- <ImageView
+                android:id="@+id/loc"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:src="@drawable/place"
+                android:onClick="Serachpage"
+                android:layout_marginRight="@dimen/ten"
+                android:layout_centerVertical="true">
+
+            </ImageView>-->
+
+            <TextView
+                android:id="@+id/text_AddressName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:fontFamily="@font/sans_bold"
+                android:text="Home"
+                android:textColor="#22647E"
+                android:textSize="@dimen/textsize"
+                android:textStyle="bold"></TextView>
+
+            <!--  <TextView
+                android:id="@+id/text_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#22647E"
+                android:textSize="@dimen/textsize"
+                android:text="Home"
+                android:layout_toRightOf="@id/loc"
+                android:layout_below="@+id/text_addressName"
+                android:textStyle="bold"
+                android:drawableRight="@drawable/arrow_drop_down"></TextView>
+-->
+        </RelativeLayout>
+
+
+        <!--   <ImageView
+            android:id="@+id/img_Cart"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginRight="40dp"
+            android:src="@drawable/cart"
+            app:tint="@color/some_color3">
+
+        </ImageView>-->
+
+        <!-- <TextView
+            android:id="@+id/text_ItemCount"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/two"
+            android:layout_marginRight="@dimen/ten"
+            android:background="@drawable/textcountshape"
+            android:gravity="center"
+            android:text="12"
+            android:textColor="@color/some_color5"
+            android:textSize="@dimen/twelve_size"
+            android:textStyle="bold" />-->
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#EDF4F4F8">
+
+        <TextView
+            android:id="@+id/advance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Why You Cancel Your Product ? "
+            android:textSize="@dimen/twenty"
+            android:layout_margin="@dimen/ten"
+            android:fontFamily="@font/sans_bold"
+            android:textColor="@color/black">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hundred"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/four"
+            android:layout_marginRight="@dimen/twenty"
+            android:layout_marginBottom="@dimen/ten"
+            android:gravity="top"
+            android:hint="Write Your Resign"
+            android:background="@drawable/textfieldback"
+            android:padding="@dimen/fifteen" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_Submit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:cornerRadius="@dimen/ten"
+                android:backgroundTint="@color/bluedrack"
+                android:layout_gravity="left"
+                android:padding="@dimen/ten"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginRight="@dimen/twenty"
+                android:layout_marginBottom="@dimen/ten"
+                android:text="Submit"
+                android:fontFamily="@font/sans_bold"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_Close"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:cornerRadius="@dimen/ten"
+                android:backgroundTint="@color/error"
+                android:layout_gravity="left"
+                android:padding="@dimen/ten"
+                android:text="Close"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginRight="@dimen/twenty"
+                android:fontFamily="@font/sans_bold"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

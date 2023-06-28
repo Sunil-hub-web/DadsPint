@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="Yellowish_Orange">#fcab13</color>
+    <color name="teal_green">#106328</color>
+    <color name="orange">#CA7A18</color>
+    <color name="light_orange">#F9931D</color>
+    <color name="bluedrack">#142997</color>
+   <!-- <color name="purple_700">#4CCFE3</color>
+    <color name="teal_200">#F9931D</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>-->
+    <color name="transparent_orange">#1AF9931D</color>
+    <color name="colorAccent">#03A9F4</color>
+    <color name="skyblue">#4CCFE3</color>
+    <color name="light_gray">#969FAA</color>
+    <color name="grey">#D0D0D0</color>
+    <color name="trans_grey">#1E0B0A0A</color>
+    <color name="primary">#673AB7</color>
+    <color name="transparent">#00000000</color>
+    <color name="menu_color">#bdbdbd</color>
+    <color name="search_grey">#F4F4F4</color>
+    <color name="visit_grey">#E1E1E1</color>
+    <color name="fed_out">#26000000</color>
+    <color name="textcolor">#BF000000</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="placeholder_bg">#dddddd</color>
+    <color name="gradient_orange">#33F9931D</color>
+    <color name="blue600">#1E88E5</color>
+    <color name="error">#B00020</color>
+    <color name="red">#E61F43</color>
+    <color name="red_back">#FF3334</color>
+    <color name="light_blue">#743F51B5</color>
+    <color name="grey_back">#F5F5F5</color>
+    <color name="light_yellow">#ffd251</color>
+    <color name="light_blue1">#5bc0de</color>
+
+
+    <color name="black_60">#8B292828</color>
+
+    //Paymen Code
+
+    <color name="payment1">#1c7777</color>
+    <color name="payment2">#65827a</color>
+    <color name="payment3">#fe3448</color>
+    <color name="payment4">#9da706</color>
+    <color name="payment5">#b1781d</color>
+    <color name="payment6">#ff0000f7</color>
+    <color name="payment7">#3de65a</color>
+    <color name="payment8">#752c2c</color>
+    <color name="payment9">#ce2727</color>
+
+    <color name="colorPrimaryDark">#5EA533</color>
+</resources>

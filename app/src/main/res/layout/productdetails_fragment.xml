@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterOption"
+        android:layout_margin="@dimen/ten"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/ten"
+        >
+
+        <ImageView
+            android:id="@+id/image_address"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_centerVertical="true"
+            android:src="@drawable/filter64">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/nav_MyAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_toRightOf="@id/image_address"
+            android:text="Filter"
+            android:textColor="@color/blue600"
+            android:textSize="@dimen/twenty"
+            android:fontFamily="@font/sans_regular">
+
+        </TextView>
+
+    </RelativeLayout>
+
+  <!--  <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/categoryOption"
+        android:layout_margin="@dimen/ten"
+        android:layout_marginRight="@dimen/ten">
+
+        <ImageView
+            android:id="@+id/image_category"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_centerVertical="true"
+            android:src="@drawable/categorize24">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/nav_MyCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_toRightOf="@id/image_category"
+            android:text="Category"
+            android:textColor="@color/blue600"
+            android:textSize="@dimen/twenty"
+            android:fontFamily="@font/sans_regular">
+
+        </TextView>
+
+    </RelativeLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/productDetailsRecycler"
+        android:layout_below="@+id/filterOption"
+        android:layout_marginTop="@dimen/ten">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

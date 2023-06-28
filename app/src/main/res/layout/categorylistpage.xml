@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/five"
+        android:id="@+id/lincategory">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profile_image_linear"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/hundred"
+            app:cardCornerRadius="@dimen/sixty"
+            >
+
+            <ImageView
+                android:id="@+id/categoryimage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ass2" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/categoryname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/sans_bold"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="White Dress"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twelve"
+            android:layout_marginBottom="@dimen/five"
+            android:layout_marginTop="@dimen/five"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

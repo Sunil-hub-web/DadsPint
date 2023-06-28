@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/textfieldback"
+        android:elevation="15dp">
+
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="@dimen/ninety"
+            android:layout_height="@dimen/hundred"
+            android:scaleType="fitXY"
+            android:layout_margin="@dimen/five"
+            android:src="@drawable/save"></ImageView>
+
+        <TextView
+            android:id="@+id/text_ProdectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_toRightOf="@id/productImage"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="You Can Call AnyTime To"
+            android:textColor="#34565C"
+            android:textSize="@dimen/textsize"
+            android:textStyle="bold"></TextView>
+
+        <LinearLayout
+            android:id="@+id/linorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_ProdectName"
+            android:layout_marginLeft="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:layout_toRightOf="@id/productImage"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!--   <TextView
+                       android:id="@id/orderId"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerVertical="true"
+                       android:layout_marginLeft="@dimen/ten"
+                       android:text="Order Id : "
+                       android:textColor="@color/light_blue1"
+                       android:textSize="@dimen/twelve"
+                       android:textStyle="bold" />-->
+
+                <TextView
+                    android:id="@+id/text_orderId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/five"
+                    android:text="dsafgghhh"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- <TextView
+                     android:id="@+id/orderDate"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="@dimen/ten"
+                     android:text="Order Date : "
+                     android:textColor="@color/light_blue1"
+                     android:textSize="@dimen/twelve"
+                     android:textStyle="bold"></TextView>-->
+
+                <TextView
+                    android:id="@+id/text_orderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/five"
+                    android:text="dsafgghhh"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!--<TextView
+                    android:id="@+id/orderStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:text="Order Status : "
+                    android:textColor="@color/light_blue1"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />-->
+
+                <TextView
+                    android:id="@+id/text_orderStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/five"
+                    android:text="dsafgghhh"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/linorder"
+                android:layout_marginTop="@dimen/five">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/five"
+                    android:layout_toRightOf="@+id/totalunit"
+                    android:id="@+id/pricedetails"
+                    >
+
+                    <TextView
+                        android:id="@+id/totalPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:text="500.00"
+                        android:textColor="@color/bluedrack"
+                        android:textSize="@dimen/twelve"
+                        android:textStyle="bold"></TextView>
+
+                    <TextView
+                        android:id="@+id/priceSymbol5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rs."
+                        android:textColor="@color/blue600"
+                        android:textSize="@dimen/twelve"
+                        android:textStyle="bold"></TextView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/totalunit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/five"
+                    android:text="250gm"
+                    android:textColor="@color/blue600"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/ten"></TextView>
+
+                <TextView
+                    android:id="@+id/btn_cancelOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:textColor="@color/grey_back"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/backgroundcolor"
+                    android:backgroundTint="@color/error"
+                    android:paddingLeft="@dimen/ten"
+                    android:paddingRight="@dimen/ten"
+                    android:paddingTop="@dimen/five"
+                    android:paddingBottom="@dimen/five"
+                    android:layout_marginLeft="@dimen/five"
+                    android:layout_marginRight="@dimen/five"></TextView>
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

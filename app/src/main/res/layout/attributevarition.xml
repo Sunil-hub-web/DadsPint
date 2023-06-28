@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/rootContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_margin="@dimen/five">
+
+        <TextView
+            android:id="@+id/attributeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_weight="0.7"
+            android:fontFamily="@font/sans_regular"
+            android:textColor="@color/bluedrack"
+            android:textSize="@dimen/edittextsize"
+            android:layout_marginRight="@dimen/fifteen"/>
+
+        <Spinner
+            android:id="@+id/tv_variationName"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textfieldback"
+            android:imeOptions="actionNext"
+            android:inputType="textAutoComplete"
+            android:focusable="false"
+            android:clickable="false"
+            android:gravity="center"
+            android:textColor="@color/textcolor"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/textsize"
+            android:padding="@dimen/three"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

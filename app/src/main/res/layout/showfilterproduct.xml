@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="Select Filter For Product"
+            android:gravity="center"
+            android:textColor="@color/bluedrack"
+            android:textSize="@dimen/edittextsize"
+            android:fontFamily="@font/sans_bold"></TextView>
+
+        <Spinner
+            android:id="@+id/spinner_City"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="@dimen/ten"
+            android:padding="@dimen/five"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/textfieldback"></Spinner>
+
+        <Spinner
+            android:id="@+id/spinner_School"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/forty_five"
+            android:layout_margin="@dimen/ten"
+            android:padding="@dimen/five"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/textfieldback"></Spinner>
+
+        <Spinner
+            android:id="@+id/spinner_Class"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/forty_five"
+            android:layout_margin="@dimen/ten"
+            android:padding="@dimen/five"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/textfieldback"></Spinner>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/ten">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_Save"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:text="Submit"
+                app:backgroundTint="@color/bluedrack"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="15dp"></com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="Cancel"
+                app:backgroundTint="#DA291C"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="15dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

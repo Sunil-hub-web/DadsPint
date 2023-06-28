@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderSuccessFully">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/image_NoResult"
+            android:layout_width="@dimen/two_hundred"
+            android:layout_height="@dimen/two_hundred"
+            android:src="@drawable/order_confirmed"
+            ></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Placed Successfully"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/twenty_size"
+            android:textColor="@color/colorAccent">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thank You"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/thirty_five"
+            android:textColor="@color/blue600">
+
+        </TextView>
+
+      <!--  <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On The Way To Your Kitchen"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/twenty_size"
+            android:textColor="@color/colorAccent">
+
+        </TextView>-->
+
+        <!-- <RelativeLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="@dimen/ten">
+
+             <TextView
+                 android:id="@id/orderId"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_marginLeft="@dimen/ten"
+                 android:text="Order Id : "
+                 android:textColor="#9EA5A6"
+                 android:textSize="@dimen/edittextsize"
+                 android:textStyle="bold" />
+
+             <TextView
+                 android:id="@+id/text_orderId"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_marginLeft="@dimen/five"
+                 android:layout_toRightOf="@+id/orderId"
+                 android:text="dsafgghhh"
+                 android:textColor="#9EA5A6"
+                 android:textSize="@dimen/edittextsize"
+                 android:textStyle="bold"></TextView>
+         </RelativeLayout>-->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backToHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginRight="@dimen/ten"
+            android:layout_margin="20dp"
+            android:padding="15dp"
+            app:cornerRadius="@dimen/five"
+            android:text="Back To Home"
+            app:backgroundTint="@color/bluedrack"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15dp"></com.google.android.material.button.MaterialButton>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layoutback">
+
+    <RelativeLayout
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/nav_profile_image"
+            android:layout_width="@dimen/seventy"
+            android:layout_height="@dimen/seventy"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:src="@drawable/applogo" />
+
+        <LinearLayout
+            android:id="@+id/headertitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/nav_profile_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nav_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sans_bold"
+                android:text="Sunil Kumar Dash"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/nav_MobileNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sans_regular"
+                android:text="+91-9178 888 455"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/textsize">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/profile"
+        android:layout_marginLeft="@dimen/twenty_five"
+        android:layout_marginTop="@dimen/forty"
+        android:layout_marginRight="@dimen/twenty"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/twenty">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_home"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/home_icon_silhouette"
+                app:tint="@color/skyblue">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_Home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@+id/image_home"
+                android:fontFamily="@font/sans_regular"
+                android:text="Home"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/text1"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/image_profile"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/user"
+                app:tint="@color/skyblue">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_Profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@id/image_profile"
+                android:text="My Profile"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"
+                android:fontFamily="@font/sans_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/text1"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/image_address"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/home_address"
+                app:tint="@color/skyblue">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_MyAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@id/image_address"
+                android:text="My Address"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"
+                android:fontFamily="@font/sans_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/text1"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:id="@+id/nav_myorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/image_order"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/checkout"
+                app:tint="@color/skyblue">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_MyOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@id/image_order"
+                android:text="My Order"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"
+                android:fontFamily="@font/sans_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/text1"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/image_logout"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:src="@drawable/logout"
+                app:tint="@color/skyblue"
+                android:layout_centerVertical="true">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_Logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@id/image_logout"
+                android:text="Logout"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"
+                android:fontFamily="@font/sans_bold">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

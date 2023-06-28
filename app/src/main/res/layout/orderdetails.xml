@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rel_Click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textfieldback"
+        android:layout_margin="@dimen/eight"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/textvalue1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toLeftOf="@+id/price">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/orderId"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten"
+                    android:textColor="@color/light_blue1"
+                    android:text="OrderId"
+                    android:textSize="@dimen/textsize"></TextView>
+
+                <TextView
+                    android:id="@+id/text_orderId"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten"
+                    android:textColor="@color/blue600"
+                    android:text="OrderId"
+                    android:textSize="@dimen/textsize"></TextView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/textvalue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/text_orderDate"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten"
+                    android:textColor="@color/light_blue1"
+                    android:text="Date"
+                    android:textSize="@dimen/textsize"></TextView>
+
+
+                <TextView
+                    android:id="@+id/text_OrderDate"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten"
+                    android:textColor="@color/blue600"
+                    android:text="OrderDate"
+                    android:textSize="@dimen/textsize"></TextView>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/textsize"
+                android:text="500.00"
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/thirty"></TextView>
+
+            <TextView
+                android:id="@+id/priceSymbol5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs."
+                android:textColor="@color/light_blue1"
+                android:textSize="@dimen/textsize"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/btn_ViewOrderDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Details."
+                android:layout_below="@+id/priceSymbol5"
+                android:textColor="@color/bluedrack"
+                android:layout_marginTop="@dimen/fifteen"
+                android:textSize="@dimen/textsize"
+                android:textStyle="bold"></TextView>
+
+            <!--<View
+                android:id="@+id/view"
+                android:layout_width="@dimen/ninety"
+                android:layout_height="1dp"
+                android:layout_below="@+id/btn_ViewOrderDetails"
+                android:background="#FFFFFF" />-->
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

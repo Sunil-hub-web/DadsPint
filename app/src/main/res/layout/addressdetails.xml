@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/homeAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="@dimen/five"
+                    android:layout_weight="1"
+                    android:background="@drawable/textfieldback"
+                    android:gravity="center"
+                    android:text="Home Address"
+                    android:textSize="@dimen/textsize">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/schoolAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/textfieldback"
+                    android:gravity="center"
+                    android:text="School Address"
+                    android:layout_marginLeft="@dimen/three"
+                    android:textSize="@dimen/textsize">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textfieldback"
+                android:padding="@dimen/twelve"
+                android:hint="First Name"
+                android:layout_margin="@dimen/ten"></EditText>
+
+            <EditText
+                android:id="@+id/edit_LastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textfieldback"
+                android:padding="@dimen/twelve"
+                android:hint="Last Name"
+                android:layout_margin="@dimen/ten"></EditText>
+
+            <EditText
+                android:id="@+id/edit_MobileNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textfieldback"
+                android:padding="@dimen/twelve"
+                android:hint="phone no"
+                android:layout_margin="@dimen/ten"></EditText>
+
+            <EditText
+                android:id="@+id/edit_EmailId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textfieldback"
+                android:padding="@dimen/twelve"
+                android:hint="email id"
+                android:layout_margin="@dimen/ten"></EditText>
+
+            <!--<Spinner
+                android:id="@+id/spinner_State"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="@dimen/ten"
+                android:padding="@dimen/five"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/textfieldback"></Spinner>-->
+
+            <Spinner
+                android:id="@+id/spinner_City"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="@dimen/ten"
+                android:padding="@dimen/five"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/textfieldback"/>
+
+            <Spinner
+                android:id="@+id/spinner_Pincode"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/forty_five"
+                android:layout_margin="@dimen/ten"
+                android:padding="@dimen/five"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/textfieldback"/>
+
+            <Spinner
+                android:id="@+id/spinner_School"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/forty_five"
+                android:layout_margin="@dimen/ten"
+                android:padding="@dimen/five"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/textfieldback"/>
+
+           <!-- <EditText
+                android:id="@+id/edit_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textfieldback"
+                android:padding="@dimen/twelve"
+                android:layout_margin="@dimen/ten"
+                android:hint="state"></EditText>-->
+
+            <EditText
+                android:id="@+id/edit_Address1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textfieldback"
+                android:padding="@dimen/twelve"
+                android:layout_margin="@dimen/ten"
+                android:hint="address1"></EditText>
+
+            <EditText
+                android:id="@+id/edit_Address2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textfieldback"
+                android:padding="@dimen/twelve"
+                android:layout_margin="@dimen/ten"
+                android:hint="address2"></EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/ten">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_Save"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_marginRight="@dimen/ten"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="Save"
+                    app:backgroundTint="@color/bluedrack"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="15dp"></com.google.android.material.button.MaterialButton>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cancle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_marginRight="@dimen/ten"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:text="Cancel"
+                    app:backgroundTint="#DA291C"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="15dp">
+
+                </com.google.android.material.button.MaterialButton>
+
+            </LinearLayout>
+
+
+            <!--<com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_Map"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:text="   Google Map    "
+                android:layout_gravity="center"
+                app:backgroundTint="#DA291C"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="15dp">
+
+            </com.google.android.material.button.MaterialButton>-->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

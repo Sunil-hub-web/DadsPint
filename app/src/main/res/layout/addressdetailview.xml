@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rel_Click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/textfieldback"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/addressdetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/fifteen"
+            android:layout_toLeftOf="@+id/btn_Delete"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize"></TextView>
+
+        <TextView
+            android:id="@+id/shoppingCharges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/addressdetails"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/fifteen"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize"></TextView>
+
+        <ImageView
+            android:id="@+id/btn_Delete"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="@dimen/seven"
+            android:layout_marginTop="@dimen/seven"
+            android:layout_marginEnd="@dimen/seven"
+            android:layout_marginRight="@dimen/ten"
+            android:layout_marginBottom="@dimen/seven"
+            android:src="@drawable/delete_button"></ImageView>
+
+        <!-- <TextView
+             android:id="@+id/addressId"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="@dimen/ten"
+             android:layout_margin="@dimen/twenty"
+             android:textColor="@color/black"
+             android:layout_below="@id/addressdetails"
+             android:textSize="@dimen/edittextsize"></TextView>-->
+
+       <!-- <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_SelectAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shoppingCharges"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginRight="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:text="Select Address"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twelve"
+            android:textStyle="bold"
+            app:backgroundTint="@color/bluedrack"></com.google.android.material.button.MaterialButton>-->
+
+    </RelativeLayout>
+
+</RelativeLayout>
