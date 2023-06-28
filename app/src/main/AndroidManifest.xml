@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        <activity android:name=".SplashScreen"
+        <activity android:name="co.in.dadspint.SplashScreen"
                   android:exported="true">
            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
             </intent-filter>-->
         </activity>
         <activity
-            android:name=".OrderSuccessFully"
+            android:name="co.in.dadspint.OrderSuccessFully"
             android:exported="true">
            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,7 @@
             </intent-filter>-->
         </activity>
         <activity
-            android:name=".SingleProductDesc"
+            android:name="co.in.dadspint.SingleProductDesc"
             android:exported="true">
 
             <!--
@@ -45,7 +45,7 @@
             -->
         </activity>
         <activity
-            android:name=".OtpVerifactionActivity"
+            android:name="co.in.dadspint.OtpVerifactionActivity"
             android:exported="true">
 
             <!--
@@ -57,7 +57,7 @@
             -->
         </activity>
         <activity
-            android:name=".DeshBoardActivity"
+            android:name="co.in.dadspint.DeshBoardActivity"
             android:exported="true">
 
             <intent-filter>
@@ -68,12 +68,12 @@
 
         </activity>
         <activity
-            android:name=".LogiRegisterPage"
+            android:name="co.in.dadspint.LogiRegisterPage"
             android:exported="true">
 
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="co.in.dadspint.MainActivity"
             android:exported="true">
 
             <!--
