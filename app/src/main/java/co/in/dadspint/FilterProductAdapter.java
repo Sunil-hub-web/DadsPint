@@ -68,15 +68,15 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tv_minus = (TextView) itemView.findViewById(R.id.tv_minus);
-            tv_count = (TextView) itemView.findViewById(R.id.tv_count);
-            tv_plus = (TextView) itemView.findViewById(R.id.tv_plus);
-            lin_addCart = (LinearLayout) itemView.findViewById(R.id.lin_addCart);
-            lin_add_cart = (LinearLayout) itemView.findViewById(R.id.lin_add_cart);
-            uniform_name1 = (TextView) itemView.findViewById(R.id.uniform_name1);
-            restt_price1 = (TextView) itemView.findViewById(R.id.restt_price1);
-            restt_price2 = (TextView) itemView.findViewById(R.id.restt_price2);
-            imag_uniform = (ImageView) itemView.findViewById(R.id.imag_uniform);
+            tv_minus = itemView.findViewById(R.id.tv_minus);
+            tv_count = itemView.findViewById(R.id.tv_count);
+            tv_plus = itemView.findViewById(R.id.tv_plus);
+            lin_addCart = itemView.findViewById(R.id.lin_addCart);
+            lin_add_cart = itemView.findViewById(R.id.lin_add_cart);
+            uniform_name1 = itemView.findViewById(R.id.uniform_name1);
+            restt_price1 = itemView.findViewById(R.id.restt_price1);
+            restt_price2 = itemView.findViewById(R.id.restt_price2);
+            imag_uniform = itemView.findViewById(R.id.imag_uniform);
         }
     }
 }

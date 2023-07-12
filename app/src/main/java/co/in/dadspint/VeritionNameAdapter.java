@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class VeritionNameAdapter extends ArrayAdapter<SingleProductVariations> {
 
-    private ArrayList<SingleProductVariations> myarrayList;
+    private final ArrayList<SingleProductVariations> myarrayList;
 
     public VeritionNameAdapter(Context context, int textViewResourceId, ArrayList<SingleProductVariations> modelArrayList) {
         super(context, textViewResourceId, modelArrayList);

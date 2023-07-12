@@ -82,7 +82,7 @@ public class CartFragment extends Fragment {
 
                 DeshBoardActivity.menu.setVisibility(View.GONE);
                 DeshBoardActivity.backimage.setVisibility(View.VISIBLE);
-                DeshBoardActivity.image_search.setVisibility(View.GONE);;
+                DeshBoardActivity.image_search.setVisibility(View.GONE);
             }
         });
 

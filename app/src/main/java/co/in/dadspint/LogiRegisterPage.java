@@ -43,7 +43,7 @@ public class LogiRegisterPage extends AppCompatActivity {
         ft.addToBackStack(null);
         ft.commit();
 
-        binding.login.setTextColor(getResources().getColor(R.color.bluedrack));;
+        binding.login.setTextColor(getResources().getColor(R.color.bluedrack));
 
         test = (LoginPageFragment) getSupportFragmentManager().findFragmentByTag("loginpage");
 

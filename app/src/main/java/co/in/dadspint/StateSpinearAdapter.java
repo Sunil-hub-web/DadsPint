@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class StateSpinearAdapter extends ArrayAdapter<StateModelClass> {
 
-    private ArrayList<StateModelClass> myarrayList;
+    private final ArrayList<StateModelClass> myarrayList;
 
     public StateSpinearAdapter(Context context, int textViewResourceId, ArrayList<StateModelClass> modelArrayList) {
         super(context, textViewResourceId, modelArrayList);

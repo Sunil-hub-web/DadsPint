@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="@dimen/hundred_eighty"
+        android:layout_width="@dimen/two_hundred"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/five"
         android:layout_marginStart="@dimen/five"
@@ -36,6 +36,18 @@
                     android:layout_marginEnd="0dp"
                     android:layout_marginBottom="0dp"
                     android:src="@drawable/whiteuniform" />
+
+                <TextView
+                    android:id="@+id/parcentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/add_bg"
+                    android:padding="@dimen/three"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twelve"
+                    android:layout_margin="@dimen/three">
+
+                </TextView>
 
             </RelativeLayout>
 

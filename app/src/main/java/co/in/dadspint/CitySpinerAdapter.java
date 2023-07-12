@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class CitySpinerAdapter extends ArrayAdapter<CityModelClass> {
 
-    private ArrayList<CityModelClass> myarrayList;
+    private final ArrayList<CityModelClass> myarrayList;
 
     public CitySpinerAdapter(Context context, int textViewResourceId, ArrayList<CityModelClass> modelArrayList) {
         super(context, textViewResourceId, modelArrayList);

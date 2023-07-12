@@ -26,7 +26,7 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
 
         this.viewAddress_Model = viewAddress_model;
         this.context = context;
-        this.checkOut1 = checkOut;
+        checkOut1 = checkOut;
 
     }
 

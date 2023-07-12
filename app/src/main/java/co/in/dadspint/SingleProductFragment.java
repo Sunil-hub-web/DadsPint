@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class SingleProductFragment extends Fragment {
     ArrayList<SingleProductVariations> singleProductVariations;
     TextView productName,product_decs,regular_price,tv_minus1,tv_count1,tv_plus;
     String product_name,regularprice,description,primary_image,productId,product_Name,userId,
-            productid,quenty,quantity,price,varitionprice;
+            quenty,quantity,price,varitionprice,str_singleProducuAttributes;
     public static String salesprice;
     public static TextView sales_price;
     ViewPager2 showImageViewPager2;
@@ -119,11 +120,26 @@ public class SingleProductFragment extends Fragment {
 
                 linearLayout(false);
 
-                quantity = tv_count1.getText().toString().trim();
-                count_value = Integer.valueOf(tv_count1.getText().toString());
+
                 varitionprice = attributeVaritionAdapter.getvaritionPrice();
 
-                addToCart(userId,productid,quantity,varitionprice,salesprice);
+                if (str_singleProducuAttributes.equals("singleProducuAttributes")){
+
+                    quantity = tv_count1.getText().toString().trim();
+                    count_value = Integer.valueOf(tv_count1.getText().toString());
+
+                    addToCart(userId,productId,quantity,"",salesprice);
+
+                }else{
+
+                    quantity = tv_count1.getText().toString().trim();
+                    count_value = Integer.valueOf(tv_count1.getText().toString());
+
+                    addToCart(userId,productId,quantity,varitionprice,salesprice);
+                }
+
+
+
 
             }
         });
@@ -134,11 +150,24 @@ public class SingleProductFragment extends Fragment {
 
                 linearLayout(true);
 
-                quantity = tv_count1.getText().toString().trim();
-                count_value = Integer.valueOf(tv_count1.getText().toString());
-                varitionprice = attributeVaritionAdapter.getvaritionPrice();
+                if (str_singleProducuAttributes.equals("singleProducuAttributes")){
 
-                addToCart(userId,productid,quantity,varitionprice,salesprice);
+                    quantity = tv_count1.getText().toString().trim();
+                    count_value = Integer.valueOf(tv_count1.getText().toString());
+                    varitionprice = attributeVaritionAdapter.getvaritionPrice();
+
+                    addToCart(userId,productId,quantity,"",salesprice);
+
+                }else{
+
+                    quantity = tv_count1.getText().toString().trim();
+                    count_value = Integer.valueOf(tv_count1.getText().toString());
+                    varitionprice = attributeVaritionAdapter.getvaritionPrice();
+
+                    addToCart(userId,productId,quantity,varitionprice,salesprice);
+                }
+
+
 
             }
         });
@@ -157,11 +186,34 @@ public class SingleProductFragment extends Fragment {
 
                 }else{
 
-                    quantity = tv_count1.getText().toString().trim();
-                    String strprice = sales_price.getText().toString().trim();
-                    varitionprice = attributeVaritionAdapter.getvaritionPrice();
+                    //quantity = tv_count1.getText().toString().trim();
+                    //String strprice = sales_price.getText().toString().trim();
+                   // varitionprice = attributeVaritionAdapter.getvaritionPrice();
 
-                    addToCart(userId,productId,quantity,varitionprice,salesprice);
+                   // addToCart(userId,productId,quantity,varitionprice,salesprice);
+
+//                   Log.d("veritionprice",String.valueOf(attributeVaritionAdapter.getvaritionPrice()));
+
+                    if (str_singleProducuAttributes.equals("singleProducuAttributes")){
+
+                        quantity = tv_count1.getText().toString().trim();
+                        count_value = Integer.valueOf(tv_count1.getText().toString());
+
+                        addToCart(userId,productId,quantity,"",salesprice);
+
+                        Log.d("veritionprice1",userId+", "+productId+", "+quantity+", "+salesprice);
+
+                    }else{
+
+                        quantity = tv_count1.getText().toString().trim();
+                        count_value = Integer.valueOf(tv_count1.getText().toString());
+                        varitionprice = attributeVaritionAdapter.getvaritionPrice();
+
+                        addToCart(userId,productId,quantity,varitionprice,salesprice);
+
+                        Log.d("veritionprice2",userId+", "+productId+", "+quantity+", "+varitionprice+", "+salesprice);
+                    }
+
                 }
             }
         });
@@ -308,7 +360,7 @@ public class SingleProductFragment extends Fragment {
                             dots = new TextView[arraysize];
                             dotsIndicator();
 
-                            Toast.makeText(getContext(), "Product Image Not Found", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getContext(), "Product Image Not Found", Toast.LENGTH_LONG).show();
                         }
 
                         JSONArray jsonArray_attribute = new JSONArray(attribute);
@@ -367,9 +419,14 @@ public class SingleProductFragment extends Fragment {
                             recyclerAttribute.setHasFixedSize(true);
                             recyclerAttribute.setAdapter(attributeVaritionAdapter);
 
+                            str_singleProducuAttributes = "";
+
                         }else{
 
                             Toast.makeText(getContext(), "Attribute Not Found", Toast.LENGTH_SHORT).show();
+
+                            str_singleProducuAttributes = "singleProducuAttributes";
+
                         }
 
                     }
@@ -394,6 +451,7 @@ public class SingleProductFragment extends Fragment {
                 Map<String,String> params = new HashMap<>();
                 params.put("user_id",user_id);
                 params.put("product_id",product_id);
+                Log.d("productdaa",user_id+",  "+product_id);
                 return params;
             }
         };

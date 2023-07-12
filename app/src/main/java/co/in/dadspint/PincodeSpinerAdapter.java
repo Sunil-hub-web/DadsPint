@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class PincodeSpinerAdapter extends ArrayAdapter<PinCodeModel> {
 
-    private ArrayList<PinCodeModel> myarrayList1;
+    private final ArrayList<PinCodeModel> myarrayList1;
 
     public PincodeSpinerAdapter(Context context, int textViewResourceId, ArrayList<PinCodeModel> modelArrayList) {
         super(context, textViewResourceId, modelArrayList);

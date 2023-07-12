@@ -220,6 +220,7 @@ public class ProductDetailsFragment extends Fragment {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", user_id);
+                Log.d("userId",user_id);
                 return params;
             }
         };
@@ -231,7 +232,7 @@ public class ProductDetailsFragment extends Fragment {
     }
     public void schoolUniform(){
 
-        if(productDataModel1.size() != 0){
+        if(productDataModel2.size() != 0){
 
             schoolUniformAdapter = new SchoolUniformAdapter(productDataModel2,getActivity());
             //gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -245,7 +246,7 @@ public class ProductDetailsFragment extends Fragment {
     }
     public void schoolAccessories(){
 
-        if (productDataModel2.size() != 0){
+        if (productDataModel1.size() != 0){
 
             schoolAccessoriesAdapter = new SchoolAccessoriesAdapter(productDataModel1,getActivity());
             gridLayoutManager1 = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);

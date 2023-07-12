@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class SchoolSpinearAdapter extends ArrayAdapter<SchoolModelClass> {
 
-    private ArrayList<SchoolModelClass> myarrayList;
+    private final ArrayList<SchoolModelClass> myarrayList;
 
     public SchoolSpinearAdapter(Context context, int textViewResourceId, ArrayList<SchoolModelClass> modelArrayList) {
         super(context, textViewResourceId, modelArrayList);

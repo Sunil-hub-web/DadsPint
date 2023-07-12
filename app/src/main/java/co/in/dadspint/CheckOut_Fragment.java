@@ -1120,7 +1120,7 @@ public class CheckOut_Fragment extends Fragment {
 
                 str_ShowAddress = viewAddressAdapter.addressvalue();
                 str_shipping = viewAddressAdapter.shipping();
-                addreessid = viewAddressAdapter.addressId;
+                addreessid = ViewAddressAdapter.addressId;
 
                 Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
 

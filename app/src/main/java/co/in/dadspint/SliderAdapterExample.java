@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SliderAdapterExample extends SliderViewAdapter<SliderAdapterExample.SliderAdapterVH> {
 
-    private Context context;
+    private final Context context;
     private List<BannerModelClass> mSliderItems = new ArrayList<>();
 
     public SliderAdapterExample(Context context, List<BannerModelClass> sliderItemList) {

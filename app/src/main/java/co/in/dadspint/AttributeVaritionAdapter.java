@@ -25,7 +25,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import co.in.dadspint.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +38,6 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
 
     ArrayList<SingleProducuAttribute> singleProducuAttributes;
     ArrayList<SingleProductVariations> singleProductVariations = new ArrayList<>();
-    ;
     Context context;
     ArrayList<String> varitionnameId = new ArrayList<>();
     ArrayList<Integer> varitionnameId2 = new ArrayList<>();
@@ -47,7 +45,7 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
     ArrayList<VaritionNameDet> varitionnameId1 = new ArrayList<>();
 
     public static String varitionprice = "", varitionName = "", strnamedetails = "NotSelect",
-            varition_id,strPrice,services_Id;
+            varition_id,strPrice,services_Id,attributeNotFound;
     ArrayList<String> str_singleProductVariations = new ArrayList<>();
     HashMap<String, String> hash_singleProductVariations = new HashMap<>();
 
@@ -72,6 +70,8 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
 
         SingleProducuAttribute singlattribut = singleProducuAttributes.get(position1);
         holder.attributeName.setText(singlattribut.getAttribute_name());
+
+        Log.d("attributedetails",singleProducuAttributes.toString());
 
         singleProductVariations = singlattribut.getSingleProductVariations();
         str_singleProductVariations = singlattribut.getStr_singleProductVariations();
@@ -254,7 +254,7 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
                     String error = jsonObject.getString("error");
                     String messages = jsonObject.getString("messages");
 
-                    Log.d("responsedetails",response.toString());
+                    Log.d("responsedetails", response);
 
                     if (status.equals("200")){
 
@@ -276,7 +276,7 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
                             }
                         }else{
 
-                            Toast.makeText(context, "Price not Found1", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(context, "Price not Found1", Toast.LENGTH_SHORT).show();
 
                             SingleProductFragment.sales_price.setText("Rs  "+varitionprice);
                             SingleProductFragment.salesprice = varitionprice;
@@ -288,7 +288,7 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
                         String responsecode = jsonObject_message.getString("responsecode");
                         String status_message = jsonObject_message.getString("status");
 
-                        Toast.makeText(context, "Price not Found", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Price not Found", Toast.LENGTH_SHORT).show();
 
                         SingleProductFragment.sales_price.setText("Rs  "+varitionprice);
                         SingleProductFragment.salesprice = varitionprice;

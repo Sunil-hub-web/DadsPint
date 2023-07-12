@@ -143,7 +143,6 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 menu.setVisibility(View.VISIBLE);
                 backimage.setVisibility(View.GONE);
                 image_search.setVisibility(View.VISIBLE);
-                ;
 
             }
         });

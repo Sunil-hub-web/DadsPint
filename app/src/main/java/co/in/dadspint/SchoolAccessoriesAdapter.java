@@ -35,6 +35,7 @@ import co.in.dadspint.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +74,17 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
         holder.restt_price1.setText("Rs. "+product.sales_price);
         holder.restt_price2.setText("Rs. "+product.regular_price);
 
+        Double price1 = Double.valueOf(product.regular_price);
+        Double price2 = Double.valueOf(product.sales_price);
+        Double price3 = price1 - price2;
+        Double price6 = price3 / price1;
+        Log.d("pricedetails",price1+"-"+price2+"/"+price1+"="+price6);
+        Double price4 = price6 * 100;
+        DecimalFormat df = new DecimalFormat("#.00");
+        String price5 = df.format(price4);
+
+        holder.parcentage.setText(price5+" %");
+
         holder.restt_price2.setPaintFlags(holder.restt_price2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         String imageUrl = "https://dadspint.com/uploads/"+product.getPrimary_image();
@@ -91,11 +103,11 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
             @Override
             public void onClick(View v) {
 
-                if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
+           /*     if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
 
                     Toast.makeText(context, "Varition Not Found", Toast.LENGTH_SHORT).show();
 
-                } else {
+                } else {*/
 
                     SingleProductFragment singleProductFragment = new SingleProductFragment();
                     Bundle args = new Bundle();
@@ -111,7 +123,7 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
-                }
+                //}
 
             }
         });
@@ -119,12 +131,12 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
         holder.imag_uniform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+/*
                 if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
 
                     Toast.makeText(context, "Varition Not Found", Toast.LENGTH_SHORT).show();
 
-                } else {
+                } else {*/
 
                     SingleProductFragment singleProductFragment = new SingleProductFragment();
                     Bundle args = new Bundle();
@@ -140,7 +152,7 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
-                }
+               // }
             }
         });
 
@@ -224,24 +236,25 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imag_uniform;
-        TextView uniform_name1,restt_price1,restt_price2,tv_minus,tv_count,tv_plus,addtext1,tv_count1;
+        TextView uniform_name1,restt_price1,restt_price2,tv_minus,tv_count,tv_plus,addtext1,tv_count1,parcentage;
         LinearLayout lin_addCart,lin_add_cart;
         RelativeLayout relImageClick,addlay1;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            addlay1 = (RelativeLayout) itemView.findViewById(R.id.addlay1);
-            addtext1 = (TextView) itemView.findViewById(R.id.addtext1);
-            tv_minus = (TextView) itemView.findViewById(R.id.tv_minus1);
-            tv_count = (TextView) itemView.findViewById(R.id.tv_count1);
-            tv_plus = (TextView) itemView.findViewById(R.id.tv_plus);
-            lin_addCart = (LinearLayout) itemView.findViewById(R.id.lin_addCart);
-            lin_add_cart = (LinearLayout) itemView.findViewById(R.id.lin_add_cart);
-            uniform_name1 = (TextView) itemView.findViewById(R.id.uniform_name1);
-            restt_price1 = (TextView) itemView.findViewById(R.id.restt_price1);
-            restt_price2 = (TextView) itemView.findViewById(R.id.restt_price2);
-            imag_uniform = (ImageView) itemView.findViewById(R.id.imag_uniform);
-            relImageClick = (RelativeLayout) itemView.findViewById(R.id.relImageClick);
+            addlay1 = itemView.findViewById(R.id.addlay1);
+            addtext1 = itemView.findViewById(R.id.addtext1);
+            tv_minus = itemView.findViewById(R.id.tv_minus1);
+            tv_count = itemView.findViewById(R.id.tv_count1);
+            tv_plus = itemView.findViewById(R.id.tv_plus);
+            lin_addCart = itemView.findViewById(R.id.lin_addCart);
+            lin_add_cart = itemView.findViewById(R.id.lin_add_cart);
+            uniform_name1 = itemView.findViewById(R.id.uniform_name1);
+            restt_price1 = itemView.findViewById(R.id.restt_price1);
+            restt_price2 = itemView.findViewById(R.id.restt_price2);
+            imag_uniform = itemView.findViewById(R.id.imag_uniform);
+            relImageClick = itemView.findViewById(R.id.relImageClick);
+            parcentage = itemView.findViewById(R.id.parcentage);
         }
 
         private void linearLayout(Boolean x) {

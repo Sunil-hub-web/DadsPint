@@ -79,4 +79,17 @@ public class SingleProducuAttribute {
     public void setSalesprice(String salesprice) {
         this.salesprice = salesprice;
     }
+
+    @Override
+    public String toString() {
+        return "SingleProducuAttribute{" +
+                "attribute_id='" + attribute_id + '\'' +
+                ", attribute_name='" + attribute_name + '\'' +
+                ", product_id='" + product_id + '\'' +
+                ", salesprice='" + salesprice + '\'' +
+                ", singleProductVariations=" + singleProductVariations +
+                ", str_singleProductVariations=" + str_singleProductVariations +
+                ", hash_singleProductVariations=" + hash_singleProductVariations +
+                '}';
+    }
 }

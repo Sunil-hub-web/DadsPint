@@ -87,7 +87,7 @@ public class SubCategoryPage extends Fragment {
 
                 progressDialog.dismiss();
 
-                Log.d("poductresponse",response.toString());
+                Log.d("poductresponse", response);
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);

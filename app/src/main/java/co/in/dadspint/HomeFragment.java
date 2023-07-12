@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment {
 
                 progressDialog.dismiss();
 
-                Log.d("poductresponse",response.toString());
+                Log.d("poductresponse", response);
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -252,7 +252,7 @@ public class HomeFragment extends Fragment {
 
                             schoolAccessoriesAdapter = new SchoolAccessoriesAdapter(productDataModel2,getActivity());
                             //   gridLayoutManager1 = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-                            gridLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);;
+                            gridLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                             schoolAccessRecycler.setLayoutManager(gridLayoutManager1);
                             schoolAccessRecycler.setHasFixedSize(true);
                             schoolAccessRecycler.setAdapter(schoolAccessoriesAdapter);
