@@ -187,8 +187,7 @@
                     android:paddingRight="@dimen/ten"
                     android:paddingTop="@dimen/five"
                     android:paddingBottom="@dimen/five"
-                    android:layout_marginLeft="@dimen/five"
-                    android:layout_marginRight="@dimen/five"></TextView>
+                    android:layout_margin="@dimen/five"></TextView>
 
             </RelativeLayout>
 

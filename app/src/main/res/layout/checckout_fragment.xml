@@ -21,38 +21,6 @@
                 android:orientation="vertical"
                 android:layout_margin="@dimen/ten">
 
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/fifteen"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <RadioButton
-                        android:id="@+id/radio_payonline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@null"
-                        android:paddingLeft="@dimen/ten"
-                        android:text="Pay Online"
-                        android:textColor="@color/blue600"
-                        android:textSize="@dimen/edittextsize" />
-
-                    <RadioButton
-                        android:id="@+id/radio_cashondelivery"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="@dimen/twenty"
-                        android:paddingLeft="@dimen/ten"
-                        android:text="Cash On Delivery"
-                        android:textColor="@color/blue600"
-                        android:textSize="@dimen/edittextsize" />
-
-                </RadioGroup>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -174,6 +142,38 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
             </RelativeLayout>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RadioButton
+                    android:id="@+id/radio_payonline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:paddingLeft="@dimen/ten"
+                    android:text="Pay Online"
+                    android:textColor="@color/blue600"
+                    android:textSize="@dimen/edittextsize" />
+
+                <RadioButton
+                    android:id="@+id/radio_cashondelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/twenty"
+                    android:paddingLeft="@dimen/ten"
+                    android:text="Cash On Delivery"
+                    android:textColor="@color/blue600"
+                    android:textSize="@dimen/edittextsize" />
+
+            </RadioGroup>
 
             <LinearLayout
                 android:id="@+id/amount"

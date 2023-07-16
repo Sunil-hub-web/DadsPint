@@ -14,8 +14,8 @@
             android:id="@+id/advance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Why You Cancel Your Product ? "
-            android:textSize="@dimen/twenty"
+            android:text="Can you please share the reasons for cancellation ? "
+            android:textSize="@dimen/edittextsize"
             android:layout_margin="@dimen/ten"
             android:fontFamily="@font/sans_bold"
             android:textColor="@color/black">
@@ -31,7 +31,6 @@
             android:layout_marginRight="@dimen/twenty"
             android:layout_marginBottom="@dimen/ten"
             android:gravity="top"
-            android:hint="Write Your Resign"
             android:background="@drawable/textfieldback"
             android:padding="@dimen/fifteen" />
 

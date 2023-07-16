@@ -20,7 +20,7 @@
             android:layout_height="@dimen/fifty"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:src="@drawable/logopng"></ImageView>
+            android:src="@drawable/dadapicon"></ImageView>
 
         <RelativeLayout
             android:id="@+id/loginsignup"

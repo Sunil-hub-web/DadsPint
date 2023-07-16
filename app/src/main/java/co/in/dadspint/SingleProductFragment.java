@@ -62,7 +62,7 @@ public class SingleProductFragment extends Fragment {
     ArrayList<String> str_singleProductVariations = new ArrayList<>();
     HashMap<String,String> hash_singleProductVariations = new HashMap<>();
     int count_value;
-    LinearLayout lin_addCart,lin_add_cart,lin_ByNow,dots_container;
+    LinearLayout lin_addCart,lin_add_cart,dots_container;
 
     @Nullable
     @Override
@@ -83,7 +83,7 @@ public class SingleProductFragment extends Fragment {
         tv_plus = view.findViewById(R.id.tv_plus);
         lin_addCart = view.findViewById(R.id.lin_addCart);
         lin_add_cart = view.findViewById(R.id.lin_add_cart);
-        lin_ByNow = view.findViewById(R.id.lin_ByNow);
+      //  lin_ByNow = view.findViewById(R.id.lin_ByNow);
        // backimage = view.findViewById(R.id.backimage);
         dots_container = view.findViewById(R.id.dots_container);
 
@@ -218,7 +218,7 @@ public class SingleProductFragment extends Fragment {
             }
         });
 
-        lin_ByNow.setOnClickListener(new View.OnClickListener() {
+        /*lin_ByNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -237,7 +237,7 @@ public class SingleProductFragment extends Fragment {
                 DeshBoardActivity.backimage.setVisibility(View.VISIBLE);
                 DeshBoardActivity.image_search.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         return view;
     }
@@ -423,7 +423,7 @@ public class SingleProductFragment extends Fragment {
 
                         }else{
 
-                            Toast.makeText(getContext(), "Attribute Not Found", Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(getContext(), "Attribute Not Found", Toast.LENGTH_SHORT).show();
 
                             str_singleProducuAttributes = "singleProducuAttributes";
 

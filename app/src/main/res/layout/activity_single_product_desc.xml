@@ -240,7 +240,7 @@
                     android:layout_below="@+id/instock2"
                     android:layout_marginTop="@dimen/fifteen">
 
-                    <LinearLayout
+                  <!--  <LinearLayout
                         android:id="@+id/lin_ByNow"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -260,7 +260,7 @@
                             android:textSize="@dimen/fourteen" />
 
 
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                     <!-- <LinearLayout
                          android:id="@+id/lin_add_cart"

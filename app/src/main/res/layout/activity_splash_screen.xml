@@ -11,7 +11,7 @@
             android:layout_width="@dimen/two_hundred"
             android:layout_height="@dimen/hundred"
             android:layout_centerInParent="true"
-            android:src="@drawable/logopng">
+            android:src="@drawable/dadapicon">
 
         </ImageView>
 

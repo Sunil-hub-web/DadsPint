@@ -647,8 +647,8 @@ public class Address_fragment extends Fragment {
         //  EditText edit_state = dialog.findViewById(R.id.edit_state);
         EditText edit_Address1 = dialog.findViewById(R.id.edit_Address1);
         EditText edit_Address2 = dialog.findViewById(R.id.edit_Address2);
-        TextView homeAddress = dialog.findViewById(R.id.homeAddress);
-        TextView schoolAddress = dialog.findViewById(R.id.schoolAddress);
+       // TextView homeAddress = dialog.findViewById(R.id.homeAddress);
+       // TextView schoolAddress = dialog.findViewById(R.id.schoolAddress);
         Button btn_Save = dialog.findViewById(R.id.btn_Save);
         Button btn_cancle = dialog.findViewById(R.id.btn_cancle);
 
@@ -666,12 +666,12 @@ public class Address_fragment extends Fragment {
         getCity();
      //   getState();
 
-        homeAddress.setBackgroundResource(R.drawable.backgroundcolor);
-        schoolAddress.setBackgroundResource(R.drawable.textfieldback);
+        //homeAddress.setBackgroundResource(R.drawable.backgroundcolor);
+       // schoolAddress.setBackgroundResource(R.drawable.textfieldback);
 
         addressInsertMessage = "homeAddress";
 
-        homeAddress.setOnClickListener(new View.OnClickListener() {
+       /* homeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -702,7 +702,7 @@ public class Address_fragment extends Fragment {
                 spinner_Pincode.setVisibility(View.GONE);
                // spinner_State.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         btn_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -716,47 +716,49 @@ public class Address_fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (addressInsertMessage.equals("homeAddress")) {
+                if (edit_firstname.getText().toString().trim().equals("")) {
 
-                    if (edit_firstname.getText().toString().trim().equals("")) {
+                    edit_firstname.setError("Please Enter Name");
 
-                        edit_firstname.setError("Please Enter Name");
+                } else if (TextUtils.isEmpty(edit_LastName.getText())) {
 
-                    } else if (TextUtils.isEmpty(edit_LastName.getText())) {
+                    edit_LastName.setError("Please Enter Email");
 
-                        edit_LastName.setError("Please Enter Email");
+                } else if (TextUtils.isEmpty(edit_EmailId.getText())) {
 
-                    } else if (TextUtils.isEmpty(edit_EmailId.getText())) {
+                    edit_EmailId.setError("Please Enter Email");
 
-                        edit_EmailId.setError("Please Enter Email");
+                } else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() == 10) {
 
-                    } else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() == 10) {
+                    edit_MobileNo.setError("Please Enter MobileNumber");
 
-                        edit_MobileNo.setError("Please Enter MobileNumber");
+                } else if (TextUtils.isEmpty(edit_Address1.getText())) {
 
-                    } else if (TextUtils.isEmpty(edit_Address1.getText())) {
+                    edit_Address1.setError("Please Enter Address");
 
-                        edit_Address1.setError("Please Enter Address");
+                } else if (TextUtils.isEmpty(edit_Address2.getText())) {
 
-                    } else if (TextUtils.isEmpty(edit_Address2.getText())) {
+                    edit_Address2.setError("Please Enter Address");
 
-                        edit_Address2.setError("Please Enter Address");
+                } else {
 
-                    } else {
+                    str_FirstName = edit_firstname.getText().toString().trim();
+                    str_LastName = edit_LastName.getText().toString().trim();
+                    str_Email = edit_EmailId.getText().toString().trim();
+                    str_MobileNo = edit_MobileNo.getText().toString().trim();
+                    //str_state = edit_state.getText().toString().trim();
+                    str_Address1 = edit_Address1.getText().toString().trim();
+                    str_Address2 = edit_Address2.getText().toString().trim();
+                    str_PinCodeId = pincodeId;
+                    str_CityId = city_Id;
 
-                        str_FirstName = edit_firstname.getText().toString().trim();
-                        str_LastName = edit_LastName.getText().toString().trim();
-                        str_Email = edit_EmailId.getText().toString().trim();
-                        str_MobileNo = edit_MobileNo.getText().toString().trim();
-                        //str_state = edit_state.getText().toString().trim();
-                        str_Address1 = edit_Address1.getText().toString().trim();
-                        str_Address2 = edit_Address2.getText().toString().trim();
-                        str_PinCodeId = pincodeId;
-                        str_CityId = city_Id;
+                    addAddress_Save(userId, str_FirstName, str_LastName, str_Address1, str_Address2, str_CityId, state_Name,
+                            str_PinCodeId, str_Email, str_MobileNo, "1", schoolId);
+                }
 
-                        addAddress_Save(userId, str_FirstName, str_LastName, str_Address1, str_Address2, str_CityId, state_Name,
-                                str_PinCodeId, str_Email, str_MobileNo, "1", schoolId);
-                    }
+               /* if (addressInsertMessage.equals("homeAddress")) {
+
+
 
                 } else {
 
@@ -793,7 +795,7 @@ public class Address_fragment extends Fragment {
 
                     }
 
-                }
+                }*/
 
             }
         });
@@ -917,7 +919,6 @@ public class Address_fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
-
     public void viewAddress(String userId) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());

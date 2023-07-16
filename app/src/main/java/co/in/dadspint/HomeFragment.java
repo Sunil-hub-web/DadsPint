@@ -122,7 +122,19 @@ public class HomeFragment extends Fragment {
         imageSlider.setOnIndicatorClickListener(new DrawController.ClickListener() {
             @Override
             public void onIndicatorClicked(int position) {
-                Log.i("GGG", "onIndicatorClicked: " + imageSlider.getCurrentPagePosition());
+
+                Fragment fragment = new ProductDetailsFragment();
+                Bundle args = new Bundle();
+                args.putString("YourKey", "SchoolUniform");
+                fragment.setArguments(args);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.framLayout, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                DeshBoardActivity.menu.setVisibility(View.GONE);
+                DeshBoardActivity.backimage.setVisibility(View.VISIBLE);
             }
         });
 

@@ -207,11 +207,12 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 menu.setVisibility(View.VISIBLE);
                 backimage.setVisibility(View.GONE);
                 image_search.setVisibility(View.VISIBLE);
+
+                binding.bottomNavigation.setSelectedItemId(R.id.home);
             }
         });
 
         binding.bottomNavigation.setSelectedItemId(R.id.home);
-
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -293,6 +294,11 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
         // opendrawer layout
         drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public void Serachpage(View view){
+
+        Toast.makeText(this, "Work in Progress", Toast.LENGTH_SHORT).show();
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

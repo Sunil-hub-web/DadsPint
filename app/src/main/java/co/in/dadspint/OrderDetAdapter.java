@@ -224,12 +224,12 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
                 if (description.getText().toString().trim().equals("")){
 
-                    Toast.makeText(context, "Enter Your Message", Toast.LENGTH_SHORT).show();
+                    String strmessage = "";
+                    productCancle(cust_id,order_id,orders_id,strmessage);
 
                 }else{
 
                     String strmessage = description.getText().toString().trim();
-
                     productCancle(cust_id,order_id,orders_id,strmessage);
                 }
             }

@@ -59,7 +59,7 @@ public class SingleProductDesc extends AppCompatActivity {
     ArrayList<String> str_singleProductVariations = new ArrayList<>();
     HashMap<String,String> hash_singleProductVariations = new HashMap<>();
     int count_value;
-    LinearLayout lin_addCart,lin_add_cart,lin_ByNow;
+    LinearLayout lin_addCart,lin_add_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class SingleProductDesc extends AppCompatActivity {
         tv_plus = findViewById(R.id.tv_plus);
         lin_addCart = findViewById(R.id.lin_addCart);
         lin_add_cart = findViewById(R.id.lin_add_cart);
-        lin_ByNow = findViewById(R.id.lin_ByNow);
+        //lin_ByNow = findViewById(R.id.lin_ByNow);
         //backimage = findViewById(R.id.backimage);
 
         productId = getIntent().getStringExtra("productId");
@@ -165,7 +165,7 @@ public class SingleProductDesc extends AppCompatActivity {
             }
         });
 
-        lin_ByNow.setOnClickListener(new View.OnClickListener() {
+   /*     lin_ByNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -185,7 +185,7 @@ public class SingleProductDesc extends AppCompatActivity {
                 DeshBoardActivity.backimage.setVisibility(View.VISIBLE);
                 DeshBoardActivity.image_search.setVisibility(View.GONE);
             }
-        });
+        });*/
 
     }
     public void getSingleProduct(String user_id, String product_id){
@@ -367,7 +367,7 @@ public class SingleProductDesc extends AppCompatActivity {
 
                         }else{
 
-                            Toast.makeText(SingleProductDesc.this, "Attribute Not Found", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SingleProductDesc.this, "Attribute Not Found", Toast.LENGTH_SHORT).show();
                         }
 
                     }

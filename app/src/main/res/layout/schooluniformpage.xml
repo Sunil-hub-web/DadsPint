@@ -41,11 +41,14 @@
                     android:id="@+id/parcentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/three"
+                    android:layout_marginTop="@dimen/three"
+                    android:layout_marginEnd="@dimen/three"
+                    android:layout_marginBottom="@dimen/three"
                     android:background="@drawable/add_bg"
                     android:padding="@dimen/three"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/twelve"
-                    android:layout_margin="@dimen/three">
+                    android:textSize="@dimen/twelve">
 
                 </TextView>
 

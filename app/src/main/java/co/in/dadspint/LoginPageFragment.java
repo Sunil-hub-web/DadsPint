@@ -102,7 +102,7 @@ public class LoginPageFragment extends Fragment {
 
                     if (status.equals("200")) {
 
-                        Toast.makeText(getContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
 
                         String error = jsonObject.getString("error");
                         String messages = jsonObject.getString("messages");

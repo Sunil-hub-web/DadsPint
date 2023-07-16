@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CheckOut_Fragment extends Fragment {
 
@@ -126,7 +129,7 @@ public class CheckOut_Fragment extends Fragment {
 
                 } else if (selectedRadioButtonId == -1) {
 
-                    Toast.makeText(getContext(), "Please select RadioButton", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Select Payment Option", Toast.LENGTH_SHORT).show();
 
                 }else{
 
@@ -840,8 +843,8 @@ public class CheckOut_Fragment extends Fragment {
         //  EditText edit_state = dialog.findViewById(R.id.edit_state);
         EditText edit_Address1 = dialog.findViewById(R.id.edit_Address1);
         EditText edit_Address2 = dialog.findViewById(R.id.edit_Address2);
-        TextView homeAddress = dialog.findViewById(R.id.homeAddress);
-        TextView schoolAddress = dialog.findViewById(R.id.schoolAddress);
+        //TextView homeAddress = dialog.findViewById(R.id.homeAddress);
+        //TextView schoolAddress = dialog.findViewById(R.id.schoolAddress);
         Button btn_Save = dialog.findViewById(R.id.btn_Save);
         Button btn_cancle = dialog.findViewById(R.id.btn_cancle);
 
@@ -859,12 +862,12 @@ public class CheckOut_Fragment extends Fragment {
         getCity();
        // getState();
 
-        homeAddress.setBackgroundResource(R.drawable.backgroundcolor);
-        schoolAddress.setBackgroundResource(R.drawable.textfieldback);
+       // homeAddress.setBackgroundResource(R.drawable.backgroundcolor);
+       // schoolAddress.setBackgroundResource(R.drawable.textfieldback);
 
         addressInsertMessage = "homeAddress";
 
-        homeAddress.setOnClickListener(new View.OnClickListener() {
+       /* homeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -895,7 +898,7 @@ public class CheckOut_Fragment extends Fragment {
                 spinner_Pincode.setVisibility(View.GONE);
                // spinner_State.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         btn_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -909,47 +912,51 @@ public class CheckOut_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (addressInsertMessage.equals("homeAddress")) {
+                if (edit_firstname.getText().toString().trim().equals("")) {
 
-                    if (edit_firstname.getText().toString().trim().equals("")) {
+                    edit_firstname.setError("Please Enter Name");
 
-                        edit_firstname.setError("Please Enter Name");
+                } else if (TextUtils.isEmpty(edit_LastName.getText())) {
 
-                    } else if (TextUtils.isEmpty(edit_LastName.getText())) {
+                    edit_LastName.setError("Please Enter Email");
 
-                        edit_LastName.setError("Please Enter Email");
+                } else if (TextUtils.isEmpty(edit_EmailId.getText())) {
 
-                    } else if (TextUtils.isEmpty(edit_EmailId.getText())) {
+                    edit_EmailId.setError("Please Enter Email");
 
-                        edit_EmailId.setError("Please Enter Email");
+                }else if (!isValidEmail(edit_EmailId.getText().toString().trim())) {
 
-                    } else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() == 10) {
+                    edit_EmailId.setError("Enter Valide Email id");
 
-                        edit_MobileNo.setError("Please Enter MobileNumber");
+                } else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() != 10) {
 
-                    } else if (TextUtils.isEmpty(edit_Address1.getText())) {
+                    edit_MobileNo.setError("Please Enter MobileNumber");
 
-                        edit_Address1.setError("Please Enter Address");
+                } else if (TextUtils.isEmpty(edit_Address1.getText())) {
 
-                    } else if (TextUtils.isEmpty(edit_Address2.getText())) {
+                    edit_Address1.setError("Please Enter Address");
 
-                        edit_Address2.setError("Please Enter Address");
+                } else if (TextUtils.isEmpty(edit_Address2.getText())) {
 
-                    } else {
+                    edit_Address2.setError("Please Enter Address");
 
-                        str_FirstName = edit_firstname.getText().toString().trim();
-                        str_LastName = edit_LastName.getText().toString().trim();
-                        str_Email = edit_EmailId.getText().toString().trim();
-                        str_MobileNo = edit_MobileNo.getText().toString().trim();
-                        //str_state = edit_state.getText().toString().trim();
-                        str_Address1 = edit_Address1.getText().toString().trim();
-                        str_Address2 = edit_Address2.getText().toString().trim();
-                        str_PinCodeId = pincodeId;
-                        str_CityId = city_Id;
+                } else {
 
-                        addAddress_Save(userid, str_FirstName, str_LastName, str_Address1, str_Address2, str_CityId, state_Name,
-                                str_PinCodeId, str_Email, str_MobileNo, "1", schoolId);
-                    }
+                    str_FirstName = edit_firstname.getText().toString().trim();
+                    str_LastName = edit_LastName.getText().toString().trim();
+                    str_Email = edit_EmailId.getText().toString().trim();
+                    str_MobileNo = edit_MobileNo.getText().toString().trim();
+                    //str_state = edit_state.getText().toString().trim();
+                    str_Address1 = edit_Address1.getText().toString().trim();
+                    str_Address2 = edit_Address2.getText().toString().trim();
+                    str_PinCodeId = pincodeId;
+                    str_CityId = city_Id;
+
+                    addAddress_Save(userid, str_FirstName, str_LastName, str_Address1, str_Address2, str_CityId, state_Name,
+                            str_PinCodeId, str_Email, str_MobileNo, "1", schoolId);
+                }
+
+               /* if (addressInsertMessage.equals("homeAddress")) {
 
                 } else {
 
@@ -986,7 +993,7 @@ public class CheckOut_Fragment extends Fragment {
 
                     }
 
-                }
+                }*/
 
             }
         });
@@ -1428,5 +1435,20 @@ public class CheckOut_Fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
 
+    }
+
+    public boolean isValidEmail(final String email) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        //final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
+
+        pattern = Patterns.EMAIL_ADDRESS;
+        matcher = pattern.matcher(email);
+
+        return matcher.matches();
+
+        //return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

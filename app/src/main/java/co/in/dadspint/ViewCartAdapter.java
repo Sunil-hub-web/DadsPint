@@ -37,7 +37,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
 
     ArrayList<ViewCartModel> viewCartModelArray;
     Context context;
-    double Total,price,quantity,salesPrice;
+    double Total,price,quantity,salesPrice,priceDet,d_Totalprice,d_Totalprice1,d_Totalprice2;
     String userId,productid,quenty,quantity12,price12,price_total;
     int count_value;
     SessionManager sessionManager;
@@ -56,6 +56,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
         return new ViewModel(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewCartAdapter.ViewModel holder, @SuppressLint("RecyclerView") int position) {
 
@@ -82,8 +83,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
         String price1 = viewcart.getProduct_price();
         String quantity1 = viewcart.getQuantity();
 
-        price = Double.valueOf(price1);
-        quantity = Double.valueOf(quantity1);
+        price = Double.parseDouble(price1);
+        quantity = Double.parseDouble(quantity1);
 
         Total = price * quantity;
 
@@ -94,30 +95,45 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
             @Override
             public void onClick(View v) {
 
-                holder.linearLayout(false);
-
                 quantity12 = holder.tv_count1.getText().toString().trim();
-                count_value = Integer.valueOf(holder.tv_count1.getText().toString());
-                price12 = viewcart.getProduct_price();
-                productid = viewcart.getProduct_id();
 
-                addToCart(userId,productid,quantity12,"",price12);
+                if (quantity12.equals("1")){}else{
 
-                price = Double.valueOf(price1);
-                quantity = Double.valueOf(quantity12);
+                    holder.linearLayout(false);
+                    quantity12 = holder.tv_count1.getText().toString().trim();
 
-                Total = price * quantity;
+                    count_value = Integer.parseInt(quantity12);
+                    price12 = viewcart.getProduct_price();
+                    productid = viewcart.getProduct_id();
 
-                price_total = String.valueOf(Total);
-                holder.totalPrice.setText(price_total);
+                    price = Double.parseDouble(price1);
+                    quantity = Double.parseDouble(quantity12);
 
-                String carttotal = CartFragment.text_totalPrice.getText().toString();
-                salesPrice = Double.valueOf(carttotal);
-                double priceDet = salesPrice - price;
-                String strpriceDet = String.valueOf(priceDet);
-                CartFragment.text_totalPrice.setText(strpriceDet);
-                CartFragment.text_subTotalPrice.setText(strpriceDet);
+                    Total = price * quantity;
 
+                    price_total = String.valueOf(Total);
+                    holder.totalPrice.setText(price_total);
+
+                    String carttotal = CartFragment.text_totalPrice.getText().toString();
+                    salesPrice = Double.parseDouble(carttotal);
+                    priceDet = salesPrice - price;
+                    String strpriceDet = String.valueOf(priceDet);
+                    CartFragment.text_totalPrice.setText(strpriceDet);
+                    CartFragment.text_subTotalPrice.setText(strpriceDet);
+
+                    addToCart(userId,productid,quantity12,"",price12);
+
+                    quantity12 = "";
+                    count_value = 0;
+                    price12 = "";
+                    productid = "";
+                    price = 0.0;
+                    quantity = 0.0;
+                    Total = 0.0;
+                    salesPrice = 0.0;
+                    priceDet = 0.0;
+                }
+                
             }
         });
 
@@ -128,14 +144,12 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
                 holder.linearLayout(true);
 
                 quantity12 = holder.tv_count1.getText().toString().trim();
-                count_value = Integer.valueOf(holder.tv_count1.getText().toString());
+                count_value = Integer.parseInt(quantity12);
                 price12 = viewcart.getProduct_price();
                 productid = viewcart.getProduct_id();
 
-                addToCart(userId,productid,quantity12,"",price12);
-
-                price = Double.valueOf(price1);
-                quantity = Double.valueOf(quantity12);
+                price = Double.parseDouble(price1);
+                quantity = Double.parseDouble(quantity12);
 
                 Total = price * quantity;
 
@@ -143,30 +157,41 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
                 holder.totalPrice.setText(price_total);
 
                 String carttotal = CartFragment.text_totalPrice.getText().toString();
-                salesPrice = Double.valueOf(carttotal);
-                double priceDet = salesPrice + price;
+                salesPrice = Double.parseDouble(carttotal);
+                priceDet = salesPrice + price;
                 String strpriceDet = String.valueOf(priceDet);
                 CartFragment.text_totalPrice.setText(strpriceDet);
                 CartFragment.text_subTotalPrice.setText(strpriceDet);
+
+                addToCart(userId,productid,quantity12,"",price12);
+
+                quantity12 = "";
+                count_value = 0;
+                price12 = "";
+                productid = "";
+                price = 0.0;
+                quantity = 0.0;
+                Total = 0.0;
+                salesPrice = 0.0;
+                priceDet = 0.0;
 
             }
         });
 
         holder.img_Delete.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View v) {
 
                 String cartId = viewcart.getCart_id();
-                removeCart(cartId);
-
 
                 String strTotalprice = holder.totalPrice.getText().toString().trim();
                 String strTotalprice1 = CartFragment.text_totalPrice.getText().toString().trim();
 
-                double d_Totalprice = Double.valueOf(strTotalprice);
-                double d_Totalprice1 = Double.valueOf(strTotalprice1);
+                d_Totalprice = Double.parseDouble(strTotalprice);
+                d_Totalprice1 = Double.parseDouble(strTotalprice1);
 
-                double d_Totalprice2 = d_Totalprice1 - d_Totalprice;
+                d_Totalprice2 = d_Totalprice1 - d_Totalprice;
 
                 String strTotalprice2 = String.valueOf(d_Totalprice2);
                 CartFragment.text_totalPrice.setText(strTotalprice2);
@@ -174,6 +199,13 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
 
                 viewCartModelArray.remove(position);
                 notifyDataSetChanged();
+
+                removeCart(cartId);
+
+                d_Totalprice = 0.0;
+                d_Totalprice1 = 0.0;
+                d_Totalprice2 = 0.0;
+
             }
         });
 
