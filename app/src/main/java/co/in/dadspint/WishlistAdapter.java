@@ -30,7 +30,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import co.in.dadspint.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,39 +39,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccessoriesAdapter.ViewHolder> {
+public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
 
-    ArrayList<ProductDataModel> productDataModel;
     Context context;
-    SessionManager sessionManager;
-    String userId,productid,quenty,quantity,price,quantity1;
+    ArrayList<WishlistModel> wishlistModels;
+    String quantity,userId,productid,quenty,price;
     int count_value;
-    public SchoolAccessoriesAdapter(ArrayList<ProductDataModel> productDataModel2, FragmentActivity activity) {
+    SessionManager sessionManager;
+    public WishlistAdapter(ArrayList<WishlistModel> wishlistModels, FragmentActivity activity) {
 
-        this.productDataModel = productDataModel2;
+        this.wishlistModels = wishlistModels;
         this.context = activity;
+
     }
 
     @NonNull
     @Override
-    public SchoolAccessoriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public WishlistAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.schooluniformpage,parent,false);
-        return new SchoolAccessoriesAdapter.ViewHolder(view);
+        View view = inflater.inflate(R.layout.schooluniformpage, parent, false);
+        return new WishlistAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SchoolAccessoriesAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WishlistAdapter.ViewHolder holder, int position) {
 
         sessionManager = new SessionManager(context);
         userId = sessionManager.getUSERID();
 
-        ProductDataModel product = productDataModel.get(position);
+        WishlistModel product = wishlistModels.get(position);
 
         holder.uniform_name1.setText(product.product_name);
-        holder.restt_price1.setText("Rs. "+product.sales_price);
-        holder.restt_price2.setText("Rs. "+product.regular_price);
+        holder.restt_price1.setText("Rs. " + product.sales_price);
+        holder.restt_price2.setText("Rs. " + product.regular_price);
 
         String str_sales_price = String.valueOf(product.sales_price);
         String str_regular_price = String.valueOf(product.regular_price);
@@ -100,72 +99,71 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
 
         holder.restt_price2.setPaintFlags(holder.restt_price2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        String imageUrl = "https://dadspint.com/uploads/"+product.getPrimary_image();
-        Glide.with(context).load(imageUrl).into(holder.imag_uniform);
-
-        if (product.getProdType().equals("0")){
+        if (product.getProduct_type().equals("0")) {
 
             holder.addtext1.setText("Add To cart");
 
-        }else {
+        } else {
 
             holder.addtext1.setText("Select Product");
         }
+
+        String imageUrl = "https://dadspint.com/uploads/" + product.getPrimary_image();
+        Glide.with(context).load(imageUrl).into(holder.imag_uniform);
 
         holder.relImageClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-           /*     if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
+             /*   if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
 
                     Toast.makeText(context, "Varition Not Found", Toast.LENGTH_SHORT).show();
 
                 } else {*/
 
-                    SingleProductFragment singleProductFragment = new SingleProductFragment();
-                    Bundle args = new Bundle();
-                    args.putString("productId", product.getProduct_id());
-                    args.putString("productName", product.getProduct_name());
-                    singleProductFragment.setArguments(args);
-                    FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                SingleProductFragment singleProductFragment = new SingleProductFragment();
+                Bundle args = new Bundle();
+                args.putString("productId", product.getProduct_id());
+                args.putString("productName", product.getProduct_name());
+                singleProductFragment.setArguments(args);
+                FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
+                transaction.addToBackStack(null);
+                transaction.commit();
 
-                 /*   Intent intent = new Intent(context, SingleProductDesc.class);
+                /*    Intent intent = new Intent(context, SingleProductDesc.class);
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
-                //}
-
+                // }
             }
         });
 
         holder.imag_uniform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-                if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
+
+              /*  if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
 
                     Toast.makeText(context, "Varition Not Found", Toast.LENGTH_SHORT).show();
 
                 } else {*/
 
-                    SingleProductFragment singleProductFragment = new SingleProductFragment();
-                    Bundle args = new Bundle();
-                    args.putString("productId", product.getProduct_id());
-                    args.putString("productName", product.getProduct_name());
-                    singleProductFragment.setArguments(args);
-                    FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-              /*      Intent intent = new Intent(context, SingleProductDesc.class);
+                SingleProductFragment singleProductFragment = new SingleProductFragment();
+                Bundle args = new Bundle();
+                args.putString("productId", product.getProduct_id());
+                args.putString("productName", product.getProduct_name());
+                singleProductFragment.setArguments(args);
+                FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
+                transaction.addToBackStack(null);
+                transaction.commit();
+/*
+                    Intent intent = new Intent(context, SingleProductDesc.class);
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
-               // }
+                // }
             }
         });
 
@@ -180,7 +178,6 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                 price = product.getSales_price();
 
                 addToCart(userId,productid,quantity,"",price);
-
             }
         });
 
@@ -203,9 +200,7 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
             @Override
             public void onClick(View v) {
 
-                holder.tv_count.setText("1");
-
-                if (product.getProdType().equals("0")) {
+                if (product.getProduct_type().equals("0")) {
 
                     holder.lin_addCart.setVisibility(View.GONE);
                     holder.lin_add_cart.setVisibility(View.VISIBLE);
@@ -230,7 +225,7 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                     transaction.addToBackStack(null);
                     transaction.commit();
 
-                 /*   Intent intent = new Intent(context, SingleProductDesc.class);
+                /*    Intent intent = new Intent(context, SingleProductDesc.class);
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
@@ -240,30 +235,25 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
             }
         });
 
-        holder.img_wishlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                addWishList(userId,product.getProduct_id());
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return productDataModel.size();
+
+        return wishlistModels.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imag_uniform,img_wishlist;
-        TextView uniform_name1,restt_price1,restt_price2,tv_minus,tv_count,tv_plus,addtext1,tv_count1,parcentage;
-        LinearLayout lin_addCart,lin_add_cart;
-        RelativeLayout relImageClick,addlay1;
+        ImageView imag_uniform;
+        TextView uniform_name1, restt_price1, restt_price2, tv_minus, tv_count, tv_plus, addtext1,parcentage;
+        LinearLayout lin_addCart, lin_add_cart;
+        RelativeLayout relImageClick, addlay1;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            addlay1 = itemView.findViewById(R.id.addlay1);
             addtext1 = itemView.findViewById(R.id.addtext1);
             tv_minus = itemView.findViewById(R.id.tv_minus);
             tv_count = itemView.findViewById(R.id.tv_count1);
@@ -272,11 +262,11 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
             lin_add_cart = itemView.findViewById(R.id.lin_add_cart);
             uniform_name1 = itemView.findViewById(R.id.uniform_name1);
             restt_price1 = itemView.findViewById(R.id.restt_price1);
+            parcentage = itemView.findViewById(R.id.parcentage);
             restt_price2 = itemView.findViewById(R.id.restt_price2);
             imag_uniform = itemView.findViewById(R.id.imag_uniform);
             relImageClick = itemView.findViewById(R.id.relImageClick);
-            parcentage = itemView.findViewById(R.id.parcentage);
-            img_wishlist = itemView.findViewById(R.id.img_wishlist);
+            addlay1 = itemView.findViewById(R.id.addlay1);
         }
 
         private void linearLayout(Boolean x) {
@@ -353,69 +343,5 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
 
-    }
-
-    public void addWishList(String userId,String product_id){
-
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Add To Cart Details....");
-        progressDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.PostWishlist, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                progressDialog.dismiss();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String status = jsonObject.getString("status");
-                    String error = jsonObject.getString("error");
-                    String messages = jsonObject.getString("messages");
-
-                    if (status.equals("200")){
-
-                        JSONObject jsonObject_message = new JSONObject(messages);
-                        String responsecode = jsonObject_message.getString("responsecode");
-                        String status_message = jsonObject_message.getString("status");
-
-                        Toast.makeText(context, status_message, Toast.LENGTH_SHORT).show();
-
-                    }else{
-
-                        JSONObject jsonObject_message = new JSONObject(messages);
-                        String responsecode = jsonObject_message.getString("responsecode");
-                        String status_message = jsonObject_message.getString("status");
-
-                        Toast.makeText(context, status_message, Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                progressDialog.dismiss();
-                Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
-            }
-        }){
-
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String,String> params = new HashMap<>();
-                params.put("product_id",product_id);
-                params.put("cust_id",userId);
-                return params;
-            }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(stringRequest);
     }
 }

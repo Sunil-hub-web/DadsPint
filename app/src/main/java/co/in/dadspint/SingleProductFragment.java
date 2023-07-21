@@ -58,7 +58,7 @@ public class SingleProductFragment extends Fragment {
     RecyclerView recyclerAttribute;
     AttributeVaritionAdapter attributeVaritionAdapter;
     SessionManager sessionManager;
-    ImageView backimage;
+    ImageView backimage,img_wishlist;
     ArrayList<String> str_singleProductVariations = new ArrayList<>();
     HashMap<String,String> hash_singleProductVariations = new HashMap<>();
     int count_value;
@@ -86,6 +86,7 @@ public class SingleProductFragment extends Fragment {
       //  lin_ByNow = view.findViewById(R.id.lin_ByNow);
        // backimage = view.findViewById(R.id.backimage);
         dots_container = view.findViewById(R.id.dots_container);
+        img_wishlist = view.findViewById(R.id.img_wishlist);
 
         productId = getArguments().getString("productId");
         product_Name = getArguments().getString("productName");
@@ -238,6 +239,13 @@ public class SingleProductFragment extends Fragment {
                 DeshBoardActivity.image_search.setVisibility(View.GONE);
             }
         });*/
+        img_wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addWishList(userId,productId);
+            }
+        });
 
         return view;
     }
@@ -568,5 +576,67 @@ public class SingleProductFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
 
+    }
+    public void addWishList(String userId,String ProductId){
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Add To Cart Details....");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.PostWishlist, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+                    String error = jsonObject.getString("error");
+                    String messages = jsonObject.getString("messages");
+
+                    if (status.equals("200")){
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(getContext(), status_message, Toast.LENGTH_SHORT).show();
+
+                    }else{
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(getContext(), status_message, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), ""+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new HashMap<>();
+                params.put("cust_id",userId);
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
     }
 }

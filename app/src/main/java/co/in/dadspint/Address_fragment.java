@@ -46,11 +46,11 @@ public class Address_fragment extends Fragment {
 
     RecyclerView addressRecyclerView;
     Dialog dialog;
-    Spinner spinner_City, spinner_Pincode, spinner_State, spinner_School;
+    Spinner spinner_City, spinner_Pincode, spinner_State;
     MaterialButton btn_addAddress;
 
     String str_FirstName, str_LastName, str_Email, str_MobileNo, str_CityId, str_state, str_Address1, str_Address2,
-            str_PinCodeId, userId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId, schoolName,
+            str_PinCodeId, userId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId ="", schoolName,
             Name, Email, MobileNo, City, Area, Address, PinCode, addressId, city_id, state_id, state_name, addressInsertMessage;
 
     ArrayList<CityModelClass> arrayListCity = new ArrayList<>();
@@ -283,7 +283,7 @@ public class Address_fragment extends Fragment {
                                     city_Name = mystate.getCity_name();
                                     Log.d("R_Pincode", city_Id);
                                     getPinCode(city_Id);
-                                    getSchool(city_Id);
+                                    //getSchool(city_Id);
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -536,13 +536,13 @@ public class Address_fragment extends Fragment {
                         SchoolSpinearAdapter adapter = new SchoolSpinearAdapter(getContext(), android.R.layout.simple_spinner_item
                                 , arrayListSchool);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner_School.setAdapter(adapter);
+                        //spinner_School.setAdapter(adapter);
 
                         Log.d("citylist", arrayListCity.toString());
 
-                        spinner_School.setSelection(-1, true);
+                      //  spinner_School.setSelection(-1, true);
 
-                        spinner_School.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                       /* spinner_School.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                                 try {
@@ -565,7 +565,7 @@ public class Address_fragment extends Fragment {
                             public void onNothingSelected(AdapterView<?> parent) {
 
                             }
-                        });
+                        });*/
 
                     } else {
 
@@ -638,7 +638,7 @@ public class Address_fragment extends Fragment {
         spinner_City = dialog.findViewById(R.id.spinner_City);
         spinner_Pincode = dialog.findViewById(R.id.spinner_Pincode);
        // spinner_State = dialog.findViewById(R.id.spinner_State);
-        spinner_School = dialog.findViewById(R.id.spinner_School);
+    //    spinner_School = dialog.findViewById(R.id.spinner_School);
 
         EditText edit_firstname = dialog.findViewById(R.id.edit_firstname);
         EditText edit_LastName = dialog.findViewById(R.id.edit_LastName);
@@ -907,7 +907,6 @@ public class Address_fragment extends Fragment {
                 params.put("school_id", schoolId);
 
                 Log.d("addressparameterlist",params.toString());
-
 
                 return params;
 

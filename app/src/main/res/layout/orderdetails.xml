@@ -84,6 +84,8 @@
 
             </LinearLayout>
 
+
+
         </LinearLayout>
 
         <RelativeLayout
@@ -114,15 +116,39 @@
                 android:textStyle="bold"></TextView>
 
             <TextView
+                android:id="@+id/btn_statues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/priceSymbol5"
+                android:textColor="@color/bluedrack"
+                android:text="Order Delivired"
+                android:layout_marginTop="@dimen/five"
+                android:textSize="@dimen/textsize"
+                android:textStyle="bold"></TextView>
+
+            <TextView
                 android:id="@+id/btn_ViewOrderDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View Details."
-                android:layout_below="@+id/priceSymbol5"
+                android:layout_below="@+id/btn_statues"
+                android:textColor="@color/bluedrack"
+                android:layout_marginTop="@dimen/five"
+                android:textSize="@dimen/textsize"
+                android:textStyle="bold"></TextView>
+
+           <!-- <TextView
+                android:id="@+id/btn_Statues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Details."
+                android:layout_below="@+id/btn_ViewOrderDetails"
                 android:textColor="@color/bluedrack"
                 android:layout_marginTop="@dimen/fifteen"
                 android:textSize="@dimen/textsize"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"></TextView>-->
+
+
 
             <!--<View
                 android:id="@+id/view"

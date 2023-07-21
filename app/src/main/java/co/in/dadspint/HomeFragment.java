@@ -138,8 +138,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        getHomeDetails("78");
-        sessionManager.setUSERID("78");
+        sessionManager.setUSERID(userId);
+        getHomeDetails(userId);
 
         return view;
     }

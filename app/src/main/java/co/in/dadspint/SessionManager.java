@@ -18,12 +18,25 @@ public class SessionManager {
     private static final String IS_LOGINOTP="isloginotp";
     private static final String IS_USEREMAIL="isuseremail";
     private static final String IS_lOGGEDIN="isLoggedIn";
+    private static final String WALLET_AMOUNT = "walletamount";
 
     public SessionManager(Context context) {
 
         this.context = context;
         sharedprefernce = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = sharedprefernce.edit();
+    }
+
+    public void setWalletAmount(Float walletAmount){
+
+        editor.putFloat(WALLET_AMOUNT,walletAmount);
+        editor.commit();
+
+    }
+
+    public Float getWalletAmount(){
+
+        return  sharedprefernce.getFloat(WALLET_AMOUNT,0);
     }
 
     public void setUSERID(String id){

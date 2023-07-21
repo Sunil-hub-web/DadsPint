@@ -115,7 +115,7 @@
                 android:spinnerMode="dropdown"
                 android:background="@drawable/textfieldback"/>
 
-            <Spinner
+           <!-- <Spinner
                 android:id="@+id/spinner_School"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/forty_five"
@@ -123,7 +123,7 @@
                 android:padding="@dimen/five"
                 android:spinnerMode="dropdown"
                 android:background="@drawable/textfieldback"
-                />
+                />-->
 
            <!-- <EditText
                 android:id="@+id/edit_state"

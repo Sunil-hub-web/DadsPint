@@ -23,7 +23,7 @@
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/fifteen"
             android:layout_marginBottom="@dimen/fifteen"
-            android:layout_toLeftOf="@+id/btn_Delete"
+            android:layout_toLeftOf="@+id/btn_Edit"
             android:textColor="@color/black"
             android:textSize="@dimen/textsize"></TextView>
 
@@ -50,6 +50,18 @@
             android:layout_marginRight="@dimen/ten"
             android:layout_marginBottom="@dimen/seven"
             android:src="@drawable/delete_button"></ImageView>
+
+        <ImageView
+            android:id="@+id/btn_Edit"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_toLeftOf="@+id/btn_Delete"
+            android:layout_marginStart="@dimen/seven"
+            android:layout_marginTop="@dimen/seven"
+            android:layout_marginEnd="@dimen/seven"
+            android:layout_marginRight="@dimen/ten"
+            android:layout_marginBottom="@dimen/seven"
+            android:src="@drawable/edit"></ImageView>
 
         <!-- <TextView
              android:id="@+id/addressId"

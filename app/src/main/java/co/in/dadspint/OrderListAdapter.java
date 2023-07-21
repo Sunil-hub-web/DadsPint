@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,6 +72,27 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.text_orderId.setText(listModel.getOrder_id());
         holder.text_OrderDate.setText(listModel.getOrder_date());
         holder.totalPrice.setText(listModel.getTotal_price());
+
+        if (listModel.getStatus().equals("5")){
+
+            holder.btn_statues.setText("Order Delivired");
+            holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+
+        } else if (listModel.getStatus().equals("0")) {
+
+            holder.btn_statues.setText("New Order");
+            holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.blue600));
+
+        }else if (listModel.getStatus().equals("3")) {
+
+            holder.btn_statues.setText("Cancled Order");
+            holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.red));
+
+        }else{
+
+            holder.btn_statues.setText("Exchange Order");
+            holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.red));
+        }
 
         holder.btn_ViewOrderDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +271,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView text_orderId, text_OrderDate, totalPrice, btn_ViewOrderDetails;
+        TextView text_orderId, text_OrderDate, totalPrice, btn_ViewOrderDetails,btn_statues;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -258,6 +280,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             text_OrderDate = itemView.findViewById(R.id.text_OrderDate);
             totalPrice = itemView.findViewById(R.id.totalPrice);
             btn_ViewOrderDetails = itemView.findViewById(R.id.btn_ViewOrderDetails);
+            btn_statues = itemView.findViewById(R.id.btn_statues);
         }
     }
 

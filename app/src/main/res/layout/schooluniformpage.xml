@@ -52,6 +52,20 @@
 
                 </TextView>
 
+                <ImageView
+                    android:id="@+id/img_wishlist"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="@dimen/three"
+                    android:layout_marginTop="@dimen/three"
+                    android:layout_marginEnd="@dimen/three"
+                    android:layout_marginBottom="@dimen/three"
+                    android:src="@drawable/wishlist">
+
+
+                </ImageView>
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -168,7 +182,7 @@
                         android:visibility="gone">
 
                         <TextView
-                            android:id="@+id/tv_minus1"
+                            android:id="@+id/tv_minus"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"

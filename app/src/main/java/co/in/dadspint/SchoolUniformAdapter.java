@@ -74,16 +74,29 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
         holder.restt_price1.setText("Rs. " + product.sales_price);
         holder.restt_price2.setText("Rs. " + product.regular_price);
 
-        Double price1 = Double.valueOf(product.regular_price);
-        Double price2 = Double.valueOf(product.sales_price);
-        Double price3 = price1 - price2;
-        Double price6 = price3 / price1;
-        Log.d("pricedetails",price1+"-"+price2+"/"+price1+"="+price6);
-        Double price4 = price6 * 100;
-        DecimalFormat df = new DecimalFormat("#.00");
-        String price5 = df.format(price4);
+        String str_sales_price = String.valueOf(product.sales_price);
+        String str_regular_price = String.valueOf(product.regular_price);
 
-        holder.parcentage.setText(price5+" %");
+        if (!str_sales_price.equals("null")){
+
+            if (!str_regular_price.equals("null")){
+
+                Double price1 = Double.valueOf(product.regular_price);
+                Double price2 = Double.valueOf(product.sales_price);
+                Double price3 = price1 - price2;
+                Double price6 = price3 / price1;
+                Log.d("pricedetails",price1+"-"+price2+"/"+price1+"="+price6);
+                Double price4 = price6 * 100;
+                DecimalFormat df = new DecimalFormat("#.00");
+                String price5 = df.format(price4);
+
+                holder.parcentage.setText(price5+" %");
+
+            }else{
+
+                holder.parcentage.setText("0"+" %");
+            }
+        }
 
         holder.restt_price2.setPaintFlags(holder.restt_price2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
@@ -155,8 +168,6 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
             }
         });
 
-
-
         holder.tv_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,6 +236,14 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
             }
         });
 
+        holder.img_wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addWishList(userId,product.getProduct_id());
+            }
+        });
+
 
     }
 
@@ -235,7 +254,7 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imag_uniform;
+        ImageView imag_uniform,img_wishlist;
         TextView uniform_name1, restt_price1, restt_price2, tv_minus, tv_count, tv_plus, addtext1,parcentage;
         LinearLayout lin_addCart, lin_add_cart;
         RelativeLayout relImageClick, addlay1;
@@ -244,7 +263,7 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
             super(itemView);
 
             addtext1 = itemView.findViewById(R.id.addtext1);
-            tv_minus = itemView.findViewById(R.id.tv_minus1);
+            tv_minus = itemView.findViewById(R.id.tv_minus);
             tv_count = itemView.findViewById(R.id.tv_count1);
             tv_plus = itemView.findViewById(R.id.tv_plus);
             lin_addCart = itemView.findViewById(R.id.lin_addCart);
@@ -256,6 +275,7 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
             imag_uniform = itemView.findViewById(R.id.imag_uniform);
             relImageClick = itemView.findViewById(R.id.relImageClick);
             addlay1 = itemView.findViewById(R.id.addlay1);
+            img_wishlist = itemView.findViewById(R.id.img_wishlist);
         }
 
         private void linearLayout(Boolean x) {
@@ -331,6 +351,69 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
 
+    }
+
+    public void addWishList(String userId,String ProductId){
+
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Add To Cart Details....");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.PostWishlist, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+                    String error = jsonObject.getString("error");
+                    String messages = jsonObject.getString("messages");
+
+                    if (status.equals("200")){
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(context, status_message, Toast.LENGTH_SHORT).show();
+
+                    }else{
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(context, status_message, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressDialog.dismiss();
+                Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new HashMap<>();
+                params.put("cust_id",userId);
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
     }
 }
 
