@@ -82,6 +82,21 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
         holder.text_orderStatus.setText("Status :" + productdet.getStatus());
         String imageUrl = "https://dadspint.com/uploads/" + productdet.getImg();
         Glide.with(context).load(imageUrl).into(holder.productImage);
+
+        if (productdet.getStatus().equals("0")){
+
+            holder.btn_cancelOrder.setText("Cancel");
+
+        } else if (productdet.getStatus().equals("5")) {
+
+            holder.btn_cancelOrder.setText("Exchange");
+
+        }else if (productdet.getStatus().equals("3")) {
+
+            holder.btn_cancelOrder.setText("Cancel");
+
+        }
+
         /*str_quantity = productdet.getProductQuantity();
         str_productPrice = productdet.getProductPrice();
 
@@ -97,7 +112,16 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
             @Override
             public void onClick(View v) {
 
-                ordercancle_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id());
+                if (holder.btn_cancelOrder.getText().toString().trim().equals("Cancel")){
+
+                    ordercancle_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id());
+
+                }else{
+
+                    orderExchange_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id());
+                }
+
+
             }
         });
 
@@ -199,13 +223,57 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
 
     }
-
     public void ordercancle_Dialog(String cust_id, String order_id, String orders_id) {
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.productcancel_layout);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        EditText description = dialog.findViewById(R.id.description);
+        Button btn_Submit = dialog.findViewById(R.id.btn_Submit);
+        Button btn_Close = dialog.findViewById(R.id.btn_Close);
+
+        btn_Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (description.getText().toString().trim().equals("")){
+
+                    String strmessage = "";
+                    productCancle(cust_id,order_id,orders_id,strmessage);
+
+                }else{
+
+                    String strmessage = description.getText().toString().trim();
+                    productCancle(cust_id,order_id,orders_id,strmessage);
+                }
+            }
+        });
+
+        btn_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+    public void orderExchange_Dialog(String cust_id, String order_id, String orders_id) {
+
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.exchangepoduct);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;

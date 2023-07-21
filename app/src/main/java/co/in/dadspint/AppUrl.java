@@ -28,6 +28,12 @@ public class AppUrl {
     public static final String apply_coupon = baseUrl1+"apply_coupon";
     public static final String getsubcatagory = baseUrl1+"getsubcatagory";
     public static final String cancelorder = baseUrl1+"cancelorder";
+    public static final String GetWishlist = baseUrl1+"GetWishlist";
+    public static final String PostWishlist = baseUrl1+"PostWishlist";
+    public static final String Editaddress = baseUrl1+"Editaddress";
+    public static final String searchproduct = baseUrl1+"searchproduct";
+    public static final String walletdtls = baseUrl1+"walletdtls";
+
 
 
 

@@ -75,6 +75,19 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal"></LinearLayout>
 
+                <ImageView
+                    android:id="@+id/img_wishlist"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="@dimen/three"
+                    android:layout_marginTop="@dimen/three"
+                    android:layout_marginEnd="@dimen/three"
+                    android:layout_marginBottom="@dimen/three"
+                    android:src="@drawable/wishlist">
+
+                </ImageView>
+
             </RelativeLayout>
 
             <TextView

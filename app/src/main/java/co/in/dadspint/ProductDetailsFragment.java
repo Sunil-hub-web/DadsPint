@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import co.in.dadspint.R;
 
 import org.json.JSONArray;
@@ -51,14 +52,14 @@ public class ProductDetailsFragment extends Fragment {
     SchoolUniformAdapter schoolUniformAdapter;
     SchoolAccessoriesAdapter schoolAccessoriesAdapter;
     FilterProductAdapter filterProductAdapter;
-     GridLayoutManager gridLayoutManager, gridLayoutManager1;
-   // LinearLayoutManager gridLayoutManager, gridLayoutManager1;
-   Dialog dialog;
-   Spinner spinner_City,spinner_Class,spinner_School;
+    GridLayoutManager gridLayoutManager, gridLayoutManager1;
+    // LinearLayoutManager gridLayoutManager, gridLayoutManager1;
+    Dialog dialog;
+    Spinner spinner_City, spinner_Class, spinner_School;
     ArrayList<CityModelClass> arrayListCity = new ArrayList<>();
     ArrayList<SchoolModelClass> arrayListSchool = new ArrayList<SchoolModelClass>();
     ArrayList<ClassModelClass> arrayListClass = new ArrayList<ClassModelClass>();
-    String city_Id = "",city_Name = "",schoolId = "",schoolName = "",class_Id = "",class_Name = "",userId,SchoolAccessories;
+    String city_Id = "", city_Name = "", schoolId = "", schoolName = "", class_Id = "", class_Name = "", userId, SchoolAccessories;
     SessionManager sessionManager;
 
     @Nullable
@@ -67,7 +68,7 @@ public class ProductDetailsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.productdetails_fragment,container,false);
+        View view = inflater.inflate(R.layout.productdetails_fragment, container, false);
 
         productDetailsRecycler = view.findViewById(R.id.productDetailsRecycler);
         filterOption = view.findViewById(R.id.filterOption);
@@ -76,7 +77,7 @@ public class ProductDetailsFragment extends Fragment {
 
         SchoolAccessories = getArguments().getString("YourKey");
 
-        if (SchoolAccessories.equals("SchoolAccessories")){
+        if (SchoolAccessories.equals("SchoolAccessories")) {
 
             filterOption.setVisibility(View.GONE);
         }
@@ -116,7 +117,7 @@ public class ProductDetailsFragment extends Fragment {
         return view;
     }
 
-    public void getall_product(String user_id){
+    public void getall_product(String user_id) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Get Product Details....");
@@ -132,73 +133,89 @@ public class ProductDetailsFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.getString("status");
 
-                    String error = jsonObject.getString("error");
-                    String messages = jsonObject.getString("messages");
-                    JSONObject jsonObject_message = new JSONObject(messages);
-                    String responsecode = jsonObject_message.getString("responsecode");
-                    String statusArray = jsonObject_message.getString("status");
+                    if (status.equals("200")) {
 
-                    JSONObject jsonstatues = new JSONObject(statusArray);
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
 
-                    String product_data = jsonstatues.getString("product_data");
+                        if (responsecode.equals("00")) {
 
-                    JSONArray jsonArray_product = new JSONArray(product_data);
+                            JSONObject jsonstatues = new JSONObject(statusArray);
 
-                    for (int i = 0; i < jsonArray_product.length(); i++) {
+                            String product_data = jsonstatues.getString("product_data");
 
-                        JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
+                            JSONArray jsonArray_product = new JSONArray(product_data);
 
-                        String product_id = jsonObject_product.getString("product_id");
-                        String product_name = jsonObject_product.getString("product_name");
-                        String primary_image = jsonObject_product.getString("primary_image");
-                        String vendor_id = jsonObject_product.getString("vendor_id");
-                        String trendingg = jsonObject_product.getString("trendingg");
-                        String today_dealing_date_time = jsonObject_product.getString("today_dealing_date_time");
-                        String product_type = jsonObject_product.getString("product_type");
-                        String regular_price = jsonObject_product.getString("regular_price");
-                        String sales_price = jsonObject_product.getString("sales_price");
-                        String stock = jsonObject_product.getString("stock");
-                        String city_name = jsonObject_product.getString("city_name");
-                        String city_id = jsonObject_product.getString("city_id");
-                        String school_id = jsonObject_product.getString("school_id");
-                        String school_name = jsonObject_product.getString("school_name");
-                        String class_id = jsonObject_product.getString("class_id");
-                        String class_name = jsonObject_product.getString("class_name");
-                        String brands_id = jsonObject_product.getString("brands_id");
-                        String brands_name = jsonObject_product.getString("brands_name");
-                        String prodType = jsonObject_product.getString("prodType");
-                        String description = jsonObject_product.getString("description");
+                            for (int i = 0; i < jsonArray_product.length(); i++) {
 
-                        if (product_type.equals("1")) {
+                                JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
 
-                            ProductDataModel product_DataModel1 = new ProductDataModel(
-                                    product_id, product_name, primary_image, vendor_id, trendingg, today_dealing_date_time, product_type, regular_price,
-                                    sales_price, stock, city_name, city_id, school_id, school_name, class_id, class_name, brands_id, brands_name, description,prodType);
+                                String product_id = jsonObject_product.getString("product_id");
+                                String product_name = jsonObject_product.getString("product_name");
+                                String primary_image = jsonObject_product.getString("primary_image");
+                                String vendor_id = jsonObject_product.getString("vendor_id");
+                                String trendingg = jsonObject_product.getString("trendingg");
+                                String today_dealing_date_time = jsonObject_product.getString("today_dealing_date_time");
+                                String product_type = jsonObject_product.getString("product_type");
+                                String regular_price = jsonObject_product.getString("regular_price");
+                                String sales_price = jsonObject_product.getString("sales_price");
+                                String stock = jsonObject_product.getString("stock");
+                                String city_name = jsonObject_product.getString("city_name");
+                                String city_id = jsonObject_product.getString("city_id");
+                                String school_id = jsonObject_product.getString("school_id");
+                                String school_name = jsonObject_product.getString("school_name");
+                                String class_id = jsonObject_product.getString("class_id");
+                                String class_name = jsonObject_product.getString("class_name");
+                                String brands_id = jsonObject_product.getString("brands_id");
+                                String brands_name = jsonObject_product.getString("brands_name");
+                                String prodType = jsonObject_product.getString("prodType");
+                                String description = jsonObject_product.getString("description");
 
-                            productDataModel1.add(product_DataModel1);
+                                if (product_type.equals("1")) {
 
-                        } else {
+                                    ProductDataModel product_DataModel1 = new ProductDataModel(
+                                            product_id, product_name, primary_image, vendor_id, trendingg, today_dealing_date_time, product_type, regular_price,
+                                            sales_price, stock, city_name, city_id, school_id, school_name, class_id, class_name, brands_id, brands_name, description, prodType);
 
-                            ProductDataModel product_DataModel2 = new ProductDataModel(
-                                    product_id, product_name, primary_image, vendor_id, trendingg, today_dealing_date_time, product_type, regular_price,
-                                    sales_price, stock, city_name, city_id, school_id, school_name, class_id, class_name, brands_id, brands_name, description,prodType);
+                                    productDataModel1.add(product_DataModel1);
 
-                            productDataModel2.add(product_DataModel2);
+                                } else {
 
+                                    ProductDataModel product_DataModel2 = new ProductDataModel(
+                                            product_id, product_name, primary_image, vendor_id, trendingg, today_dealing_date_time, product_type, regular_price,
+                                            sales_price, stock, city_name, city_id, school_id, school_name, class_id, class_name, brands_id, brands_name, description, prodType);
+
+                                    productDataModel2.add(product_DataModel2);
+
+                                }
+                            }
+
+                            String value = getArguments().getString("YourKey");
+
+                            if (value.equals("SchoolUniform")) {
+
+                                schoolUniform();
+
+                            } else {
+
+                                schoolAccessories();
+
+                            }
                         }
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
+
+                        Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
                     }
 
-                    String value = getArguments().getString("YourKey");
-
-                    if (value.equals("SchoolUniform")){
-
-                        schoolUniform();
-
-                    }else{
-
-                        schoolAccessories();
-
-                    }
 
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -210,7 +227,7 @@ public class ProductDetailsFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -220,7 +237,7 @@ public class ProductDetailsFragment extends Fragment {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", user_id);
-                Log.d("userId",user_id);
+                Log.d("userId", user_id);
                 return params;
             }
         };
@@ -230,35 +247,38 @@ public class ProductDetailsFragment extends Fragment {
         requestQueue.add(stringRequest);
 
     }
-    public void schoolUniform(){
 
-        if(productDataModel2.size() != 0){
+    public void schoolUniform() {
 
-            schoolUniformAdapter = new SchoolUniformAdapter(productDataModel2,getActivity());
+        if (productDataModel2.size() != 0) {
+
+            schoolUniformAdapter = new SchoolUniformAdapter(productDataModel2, getActivity());
             //gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
             productDetailsRecycler.setLayoutManager(gridLayoutManager);
             productDetailsRecycler.setHasFixedSize(true);
             productDetailsRecycler.setAdapter(schoolUniformAdapter);
-        }else{
+        } else {
             Toast.makeText(getActivity(), "Data Not Found", Toast.LENGTH_SHORT).show();
         }
     }
-    public void schoolAccessories(){
 
-        if (productDataModel1.size() != 0){
+    public void schoolAccessories() {
 
-            schoolAccessoriesAdapter = new SchoolAccessoriesAdapter(productDataModel1,getActivity());
+        if (productDataModel1.size() != 0) {
+
+            schoolAccessoriesAdapter = new SchoolAccessoriesAdapter(productDataModel1, getActivity());
             gridLayoutManager1 = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-           // gridLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);;
+            // gridLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);;
             productDetailsRecycler.setLayoutManager(gridLayoutManager1);
             productDetailsRecycler.setHasFixedSize(true);
             productDetailsRecycler.setAdapter(schoolAccessoriesAdapter);
-        }else{
+        } else {
             Toast.makeText(getActivity(), "Data Not Found", Toast.LENGTH_SHORT).show();
         }
 
     }
+
     public void addFilterDialog() {
 
         dialog = new Dialog(getContext());
@@ -287,7 +307,7 @@ public class ProductDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (city_Id.equals("")){
+                if (city_Id.equals("")) {
 
                     Toast.makeText(getActivity(), "Select City", Toast.LENGTH_SHORT).show();
 
@@ -299,9 +319,9 @@ public class ProductDetailsFragment extends Fragment {
 
                     Toast.makeText(getActivity(), "Select class", Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else {
 
-                    GetFilterProduct(city_Id,schoolId,class_Id);
+                    GetFilterProduct(city_Id, schoolId, class_Id);
                 }
 
             }
@@ -314,6 +334,7 @@ public class ProductDetailsFragment extends Fragment {
 
 
     }
+
     public void getCity() {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -444,6 +465,7 @@ public class ProductDetailsFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
     public void getSchool(String cityId) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -581,7 +603,8 @@ public class ProductDetailsFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
-    public void getClassDet(){
+
+    public void getClassDet() {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Get class Please Wait.....");
@@ -637,7 +660,7 @@ public class ProductDetailsFragment extends Fragment {
 
                                 try {
 
-                                   ClassModelClass mystate = (ClassModelClass) parent.getSelectedItem();
+                                    ClassModelClass mystate = (ClassModelClass) parent.getSelectedItem();
 
                                     class_Id = mystate.getClass_id();
                                     class_Name = mystate.getClass_name();
@@ -708,7 +731,8 @@ public class ProductDetailsFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
-    public void GetFilterProduct(String city, String school, String cClass){
+
+    public void GetFilterProduct(String city, String school, String cClass) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Get Product Details....");
@@ -724,7 +748,7 @@ public class ProductDetailsFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.getString("status");
 
-                    if (status.equals("200")){
+                    if (status.equals("200")) {
 
                         String error = jsonObject.getString("error");
                         String messages = jsonObject.getString("messages");
@@ -738,7 +762,7 @@ public class ProductDetailsFragment extends Fragment {
                         productDataModel2.clear();
                         productDataModel3.clear();
 
-                        if (jsonArray_product.length() != 0){
+                        if (jsonArray_product.length() != 0) {
 
                             dialog.dismiss();
 
@@ -768,28 +792,28 @@ public class ProductDetailsFragment extends Fragment {
                                 String updated_date = jsonObject_product.getString("updated_date");
 
                                 ProductFilterModel productFilterModel = new ProductFilterModel(
-                                        product_id,product_name,product_type,pschool_id,pclass_id,description,brands_id,
-                                        primary_image,vendor_id,pcity_id,trendingg,today_dealing_date_time,regular_price,sales_price,
-                                        stock,category_1,status1,prodType,created_date,updated_date);
+                                        product_id, product_name, product_type, pschool_id, pclass_id, description, brands_id,
+                                        primary_image, vendor_id, pcity_id, trendingg, today_dealing_date_time, regular_price, sales_price,
+                                        stock, category_1, status1, prodType, created_date, updated_date);
 
                                 productDataModel3.add(productFilterModel);
 
                             }
 
 
-                            if(productDataModel3.size() != 0){
+                            if (productDataModel3.size() != 0) {
 
-                                filterProductAdapter = new FilterProductAdapter(productDataModel3,getActivity());
+                                filterProductAdapter = new FilterProductAdapter(productDataModel3, getActivity());
                                 //gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                                 gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
                                 productDetailsRecycler.setLayoutManager(gridLayoutManager);
                                 productDetailsRecycler.setHasFixedSize(true);
                                 productDetailsRecycler.setAdapter(filterProductAdapter);
-                            }else{
+                            } else {
                                 Toast.makeText(getActivity(), "Data Not Found", Toast.LENGTH_SHORT).show();
                             }
 
-                        }else{
+                        } else {
 
                             Toast.makeText(getActivity(), "Product Details Not Found", Toast.LENGTH_SHORT).show();
                         }
@@ -805,7 +829,7 @@ public class ProductDetailsFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -817,6 +841,8 @@ public class ProductDetailsFragment extends Fragment {
                 params.put("city", city);
                 params.put("school", school);
                 params.put("class", cClass);
+
+                Log.d("filterdetails",city+", "+school+", "+cClass+", "+userId);
                 return params;
             }
         };

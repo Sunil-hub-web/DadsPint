@@ -176,18 +176,21 @@
                     android:id="@+id/btn_cancelOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel"
-                    android:textColor="@color/grey_back"
-                    android:textSize="@dimen/twelve"
-                    android:textStyle="bold"
                     android:layout_alignParentRight="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
                     android:background="@drawable/backgroundcolor"
                     android:backgroundTint="@color/error"
                     android:paddingLeft="@dimen/ten"
-                    android:paddingRight="@dimen/ten"
                     android:paddingTop="@dimen/five"
+                    android:paddingRight="@dimen/ten"
                     android:paddingBottom="@dimen/five"
-                    android:layout_margin="@dimen/five"></TextView>
+                    android:text="Cancel"
+                    android:textColor="@color/grey_back"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold"></TextView>
 
             </RelativeLayout>
 

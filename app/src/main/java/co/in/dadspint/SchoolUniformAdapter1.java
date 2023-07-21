@@ -4,10 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,7 +33,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import co.in.dadspint.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,32 +40,36 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccessoriesAdapter.ViewHolder> {
+public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAdapter1.ViewHolder> implements Filterable {
 
     ArrayList<ProductDataModel> productDataModel;
+    ArrayList<ProductDataModel> productDataModelFull;
     Context context;
-    SessionManager sessionManager;
-    String userId,productid,quenty,quantity,price,quantity1;
+    String quantity,userId,productid,quenty,price;
     int count_value;
-    public SchoolAccessoriesAdapter(ArrayList<ProductDataModel> productDataModel2, FragmentActivity activity) {
+    SessionManager sessionManager;
 
-        this.productDataModel = productDataModel2;
+    public SchoolUniformAdapter1(ArrayList<ProductDataModel> productDataModel1, FragmentActivity activity) {
+
+        this.productDataModel = productDataModel1;
         this.context = activity;
+        this.productDataModelFull = new ArrayList<>(productDataModel1);
+      // this.productDataModelFull.addAll(productDataModel1);
     }
 
     @NonNull
     @Override
-    public SchoolAccessoriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public SchoolUniformAdapter1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.schooluniformpage,parent,false);
-        return new SchoolAccessoriesAdapter.ViewHolder(view);
+        View view = inflater.inflate(R.layout.schooluniformpage, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SchoolAccessoriesAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SchoolUniformAdapter1.ViewHolder holder, int position) {
 
         sessionManager = new SessionManager(context);
         userId = sessionManager.getUSERID();
@@ -71,8 +77,8 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
         ProductDataModel product = productDataModel.get(position);
 
         holder.uniform_name1.setText(product.product_name);
-        holder.restt_price1.setText("Rs. "+product.sales_price);
-        holder.restt_price2.setText("Rs. "+product.regular_price);
+        holder.restt_price1.setText("Rs. " + product.sales_price);
+        holder.restt_price2.setText("Rs. " + product.regular_price);
 
         String str_sales_price = String.valueOf(product.sales_price);
         String str_regular_price = String.valueOf(product.regular_price);
@@ -100,72 +106,71 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
 
         holder.restt_price2.setPaintFlags(holder.restt_price2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        String imageUrl = "https://dadspint.com/uploads/"+product.getPrimary_image();
-        Glide.with(context).load(imageUrl).into(holder.imag_uniform);
-
-        if (product.getProdType().equals("0")){
+        if (product.getProdType().equals("0")) {
 
             holder.addtext1.setText("Add To cart");
 
-        }else {
+        } else {
 
             holder.addtext1.setText("Select Product");
         }
+
+        String imageUrl = "https://dadspint.com/uploads/" + product.getPrimary_image();
+        Glide.with(context).load(imageUrl).into(holder.imag_uniform);
 
         holder.relImageClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-           /*     if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
+             /*   if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
 
                     Toast.makeText(context, "Varition Not Found", Toast.LENGTH_SHORT).show();
 
                 } else {*/
 
-                    SingleProductFragment singleProductFragment = new SingleProductFragment();
-                    Bundle args = new Bundle();
-                    args.putString("productId", product.getProduct_id());
-                    args.putString("productName", product.getProduct_name());
-                    singleProductFragment.setArguments(args);
-                    FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                SingleProductFragment singleProductFragment = new SingleProductFragment();
+                Bundle args = new Bundle();
+                args.putString("productId", product.getProduct_id());
+                args.putString("productName", product.getProduct_name());
+                singleProductFragment.setArguments(args);
+                FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
+                transaction.addToBackStack(null);
+                transaction.commit();
 
-                 /*   Intent intent = new Intent(context, SingleProductDesc.class);
+                /*    Intent intent = new Intent(context, SingleProductDesc.class);
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
-                //}
-
+                // }
             }
         });
 
         holder.imag_uniform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-                if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
+
+              /*  if (holder.addtext1.getText().toString().trim().equals("Add To cart")) {
 
                     Toast.makeText(context, "Varition Not Found", Toast.LENGTH_SHORT).show();
 
                 } else {*/
 
-                    SingleProductFragment singleProductFragment = new SingleProductFragment();
-                    Bundle args = new Bundle();
-                    args.putString("productId", product.getProduct_id());
-                    args.putString("productName", product.getProduct_name());
-                    singleProductFragment.setArguments(args);
-                    FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-              /*      Intent intent = new Intent(context, SingleProductDesc.class);
+                SingleProductFragment singleProductFragment = new SingleProductFragment();
+                Bundle args = new Bundle();
+                args.putString("productId", product.getProduct_id());
+                args.putString("productName", product.getProduct_name());
+                singleProductFragment.setArguments(args);
+                FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.framLayout, singleProductFragment); // Add your fragment class
+                transaction.addToBackStack(null);
+                transaction.commit();
+/*
+                    Intent intent = new Intent(context, SingleProductDesc.class);
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
-               // }
+                // }
             }
         });
 
@@ -180,7 +185,6 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                 price = product.getSales_price();
 
                 addToCart(userId,productid,quantity,"",price);
-
             }
         });
 
@@ -202,8 +206,6 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
         holder.lin_addCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                holder.tv_count.setText("1");
 
                 if (product.getProdType().equals("0")) {
 
@@ -230,7 +232,7 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                     transaction.addToBackStack(null);
                     transaction.commit();
 
-                 /*   Intent intent = new Intent(context, SingleProductDesc.class);
+                /*    Intent intent = new Intent(context, SingleProductDesc.class);
                     intent.putExtra("productId", product.getProduct_id());
                     intent.putExtra("productName", product.getProduct_name());
                     context.startActivity(intent);*/
@@ -247,6 +249,8 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                 addWishList(userId,product.getProduct_id());
             }
         });
+
+
     }
 
     @Override
@@ -257,13 +261,13 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imag_uniform,img_wishlist;
-        TextView uniform_name1,restt_price1,restt_price2,tv_minus,tv_count,tv_plus,addtext1,tv_count1,parcentage;
-        LinearLayout lin_addCart,lin_add_cart;
-        RelativeLayout relImageClick,addlay1;
+        TextView uniform_name1, restt_price1, restt_price2, tv_minus, tv_count, tv_plus, addtext1,parcentage;
+        LinearLayout lin_addCart, lin_add_cart;
+        RelativeLayout relImageClick, addlay1;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            addlay1 = itemView.findViewById(R.id.addlay1);
             addtext1 = itemView.findViewById(R.id.addtext1);
             tv_minus = itemView.findViewById(R.id.tv_minus);
             tv_count = itemView.findViewById(R.id.tv_count1);
@@ -272,10 +276,11 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
             lin_add_cart = itemView.findViewById(R.id.lin_add_cart);
             uniform_name1 = itemView.findViewById(R.id.uniform_name1);
             restt_price1 = itemView.findViewById(R.id.restt_price1);
+            parcentage = itemView.findViewById(R.id.parcentage);
             restt_price2 = itemView.findViewById(R.id.restt_price2);
             imag_uniform = itemView.findViewById(R.id.imag_uniform);
             relImageClick = itemView.findViewById(R.id.relImageClick);
-            parcentage = itemView.findViewById(R.id.parcentage);
+            addlay1 = itemView.findViewById(R.id.addlay1);
             img_wishlist = itemView.findViewById(R.id.img_wishlist);
         }
 
@@ -294,7 +299,6 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
             }
         }
     }
-
     public void addToCart(String user_id,String product_id,String qty,String variation_id,String price){
 
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -354,8 +358,7 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
         requestQueue.add(stringRequest);
 
     }
-
-    public void addWishList(String userId,String product_id){
+    public void addWishList(String userId,String ProductId){
 
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Add To Cart Details....");
@@ -409,7 +412,6 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String,String> params = new HashMap<>();
-                params.put("product_id",product_id);
                 params.put("cust_id",userId);
                 return params;
             }
@@ -418,4 +420,61 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter1;
+    }
+    private Filter filter1 = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            Log.d("CharSequence",constraint.toString());
+            List<ProductDataModel> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(productDataModelFull);
+            } else {
+                String filterPattern = constraint.toString().toUpperCase().trim();
+                for (ProductDataModel item : productDataModelFull) {
+                    if (item.getProduct_name().toUpperCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            productDataModel.clear();
+            productDataModel.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    public void filter(CharSequence charSequence){
+
+        ArrayList<ProductDataModel> tempArrayList = new ArrayList<ProductDataModel>();
+
+        if(!TextUtils.isEmpty(charSequence)){
+
+            for(ProductDataModel item : productDataModel){
+
+                if(item.getProduct_name().toUpperCase().contains((charSequence))){
+                    tempArrayList.add(item);
+                }
+            }
+
+        }else{
+
+            productDataModel.addAll(productDataModelFull);
+        }
+
+        productDataModel.clear();
+        productDataModel.addAll(tempArrayList);
+        notifyDataSetChanged();
+        tempArrayList.clear();
+    }
 }
+
+

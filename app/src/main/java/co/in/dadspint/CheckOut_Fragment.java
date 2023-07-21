@@ -60,12 +60,12 @@ public class CheckOut_Fragment extends Fragment {
     OrderSummaryAdapter orderSummaryAdapter;
     SessionManager sessionManager;
     Dialog dialog;
-    Spinner spinner_City, spinner_Pincode, spinner_State, spinner_School;
+    Spinner spinner_City, spinner_Pincode, spinner_State;
     RadioGroup radioGroup;
     RadioButton radio_cashondelivery,selectedRadioButton;
 
     String str_FirstName, str_LastName, str_Email, str_MobileNo, str_CityId, str_state, str_Address1, str_Address2,
-            str_PinCodeId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId, schoolName,userid,
+            str_PinCodeId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId ="", schoolName,userid,
             str_ShowAddress = "",addreessid,str_shipping,Name, Email, MobileNo, City, Area, Address, PinCode, addressId,
             city_id, state_id, state_name, addressInsertMessage,selectPaymentOption;
 
@@ -481,7 +481,7 @@ public class CheckOut_Fragment extends Fragment {
                                     city_Name = mystate.getCity_name();
                                     Log.d("R_Pincode", city_Id);
                                     getPinCode(city_Id);
-                                    getSchool(city_Id);
+                                    //getSchool(city_Id);
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -732,13 +732,13 @@ public class CheckOut_Fragment extends Fragment {
 
                         SchoolSpinearAdapter adapter = new SchoolSpinearAdapter(getContext(), R.layout.spiner_text
                                 , arrayListSchool);
-                        spinner_School.setAdapter(adapter);
+                      //  spinner_School.setAdapter(adapter);
 
                         Log.d("citylist", arrayListCity.toString());
 
-                        spinner_School.setSelection(-1, true);
+                     //   spinner_School.setSelection(-1, true);
 
-                        spinner_School.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        /*schoolIdspinner_School.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                                 try {
@@ -761,7 +761,7 @@ public class CheckOut_Fragment extends Fragment {
                             public void onNothingSelected(AdapterView<?> parent) {
 
                             }
-                        });
+                        });*/
 
                     } else {
 
@@ -834,7 +834,7 @@ public class CheckOut_Fragment extends Fragment {
         spinner_City = dialog.findViewById(R.id.spinner_City);
         spinner_Pincode = dialog.findViewById(R.id.spinner_Pincode);
        // spinner_State = dialog.findViewById(R.id.spinner_State);
-        spinner_School = dialog.findViewById(R.id.spinner_School);
+       // spinner_School = dialog.findViewById(R.id.spinner_School);
 
         EditText edit_firstname = dialog.findViewById(R.id.edit_firstname);
         EditText edit_LastName = dialog.findViewById(R.id.edit_LastName);

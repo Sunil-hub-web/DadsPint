@@ -32,7 +32,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
     ActivityDeshBoardBinding binding;
 
     public static TextView nav_MyOrder, text_name, nav_Profile, nav_MyAddress, nav_Home,
-            nav_Logout, nav_Name, nav_MobileNo, text_ItemCount, nav_ContactUs,
+            nav_Logout, nav_Name, nav_MobileNo, nav_Wallet, nav_ContactUs,
             text_addressName, nav_Categogry;
     public static ImageView backimage, menu, image_search;
     SessionManager sessionManager;
@@ -51,6 +51,8 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         getSupportActionBar().hide();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
         sessionManager = new SessionManager(DeshBoardActivity.this);
 
         text_name = findViewById(R.id.text_AddressName);
@@ -58,6 +60,8 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         menu = findViewById(R.id.menu);
         image_search = findViewById(R.id.image_search);
         realBack = findViewById(R.id.realBack);
+
+        realBack.setVisibility(View.VISIBLE);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         HomeFragment homeFragment = new HomeFragment();
@@ -78,6 +82,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         nav_MyAddress = header.findViewById(R.id.nav_MyAddress);
         nav_MyOrder = header.findViewById(R.id.nav_MyOrder);
         nav_Logout = header.findViewById(R.id.nav_Logout);
+        nav_Wallet = header.findViewById(R.id.nav_Wallet);
 
         nav_Name.setText(sessionManager.getUSERNAME());
         nav_MobileNo.setText("+91 " + sessionManager.getMOBILENO());
@@ -93,6 +98,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 PersonalInformation personalInformation = new PersonalInformation();
                 ft.replace(R.id.framLayout, personalInformation);
+                ft.addToBackStack(null);
                 ft.commit();
 
                 text_name.setTextSize(18);
@@ -137,6 +143,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 HomeFragment homepage = new HomeFragment();
                 ft.replace(R.id.framLayout, homepage, "HomeFragment");
+                ft.addToBackStack(null);
                 ft.commit();
                 text_name.setTextSize(15);
                 text_name.setText("Home Page");
@@ -158,6 +165,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 Address_fragment address_fragment = new Address_fragment();
                 ft.replace(R.id.framLayout, address_fragment);
+                ft.addToBackStack(null);
                 ft.commit();
 
                 text_name.setTextSize(18);
@@ -176,11 +184,30 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 MyOrderDet_Fragment myOrderDet_fragment = new MyOrderDet_Fragment();
                 ft.replace(R.id.framLayout, myOrderDet_fragment);
+                ft.addToBackStack(null);
                 ft.commit();
 
                 text_name.setTextSize(18);
                 text_name.setText("My Order Details");
 
+            }
+        });
+
+        nav_Wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.MyDrawer.closeDrawer(GravityCompat.START);
+                //text_address.setVisibility(View.GONE);
+                //  search.setVisibility(View.GONE);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Wallet_Fragment wallet_fragment = new Wallet_Fragment();
+                ft.replace(R.id.framLayout, wallet_fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                text_name.setTextSize(18);
+                text_name.setText("Wallet");
             }
         });
 
@@ -201,6 +228,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 HomeFragment homepage = new HomeFragment();
                 ft.replace(R.id.framLayout, homepage, "HomeFragment");
+                ft.addToBackStack(null);
                 ft.commit();
                 text_name.setTextSize(15);
                 text_name.setText("Home Page");
@@ -232,7 +260,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                         text_name.setText("PersonalInformation");
                         //text_address.setVisibility(View.GONE);
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment).addToBackStack(null).commit();
 
                         break;
 
@@ -250,7 +278,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                         backimage.setVisibility(View.GONE);
                         image_search.setVisibility(View.VISIBLE);
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment, "HomeFragment").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment, "HomeFragment").addToBackStack(null).commit();
 
                         break;
 
@@ -267,13 +295,26 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                         backimage.setVisibility(View.VISIBLE);
                         image_search.setVisibility(View.GONE);
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment).addToBackStack(null).commit();
 
                         break;
 
-                    /*case R.id.wishlist:
+                    case R.id.wishlist:
 
-                        return true;*/
+                        selectedFragment = new WishlistFragment();
+                        //loc.setVisibility(View.GONE);
+                        //logo.setVisibility(View.GONE);
+                        image_search.setVisibility(View.GONE);
+                        text_name.setTextSize(18);
+                        text_name.setText("Wishlist");
+                        //text_address.setVisibility(View.GONE);
+                        menu.setVisibility(View.GONE);
+                        backimage.setVisibility(View.VISIBLE);
+                        image_search.setVisibility(View.GONE);
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment).addToBackStack(null).commit();
+
+                        break;
 
                 }
                 //getSupportFragmentManager().beginTransaction().replace(R.id.framLayout,selectedFragment).commit();
@@ -298,7 +339,18 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
     public void Serachpage(View view){
 
-        Toast.makeText(this, "Work in Progress", Toast.LENGTH_SHORT).show();
+        binding.MyDrawer.closeDrawer(GravityCompat.START);
+        text_name.setVisibility(View.VISIBLE);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        SerachProductFragment serachProductFragment = new SerachProductFragment();
+        ft.replace(R.id.framLayout, serachProductFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+        text_name.setTextSize(15);
+        text_name.setText("Home Page");
+        menu.setVisibility(View.VISIBLE);
+        backimage.setVisibility(View.GONE);
+        image_search.setVisibility(View.VISIBLE);
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -339,6 +391,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
             getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, new HomeFragment(), "HomeFragment").commit();
             realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+            realBack.setVisibility(View.VISIBLE);
 
         }
     }

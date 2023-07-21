@@ -37,6 +37,8 @@ public class MyOrderDet_Fragment extends Fragment {
     OrderListAdapter orderListAdapter;
     ArrayList<OrderListModel> orderListModels = new ArrayList<>();
     LinearLayoutManager linearLayoutManager;
+    SessionManager sessionManager;
+    String userId;
 
     @Nullable
     @Override
@@ -46,7 +48,9 @@ public class MyOrderDet_Fragment extends Fragment {
 
         View view = inflater.inflate(R.layout.myorderdetails_fragment,container,false);
         myOrderRecyclerView = view.findViewById(R.id.myOrderRecyclerView);
-        orderDetails("78");
+        sessionManager = new SessionManager(getActivity());
+        userId = sessionManager.getUSERID();
+        orderDetails(userId);
         return view;
     }
 
@@ -102,7 +106,7 @@ public class MyOrderDet_Fragment extends Fragment {
 
 
                 } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
 
             }
