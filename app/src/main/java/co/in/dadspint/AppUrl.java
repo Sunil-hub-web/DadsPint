@@ -33,6 +33,8 @@ public class AppUrl {
     public static final String Editaddress = baseUrl1+"Editaddress";
     public static final String searchproduct = baseUrl1+"searchproduct";
     public static final String walletdtls = baseUrl1+"walletdtls";
+    public static final String cart_count = baseUrl1+"cart_count";
+    public static final String cancel_reason = baseUrl1+"cancel_reason";
 
 
 

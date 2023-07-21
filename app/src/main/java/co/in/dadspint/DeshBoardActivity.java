@@ -1,6 +1,7 @@
 package co.in.dadspint;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -9,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -24,8 +28,24 @@ import android.widget.Toast;
 
 import co.in.dadspint.R;
 import co.in.dadspint.databinding.ActivityDeshBoardBinding;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DeshBoardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,8 +57,9 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
     public static ImageView backimage, menu, image_search;
     SessionManager sessionManager;
     public static RelativeLayout realBack;
-
     private Boolean exit = false;
+    String userId;
+    public static BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +72,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         getSupportActionBar().hide();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        bottomNavigation = findViewById(R.id.bottomNavigation);
 
         sessionManager = new SessionManager(DeshBoardActivity.this);
 
@@ -86,6 +107,9 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
         nav_Name.setText(sessionManager.getUSERNAME());
         nav_MobileNo.setText("+91 " + sessionManager.getMOBILENO());
+
+        userId = sessionManager.getUSERID();
+        cart_count(userId);
 
         nav_Profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -324,8 +348,6 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         });
 
     }
-
-
     public void Clickmenu(View view) {
 
         // open drawer
@@ -432,5 +454,98 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         window.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawableResource(R.drawable.homecard_back1);
 
+    }
+
+    public void cart_count(String user_id){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("cart_count");
+                        JSONObject jsonObject_cart_count = new JSONObject(cart_count);
+                        String total_cart = jsonObject_cart_count.getString("total_cart");
+
+                        int int_total_cart = Integer.parseInt(total_cart);
+
+                        BadgeDrawable badge = binding.bottomNavigation.getOrCreateBadge(R.id.cart);//R.id.action_add is menu id
+                        badge.setNumber(int_total_cart);
+                        badge.setBackgroundColor(ContextCompat.getColor(DeshBoardActivity.this,R.color.bluedrack));
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("cart_count");
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(DeshBoardActivity.this, "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+
+                Log.d("addressparameterlist",params.toString());
+
+                return params;
+
+
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(DeshBoardActivity.this);
+        requestQueue.add(stringRequest);
     }
 }

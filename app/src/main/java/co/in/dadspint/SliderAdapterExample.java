@@ -1,12 +1,18 @@
 package co.in.dadspint;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import co.in.dadspint.R;
@@ -62,7 +68,18 @@ public class SliderAdapterExample extends SliderViewAdapter<SliderAdapterExample
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
+
+                Fragment fragment = new ProductDetailsFragment();
+                Bundle args = new Bundle();
+                args.putString("YourKey", "SchoolUniform");
+                fragment.setArguments(args);
+                FragmentTransaction transaction =((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.framLayout, fragment); // Add your fragment class
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                DeshBoardActivity.menu.setVisibility(View.GONE);
+                DeshBoardActivity.backimage.setVisibility(View.VISIBLE);
             }
         });
     }

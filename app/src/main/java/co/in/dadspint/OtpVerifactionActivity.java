@@ -238,7 +238,7 @@ public class OtpVerifactionActivity extends AppCompatActivity {
     public void userLoginPage(String contact) {
 
         ProgressDialog progressDialog = new ProgressDialog(OtpVerifactionActivity.this);
-        progressDialog.setMessage("Login Please Wait.....");
+        progressDialog.setMessage("ReSend OTP Please Wait.....");
         progressDialog.show();
 
 

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+<!--
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,9 +16,9 @@
             android:fontFamily="@font/sans_regular"
             android:text="Sub Catagory"
             android:textColor="@color/black"
-            android:textSize="@dimen/edittextsize" />
+            android:textSize="@dimen/edittextsize" />-->
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/subcategorynotfound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textSize="@dimen/edittextsize"
             android:background="@drawable/textfieldback"
             android:padding="@dimen/ten"
-            android:layout_gravity="center" />
+            android:layout_gravity="center" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

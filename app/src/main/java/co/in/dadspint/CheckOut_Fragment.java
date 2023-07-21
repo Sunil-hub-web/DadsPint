@@ -930,7 +930,7 @@ public class CheckOut_Fragment extends Fragment {
 
                 } else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() != 10) {
 
-                    edit_MobileNo.setError("Please Enter MobileNumber");
+                    edit_MobileNo.setError("Provide 10 digit valid mobile number");
 
                 } else if (TextUtils.isEmpty(edit_Address1.getText())) {
 

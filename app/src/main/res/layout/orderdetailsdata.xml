@@ -17,8 +17,11 @@
             android:id="@+id/productImage"
             android:layout_width="@dimen/ninety"
             android:layout_height="@dimen/hundred"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
             android:scaleType="fitXY"
-            android:layout_margin="@dimen/five"
             android:src="@drawable/save"></ImageView>
 
         <TextView
@@ -194,9 +197,47 @@
 
             </RelativeLayout>
 
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/productImage"
+            android:id="@+id/lin_cancleResion"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/text_demo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ten"
+                android:text="Cancel Reason"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/twelve"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/text_cancleResion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_demo"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:ellipsize="end"
+                android:hint="Show Cancel Reason"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="#34565C"
+                android:textSize="@dimen/twelve"
+                android:textStyle="bold"></TextView>
 
         </LinearLayout>
+
+
 
     </RelativeLayout>
 

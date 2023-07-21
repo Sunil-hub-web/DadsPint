@@ -2,6 +2,7 @@ package co.in.dadspint;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PersonalInformation extends Fragment {
 
@@ -57,6 +60,8 @@ public class PersonalInformation extends Fragment {
 
         getUserProfile(userId);
 
+        btn_Update.setVisibility(View.GONE);
+
         text_editOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +75,9 @@ public class PersonalInformation extends Fragment {
 
                 edit_EmailId.requestFocus();
                 edit_EmailId.setEnabled(true);
+
+                btn_Update.setVisibility(View.VISIBLE);
+                text_editOption.setVisibility(View.GONE);
 
             }
         });
@@ -89,6 +97,10 @@ public class PersonalInformation extends Fragment {
                 }else if(edit_EmailId.getText().toString().trim().equals("")){
 
                     Toast.makeText(getActivity(), "Enter Your Email Id", Toast.LENGTH_SHORT).show();
+
+                } else if (!isValidEmail(edit_EmailId.getText().toString().trim())) {
+
+                    edit_EmailId.setError("Enter Valide Email id");
 
                 }else{
 
@@ -238,6 +250,9 @@ public class PersonalInformation extends Fragment {
 
                         Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
 
+                        btn_Update.setVisibility(View.GONE);
+                        text_editOption.setVisibility(View.VISIBLE);
+
                     }else{
 
                         String error = jsonObject.getString("error");
@@ -304,6 +319,20 @@ public class PersonalInformation extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
 
+    }
 
+    public boolean isValidEmail(final String email) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        //final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
+
+        pattern = Patterns.EMAIL_ADDRESS;
+        matcher = pattern.matcher(email);
+
+        return matcher.matches();
+
+        //return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

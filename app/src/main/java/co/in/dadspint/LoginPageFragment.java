@@ -3,6 +3,7 @@ package co.in.dadspint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,11 @@ public class LoginPageFragment extends Fragment {
 
                     Toast.makeText(getActivity(), "Enter MobileNo", Toast.LENGTH_SHORT).show();
 
-                } else if (edit_MobileNo.getText().toString().trim().length() == 10) {
+                }else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() != 10) {
+
+                    edit_MobileNo.setError("Provide 10 digit valid mobile number");
+
+                }  else if (edit_MobileNo.getText().toString().trim().length() == 10) {
 
                     String mobileNo = edit_MobileNo.getText().toString().trim();
 

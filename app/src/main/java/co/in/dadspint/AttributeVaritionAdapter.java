@@ -100,7 +100,6 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
 
         holder.tv_variationName.setSelection(-1, true);
 
-
        // holder.tv_variationName.setSelection(0,false);
 
         holder.tv_variationName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

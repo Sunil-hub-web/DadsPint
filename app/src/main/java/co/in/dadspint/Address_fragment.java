@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Address_fragment extends Fragment {
 
@@ -270,7 +273,10 @@ public class Address_fragment extends Fragment {
 
                         Log.d("citylist", arrayListCity.toString());
 
-                        spinner_City.setSelection(-1, true);
+                        spinner_City.setSelection(-1, false);
+
+//                        int initialSelectedPosition = spinner_City.getSelectedItemPosition();
+//                        spinner_City.setSelection(initialSelectedPosition, false); //clear selection
 
                         spinner_City.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -400,7 +406,10 @@ public class Address_fragment extends Fragment {
 
                         Log.d("citylist", arrayListCity.toString());
 
-                        spinner_City.setSelection(-1, true);
+                        spinner_City.setSelection(-1, false);
+
+//                        int initialSelectedPosition=spinner_Pincode.getSelectedItemPosition();
+//                        spinner_Pincode.setSelection(initialSelectedPosition, false); //clear selection
 
                         spinner_Pincode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -540,7 +549,7 @@ public class Address_fragment extends Fragment {
 
                         Log.d("citylist", arrayListCity.toString());
 
-                      //  spinner_School.setSelection(-1, true);
+                       // spinner_School.setSelection(-1, true);
 
                        /* spinner_School.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -722,15 +731,19 @@ public class Address_fragment extends Fragment {
 
                 } else if (TextUtils.isEmpty(edit_LastName.getText())) {
 
-                    edit_LastName.setError("Please Enter Email");
+                    edit_LastName.setError("Please Enter LastName");
 
                 } else if (TextUtils.isEmpty(edit_EmailId.getText())) {
 
                     edit_EmailId.setError("Please Enter Email");
 
-                } else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() == 10) {
+                } else if (!isValidEmail(edit_EmailId.getText().toString().trim())) {
 
-                    edit_MobileNo.setError("Please Enter MobileNumber");
+                    edit_EmailId.setError("Enter Valide Email id");
+
+                }else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() != 10) {
+
+                    edit_MobileNo.setError("Provide 10 digit valid mobile number");
 
                 } else if (TextUtils.isEmpty(edit_Address1.getText())) {
 
@@ -1046,6 +1059,21 @@ public class Address_fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
 
+    }
+
+    public boolean isValidEmail(final String email) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        //final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
+
+        pattern = Patterns.EMAIL_ADDRESS;
+        matcher = pattern.matcher(email);
+
+        return matcher.matches();
+
+        //return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
 }

@@ -3,11 +3,11 @@ package co.in.dadspint;
 public class OrderDetails_Model {
 
     String orders_id,productname,variation_id,qty,img,price,shipping_charge,order_id,payment_mode,status,
-            created_date,user_id;
+            created_date,user_id,cancel_status;
 
     public OrderDetails_Model(String orders_id, String productname, String variation_id, String qty, String img,
                               String price, String shipping_charge, String order_id, String payment_mode,
-                              String status,String created_date,String user_id) {
+                              String status,String created_date,String user_id,String cancel_status) {
         this.orders_id = orders_id;
         this.productname = productname;
         this.variation_id = variation_id;
@@ -20,6 +20,7 @@ public class OrderDetails_Model {
         this.status = status;
         this.created_date = created_date;
         this.user_id = user_id;
+        this.cancel_status = cancel_status;
     }
 
     public String getOrders_id() {
@@ -116,5 +117,13 @@ public class OrderDetails_Model {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getCancel_status() {
+        return cancel_status;
+    }
+
+    public void setCancel_status(String cancel_status) {
+        this.cancel_status = cancel_status;
     }
 }

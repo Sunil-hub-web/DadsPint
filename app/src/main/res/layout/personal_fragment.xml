@@ -22,7 +22,8 @@
                 android:text="Edit"
                 android:textSize="@dimen/twenty_size"
                 android:layout_gravity="right"
-                android:layout_margin="@dimen/twenty">
+                android:layout_margin="@dimen/twenty"
+                android:textStyle="bold">
 
             </TextView>
 
@@ -70,7 +71,8 @@
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/edittextsize"
                     android:textColor="#4C92D8"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:maxLength="10"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

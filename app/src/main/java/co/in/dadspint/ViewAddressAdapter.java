@@ -180,7 +180,7 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            btn_Delete = itemView.findViewById(R.id.btn_Delete);
+            //btn_Delete = itemView.findViewById(R.id.btn_Delete);
             addressdetails = itemView.findViewById(R.id.addressdetails);
             shoppingCharges = itemView.findViewById(R.id.shoppingCharges);
             // btn_SelectAddress = itemView.findViewById(R.id.btn_SelectAddress);

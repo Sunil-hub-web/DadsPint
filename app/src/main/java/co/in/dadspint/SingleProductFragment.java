@@ -31,6 +31,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.badge.BadgeDrawable;
+
 import co.in.dadspint.R;
 
 import org.json.JSONArray;
@@ -543,6 +545,8 @@ public class SingleProductFragment extends Fragment {
 
                         lin_addCart.setVisibility(View.GONE);
                         lin_add_cart.setVisibility(View.VISIBLE);
+
+                        cart_count(userId);
                     }
 
                 } catch (JSONException e) {
@@ -637,6 +641,99 @@ public class SingleProductFragment extends Fragment {
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    public void cart_count(String user_id){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("cart_count");
+                        JSONObject jsonObject_cart_count = new JSONObject(cart_count);
+                        String total_cart = jsonObject_cart_count.getString("total_cart");
+
+                        int int_total_cart = Integer.parseInt(total_cart);
+
+                        BadgeDrawable badge = DeshBoardActivity.bottomNavigation.getOrCreateBadge(R.id.cart);//R.id.action_add is menu id
+                        badge.setNumber(int_total_cart);
+                        badge.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.bluedrack));
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("cart_count");
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText( getActivity(), "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+
+                Log.d("addressparameterlist",params.toString());
+
+                return params;
+
+
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
 }

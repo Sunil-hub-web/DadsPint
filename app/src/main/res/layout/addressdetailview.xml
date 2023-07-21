@@ -39,7 +39,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/textsize"></TextView>
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/btn_Delete"
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
@@ -49,13 +49,13 @@
             android:layout_marginEnd="@dimen/seven"
             android:layout_marginRight="@dimen/ten"
             android:layout_marginBottom="@dimen/seven"
-            android:src="@drawable/delete_button"></ImageView>
+            android:src="@drawable/delete_button"></ImageView>-->
 
         <ImageView
             android:id="@+id/btn_Edit"
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
-            android:layout_toLeftOf="@+id/btn_Delete"
+            android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/seven"
             android:layout_marginTop="@dimen/seven"
             android:layout_marginEnd="@dimen/seven"

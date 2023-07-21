@@ -158,9 +158,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                                             String status1 = jsonObject_datalist.getString("status");
                                             String created_date = jsonObject_datalist.getString("created_date");
                                             String user_id = jsonObject_datalist.getString("user_id");
+                                            String cancel_status = jsonObject_datalist.getString("cancel_status");
+
 
                                             OrderDetails_Model details_model = new OrderDetails_Model(
-                                                    orders_id,productname,variation_id,qty,img,price,shipping_charge,order_id,payment_mode,status1,created_date,user_id
+                                                    orders_id,productname,variation_id,qty,img,price,shipping_charge,order_id,payment_mode,status1,
+                                                    created_date,user_id,cancel_status
                                             );
 
                                             orderDetails_models.add(details_model);

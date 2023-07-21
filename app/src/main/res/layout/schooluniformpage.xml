@@ -48,7 +48,8 @@
                     android:background="@drawable/add_bg"
                     android:padding="@dimen/three"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/twelve">
+                    android:textSize="@dimen/twelve"
+                    >
 
                 </TextView>
 

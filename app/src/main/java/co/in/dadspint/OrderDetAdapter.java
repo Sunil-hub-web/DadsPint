@@ -3,6 +3,7 @@ package co.in.dadspint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -29,8 +32,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import co.in.dadspint.R;
+
+import com.google.android.material.badge.BadgeDrawable;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +49,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
     Context context;
     ArrayList<OrderDetails_Model> product;
     Dialog dialog;
+    String reason = "";
 
     public OrderDetAdapter(ArrayList<OrderDetails_Model> product, Context context) {
 
@@ -97,6 +104,105 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
         }
 
+        String cancel_status = String.valueOf(productdet.getCancel_status());
+
+        if (cancel_status.equals("canceled")){
+
+           // cancel_reason(productdet.orders_id);
+            holder.lin_cancleResion.setVisibility(View.VISIBLE);
+            holder.btn_cancelOrder.setText("Canceled");
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cancel_reason, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String status = jsonObject.getString("status");
+
+                        if (status.equals("200")) {
+
+                            String error = jsonObject.getString("error");
+                            String messages = jsonObject.getString("messages");
+                            JSONObject jsonObject_message = new JSONObject(messages);
+                            String responsecode = jsonObject_message.getString("responsecode");
+                            String cancel_reason = jsonObject_message.getString("cancel_reason");
+                            JSONArray jsonObject_cart_count = new JSONArray(cancel_reason);
+                            for (int i=0;i<jsonObject_cart_count.length();i++){
+
+                                JSONObject jsonObject1 = jsonObject_cart_count.getJSONObject(0);
+                                reason = jsonObject1.getString("reason");
+                                holder.text_cancleResion.setText(reason);
+                            }
+
+                        } else {
+
+                            String error = jsonObject.getString("error");
+                            String messages = jsonObject.getString("messages");
+                            JSONObject jsonObject_message = new JSONObject(messages);
+                            String responsecode = jsonObject_message.getString("responsecode");
+                            String cancel_reason = jsonObject_message.getString("cancel_reason");
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Toast.makeText( context, "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+                }
+            }) {
+
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String, String> params = new HashMap<>();
+                    params.put("orders_id",productdet.orders_id);
+
+                    Log.d("addressparameterlist",params.toString());
+
+                    return params;
+
+
+                }
+            };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            requestQueue.add(stringRequest);
+
+
+        }
+
         /*str_quantity = productdet.getProductQuantity();
         str_productPrice = productdet.getProductPrice();
 
@@ -121,7 +227,6 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
                     orderExchange_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id());
                 }
 
-
             }
         });
 
@@ -134,8 +239,10 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView text_orderId, text_orderDate, text_orderStatus, totalunit, totalPrice, text_ProdectName, btn_cancelOrder;
+        TextView text_orderId, text_orderDate, text_orderStatus, totalunit, totalPrice, text_ProdectName,
+                btn_cancelOrder,text_cancleResion;
         ImageView productImage;
+        LinearLayout lin_cancleResion;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -148,6 +255,8 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
             productImage = itemView.findViewById(R.id.productImage);
             text_ProdectName = itemView.findViewById(R.id.text_ProdectName);
             btn_cancelOrder = itemView.findViewById(R.id.btn_cancelOrder);
+            lin_cancleResion = itemView.findViewById(R.id.lin_cancleResion);
+            text_cancleResion = itemView.findViewById(R.id.text_cancleResion);
 
         }
     }
@@ -180,6 +289,8 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
                         Toast.makeText(context, statusArray, Toast.LENGTH_SHORT).show();
 
+                        dialog.dismiss();
+
                     } else {
 
                         String error = jsonObject.getString("error");
@@ -189,6 +300,8 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
                         String statusArray = jsonObject_message.getString("status");
 
                         Toast.makeText(context, statusArray, Toast.LENGTH_SHORT).show();
+
+                        dialog.dismiss();
                     }
 
                 } catch (JSONException e) {
@@ -312,6 +425,95 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
         });
 
         dialog.show();
+    }
+    public void cancel_reason(String orders_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cancel_reason, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cancel_reason = jsonObject_message.getString("cancel_reason");
+                        JSONArray jsonObject_cart_count = new JSONArray(cancel_reason);
+                        for (int i=0;i<jsonObject_cart_count.length();i++){
+
+                            JSONObject jsonObject1 = jsonObject_cart_count.getJSONObject(0);
+                            reason = jsonObject1.getString("reason");
+                        }
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cancel_reason = jsonObject_message.getString("cancel_reason");
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText( context, "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("orders_id", orders_id);
+
+                Log.d("addressparameterlist",params.toString());
+
+                return params;
+
+
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
     }
 
 }

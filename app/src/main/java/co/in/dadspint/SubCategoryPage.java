@@ -47,7 +47,7 @@ public class SubCategoryPage extends Fragment {
     ArrayList<ProductDataModel> productDataModel2 = new ArrayList<>();
     SchoolUniformAdapter schoolUniformAdapter;
     SchoolAccessoriesAdapter schoolAccessoriesAdapter;
-    TextView subcategorynotfound;
+  //  TextView subcategorynotfound;
     LinearLayout cartempty;
 
     @Nullable
@@ -60,13 +60,13 @@ public class SubCategoryPage extends Fragment {
 
         subcategoryRecycler = view.findViewById(R.id.subcategoryRecycler);
         productlistRecycler = view.findViewById(R.id.productlistRecycler);
-        subcategorynotfound = view.findViewById(R.id.subcategorynotfound);
+     //   subcategorynotfound = view.findViewById(R.id.subcategorynotfound);
         cartempty = view.findViewById(R.id.cartempty);
 
         categoryID = getArguments().getString("categoryID");
         categoryName = getArguments().getString("categoryName");
 
-        subcategorynotfound.setVisibility(View.GONE);
+     //   subcategorynotfound.setVisibility(View.GONE);
 
         Log.d("categoryiddada",categoryID);
 
@@ -145,12 +145,12 @@ public class SubCategoryPage extends Fragment {
                                 subcategoryRecycler.setHasFixedSize(true);
                                 subcategoryRecycler.setAdapter(categoryListAdapter);
 
-                                subcategorynotfound.setVisibility(View.GONE);
+                               // subcategorynotfound.setVisibility(View.GONE);
 
                             }else {
 
                                 Toast.makeText(getActivity(),"Category Not Found",Toast.LENGTH_SHORT).show();
-                                subcategorynotfound.setVisibility(View.VISIBLE);
+                               // subcategorynotfound.setVisibility(View.VISIBLE);
                             }
 
 
