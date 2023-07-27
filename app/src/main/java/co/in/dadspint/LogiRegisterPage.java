@@ -15,7 +15,6 @@ import co.in.dadspint.databinding.ActivityLogiRegisterPageBinding;
 public class LogiRegisterPage extends AppCompatActivity {
 
     ActivityLogiRegisterPageBinding binding;
-
     private UiModeManager uiModeManager;
     LoginPageFragment test;
     SessionManager sessionManager;
