@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment {
     public void getHomeDetails(String user_id) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Get Home Details....");
+        progressDialog.setMessage("Loading....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.user_home, new Response.Listener<String>() {

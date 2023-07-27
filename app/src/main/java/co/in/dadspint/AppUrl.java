@@ -35,6 +35,10 @@ public class AppUrl {
     public static final String walletdtls = baseUrl1+"walletdtls";
     public static final String cart_count = baseUrl1+"cart_count";
     public static final String cancel_reason = baseUrl1+"cancel_reason";
+    public static final String cms = baseUrl1+"cms";
+    public static final String forgetpassword = baseUrl1+"forgetpassword";
+    public static final String Loginauth = baseUrl1+"Loginauth";
+    public static final String Insertregister = baseUrl1+"Insertregister";
 
 
 

@@ -1371,7 +1371,7 @@ public class CheckOut_Fragment extends Fragment {
     public void applyCouponCode(String userid, String couponcode){
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Apply Coupon Wait...");
+        progressDialog.setMessage("Applying coupon please wait");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.apply_coupon, new Response.Listener<String>() {

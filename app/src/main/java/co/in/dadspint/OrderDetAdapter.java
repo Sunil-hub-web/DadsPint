@@ -264,7 +264,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
     public void productCancle(String cust_id, String order_id, String orders_id, String message) {
 
         ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("order Cancel Please Wait.....");
+        progressDialog.setMessage("Cancelling your order please wait");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cancelorder, new Response.Listener<String>() {

@@ -2,19 +2,23 @@ package co.in.dadspint;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -32,7 +36,8 @@ public class OtpVerifactionActivity extends AppCompatActivity {
 
     OtpverifactionFragmentBinding binding;
     SessionManager sessionManager;
-    String mobileNo;
+    String mobileNo,emailId,message,fullname,mail,contact,password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +53,22 @@ public class OtpVerifactionActivity extends AppCompatActivity {
         sessionManager = new SessionManager(OtpVerifactionActivity.this);
 
         mobileNo = sessionManager.getMOBILENO();
+        emailId = sessionManager.getUSEREMAIL();
 
-        binding.mobileNumber.setText("+91" + "  " + mobileNo);
+        message = getIntent().getStringExtra("message");
+        fullname = getIntent().getStringExtra("fullname");
+        mail = getIntent().getStringExtra("mail");
+        contact = getIntent().getStringExtra("contact");
+        password = getIntent().getStringExtra("password");
+
+        if (message.equals("Register")){
+
+            binding.mobileNumber.setText(emailId);
+
+        }else{
+
+            binding.mobileNumber.setText("+91" + "  " + mobileNo);
+        }
 
         binding.btnVerifayOtp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,15 +76,29 @@ public class OtpVerifactionActivity extends AppCompatActivity {
 
                 if (binding.otpView.getOTP().equals("")) {
 
-                    Toast.makeText(OtpVerifactionActivity.this, "Enter Your Otp", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtpVerifactionActivity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
 
                 } else {
 
                     String otp = binding.otpView.getOTP();
 
-                    Toast.makeText(OtpVerifactionActivity.this, otp, Toast.LENGTH_SHORT).show();
+                    if (message.equals("Register")){
 
-                    otpVerifaction(mobileNo, otp);
+                        if (otp.equals(sessionManager.getLOGINOTP())){
+
+                            userRegisterPage(fullname,contact,mail,password);
+
+                        }else{
+
+                            Toast.makeText(OtpVerifactionActivity.this, "Otp is invalide", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+
+                        Toast.makeText(OtpVerifactionActivity.this, otp, Toast.LENGTH_SHORT).show();
+                        otpVerifaction(mobileNo, otp);
+                    }
+
+
                 }
             }
         });
@@ -74,14 +107,20 @@ public class OtpVerifactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(mobileNo.length() != 0){
-
-                    userLoginPage(mobileNo);
-
+                if (message.equals("Register")){
                 }else{
 
-                    Toast.makeText(OtpVerifactionActivity.this, "Mobile No not provide", Toast.LENGTH_SHORT).show();
+                    if(mobileNo.length() != 0){
+
+                        userLoginPage(mobileNo);
+
+                    }else{
+
+                        Toast.makeText(OtpVerifactionActivity.this, "Mobile No not provide", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
+
             }
         });
 
@@ -109,7 +148,7 @@ public class OtpVerifactionActivity extends AppCompatActivity {
 
                     if (status.equals("200")) {
 
-                        Toast.makeText(OtpVerifactionActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(OtpVerifactionActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
                         String error = jsonObject.getString("error");
                         String messages = jsonObject.getString("messages");
@@ -336,5 +375,93 @@ public class OtpVerifactionActivity extends AppCompatActivity {
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(OtpVerifactionActivity.this);
         requestQueue.add(stringRequest);
+    }
+    public void userRegisterPage(String fullname, String contact, String mail, String password) {
+
+        ProgressDialog progressDialog = new ProgressDialog(OtpVerifactionActivity.this);
+        progressDialog.setMessage("Register please wait");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.Insertregister, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.hide();
+
+                try {
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    progressDialog.dismiss();
+
+                    if (status.equals("200")) {
+
+                        // Toast.makeText(OtpVerifactionActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
+
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        LoginPageFragment loginPageFragment = new LoginPageFragment();
+                        ft.replace(R.id.fram, loginPageFragment, "loginpage");
+                        ft.addToBackStack(null);
+                        ft.commit();
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
+
+                        Toast.makeText(OtpVerifactionActivity.this, statusArray, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressDialog.hide();
+                Log.d("error_response", error.toString());
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(OtpVerifactionActivity.this, "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(OtpVerifactionActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+
+                params.put("fullname", fullname);
+                params.put("email", mail);
+                params.put("contactno", contact);
+                params.put("password", password);
+
+                Log.d("paramsforhomeapi", "" + params);
+
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new
+                DefaultRetryPolicy(30000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(OtpVerifactionActivity.this);
+        requestQueue.getCache().clear();
+        requestQueue.add(stringRequest);
+
     }
 }

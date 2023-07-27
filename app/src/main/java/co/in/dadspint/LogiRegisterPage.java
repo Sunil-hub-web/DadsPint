@@ -1,11 +1,13 @@
 package co.in.dadspint;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.UiModeManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import co.in.dadspint.R;
 import co.in.dadspint.databinding.ActivityLogiRegisterPageBinding;
@@ -68,7 +70,35 @@ public class LogiRegisterPage extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
         startActivity(intent);*/
 
-        this.finish();
-        System.exit(0);
+        Fragment currentFragment = null;
+        try {
+            currentFragment = getSupportFragmentManager().findFragmentById(R.id.fram);
+            Log.d("BackPressedFragment", currentFragment.toString());
+        } catch (Exception e) {
+            Log.d("BackPressedFragment", e.toString());
+        }
+
+        if (currentFragment instanceof LoginPageFragment) {
+
+            this.finish();
+            System.exit(0);
+
+        } else if (currentFragment instanceof RegisterFragment) {
+
+           startActivity(new Intent(getApplicationContext(),LogiRegisterPage.class));
+
+        } else if (currentFragment instanceof ForgotPasswordFragment) {
+
+            startActivity(new Intent(getApplicationContext(),LogiRegisterPage.class));
+
+        } else if (currentFragment instanceof TermsConditionsFragment) {
+
+            startActivity(new Intent(getApplicationContext(),LogiRegisterPage.class));
+
+        }else{
+
+            this.finish();
+            System.exit(0);
+        }
     }
 }

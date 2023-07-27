@@ -60,7 +60,7 @@ public class WishlistFragment extends Fragment {
     public void getall_product(String user_id) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Get Product Details....");
+        progressDialog.setMessage("Product Details....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.GetWishlist, new Response.Listener<String>() {

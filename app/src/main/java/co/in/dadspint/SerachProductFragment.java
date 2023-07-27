@@ -78,7 +78,7 @@ public class SerachProductFragment extends Fragment {
     public void getall_product() {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Get Product Details....");
+        progressDialog.setMessage("Product Details....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.searchproduct, new Response.Listener<String>() {

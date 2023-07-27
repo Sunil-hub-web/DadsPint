@@ -238,7 +238,7 @@ public class AttributeVaritionAdapter extends RecyclerView.Adapter<AttributeVari
     public void getvaritionPrice(String product_id,String variation){
 
         ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Get price Details....");
+        progressDialog.setMessage("price Details....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.variation_price, new Response.Listener<String>() {

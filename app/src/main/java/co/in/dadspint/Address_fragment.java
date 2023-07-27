@@ -224,7 +224,7 @@ public class Address_fragment extends Fragment {
     public void getCity() {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Get City Please Wait.....");
+        progressDialog.setMessage("Show City Wait.....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.GetCity, new Response.Listener<String>() {

@@ -52,8 +52,8 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
     ActivityDeshBoardBinding binding;
 
     public static TextView nav_MyOrder, text_name, nav_Profile, nav_MyAddress, nav_Home,
-            nav_Logout, nav_Name, nav_MobileNo, nav_Wallet, nav_ContactUs,
-            text_addressName, nav_Categogry;
+            nav_Logout, nav_Name, nav_MobileNo, nav_Wallet, nav_ContactUs,nav_PrivacyPolicy,nav_TermsConditions;
+
     public static ImageView backimage, menu, image_search;
     SessionManager sessionManager;
     public static RelativeLayout realBack;
@@ -104,6 +104,9 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         nav_MyOrder = header.findViewById(R.id.nav_MyOrder);
         nav_Logout = header.findViewById(R.id.nav_Logout);
         nav_Wallet = header.findViewById(R.id.nav_Wallet);
+        nav_ContactUs = header.findViewById(R.id.nav_ContactUs);
+        nav_PrivacyPolicy = header.findViewById(R.id.nav_PrivacyPolicy);
+        nav_TermsConditions = header.findViewById(R.id.nav_TermsConditions);
 
         nav_Name.setText(sessionManager.getUSERNAME());
         nav_MobileNo.setText("+91 " + sessionManager.getMOBILENO());
@@ -194,6 +197,63 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
                 text_name.setTextSize(18);
                 text_name.setText("Address Details");
+            }
+        });
+
+        nav_ContactUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.MyDrawer.closeDrawer(GravityCompat.START);
+                //loc.setVisibility(View.GONE);
+                //text_address.setVisibility(View.GONE);
+                //  search.setVisibility(View.GONE);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ContactUsFragment contactUsFragment = new ContactUsFragment();
+                ft.replace(R.id.framLayout, contactUsFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                text_name.setTextSize(18);
+                text_name.setText("Contact Us");
+            }
+        });
+
+        nav_PrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.MyDrawer.closeDrawer(GravityCompat.START);
+                //loc.setVisibility(View.GONE);
+                //text_address.setVisibility(View.GONE);
+                //  search.setVisibility(View.GONE);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                PrivacyPolicyFragment privacyPolicyFragment = new PrivacyPolicyFragment();
+                ft.replace(R.id.framLayout, privacyPolicyFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                text_name.setTextSize(18);
+                text_name.setText("Privacy Policy");
+            }
+        });
+
+        nav_TermsConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.MyDrawer.closeDrawer(GravityCompat.START);
+                //loc.setVisibility(View.GONE);
+                //text_address.setVisibility(View.GONE);
+                //  search.setVisibility(View.GONE);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                TermsConditionsFragment termsConditionsFragment = new TermsConditionsFragment();
+                ft.replace(R.id.framLayout, termsConditionsFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                text_name.setTextSize(18);
+                text_name.setText("Terms & Conditions");
             }
         });
 

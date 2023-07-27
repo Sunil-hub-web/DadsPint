@@ -63,7 +63,7 @@ public class Wallet_Fragment extends Fragment {
     public void userwallet(String user_id){
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Wallet Details Please Wait.....");
+        progressDialog.setMessage("Show Wallet Details Wait.....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.walletdtls, new Response.Listener<String>() {

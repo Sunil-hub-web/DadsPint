@@ -323,7 +323,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
     public void removeCart(String cart_id){
 
         ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Delete Cart Details....");
+        progressDialog.setMessage("Delete Cart Item Wait....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.Remove_cart, new Response.Listener<String>() {

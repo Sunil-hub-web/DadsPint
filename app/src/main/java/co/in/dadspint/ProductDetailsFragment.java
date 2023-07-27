@@ -120,7 +120,7 @@ public class ProductDetailsFragment extends Fragment {
     public void getall_product(String user_id) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Get Product Details....");
+        progressDialog.setMessage("Product Details....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.AllProduct, new Response.Listener<String>() {
@@ -735,7 +735,7 @@ public class ProductDetailsFragment extends Fragment {
     public void GetFilterProduct(String city, String school, String cClass) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Get Product Details....");
+        progressDialog.setMessage("Product Details....");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.Filter, new Response.Listener<String>() {

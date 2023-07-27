@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Are you Sure Want to Logout Your application"
+        android:text="Are you sure you want to logout?"
         android:textColor="#0C0C0C"
         android:textSize="@dimen/textsize"
         android:layout_centerHorizontal="true"/>

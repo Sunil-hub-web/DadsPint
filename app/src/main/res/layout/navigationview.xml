@@ -256,6 +256,117 @@
             android:layout_marginTop="@dimen/ten">
 
             <ImageView
+                android:id="@+id/image_PrivacyPolicy"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:src="@drawable/insurance"
+                app:tint="@color/skyblue"
+                android:layout_centerVertical="true">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_PrivacyPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@id/image_PrivacyPolicy"
+                android:text="Privacy Policy"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"
+                android:fontFamily="@font/sans_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/text1"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/image_TermsConditions"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:src="@drawable/terms_and_conditions"
+                app:tint="@color/skyblue"
+                android:layout_centerVertical="true">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_TermsConditions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@id/image_TermsConditions"
+                android:text="Terms &amp; Conditions"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"
+                android:fontFamily="@font/sans_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/text1"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/image_ContactUs"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:src="@drawable/contact_us"
+                app:tint="@color/skyblue"
+                android:layout_centerVertical="true">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/nav_ContactUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@id/image_ContactUs"
+                android:text="Contact Us"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"
+                android:fontFamily="@font/sans_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/text1"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <ImageView
                 android:id="@+id/image_logout"
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
