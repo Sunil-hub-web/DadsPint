@@ -178,9 +178,9 @@ public class RegisterFragment extends Fragment {
                         JSONObject jsonObject_statues = new JSONObject(statusArray);
 
                         String user_id = jsonObject_statues.getString("full_name");
-                        String fullname = jsonObject_statues.getString("email");
+                        String fullname1 = jsonObject_statues.getString("email");
                         String email = jsonObject_statues.getString("contact_no");
-                        String contact = jsonObject_statues.getString("password");
+                        String contact1 = jsonObject_statues.getString("password");
                         String otp = jsonObject_statues.getString("otp");
 
                         sessionManager.setUSEREMAIL(email);
@@ -189,7 +189,7 @@ public class RegisterFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), OtpVerifactionActivity.class);
                         intent.putExtra("message","Register");
                         intent.putExtra("fullname",fullname);
-                        intent.putExtra("mail",email);
+                        intent.putExtra("mail",mail);
                         intent.putExtra("contact",contact);
                         intent.putExtra("password",password);
                         startActivity(intent);
@@ -234,7 +234,7 @@ public class RegisterFragment extends Fragment {
                 params.put("contactno", contact);
                 params.put("password", password);
 
-                Log.d("paramsforhomeapi", "" + params);
+                Log.d("paramsforhomeapi12", "" + params);
 
                 return params;
             }

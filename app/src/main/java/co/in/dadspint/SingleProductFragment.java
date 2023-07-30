@@ -123,9 +123,6 @@ public class SingleProductFragment extends Fragment {
 
                 linearLayout(false);
 
-
-                varitionprice = attributeVaritionAdapter.getvaritionPrice();
-
                 if (str_singleProducuAttributes.equals("singleProducuAttributes")){
 
                     quantity = tv_count1.getText().toString().trim();
@@ -137,6 +134,7 @@ public class SingleProductFragment extends Fragment {
 
                     quantity = tv_count1.getText().toString().trim();
                     count_value = Integer.valueOf(tv_count1.getText().toString());
+                    varitionprice = attributeVaritionAdapter.getvaritionPrice();
 
                     addToCart(userId,productId,quantity,varitionprice,salesprice);
                 }
@@ -157,7 +155,7 @@ public class SingleProductFragment extends Fragment {
 
                     quantity = tv_count1.getText().toString().trim();
                     count_value = Integer.valueOf(tv_count1.getText().toString());
-                    varitionprice = attributeVaritionAdapter.getvaritionPrice();
+                    //varitionprice = attributeVaritionAdapter.getvaritionPrice();
 
                     addToCart(userId,productId,quantity,"",salesprice);
 

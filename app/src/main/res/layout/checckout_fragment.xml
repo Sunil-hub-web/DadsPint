@@ -149,31 +149,51 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:layout_marginLeft="@dimen/ten">
 
                 <RadioButton
                     android:id="@+id/radio_payonline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
                     android:paddingLeft="@dimen/ten"
                     android:text="Pay Online"
                     android:textColor="@color/blue600"
-                    android:textSize="@dimen/edittextsize" />
+                    android:textSize="@dimen/edittextsize"/>
 
                 <RadioButton
                     android:id="@+id/radio_cashondelivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginLeft="@dimen/twenty"
                     android:paddingLeft="@dimen/ten"
                     android:text="Cash On Delivery"
                     android:textColor="@color/blue600"
-                    android:textSize="@dimen/edittextsize" />
+                    android:textSize="@dimen/edittextsize"/>
+
 
             </RadioGroup>
+
+            <RadioButton
+                android:id="@+id/radio_paywallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/ten"
+                android:layout_marginLeft="@dimen/ten"
+                android:text="Pay Wallet"
+                android:textColor="@color/blue600"
+                android:textSize="@dimen/edittextsize"/>
+
+            <TextView
+                android:id="@+id/showErrorMesg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginLeft="@dimen/ten"
+                android:text="Address"
+                android:textColor="@color/error"
+                android:textSize="@dimen/edittextsize"
+                android:visibility="gone"></TextView>
 
             <LinearLayout
                 android:id="@+id/amount"

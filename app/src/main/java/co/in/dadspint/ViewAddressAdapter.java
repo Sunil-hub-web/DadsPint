@@ -48,7 +48,7 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
 
     ArrayList<ViewAddressModel> viewAddress_Model = new ArrayList<ViewAddressModel>();
     Context context;
-    public static String addressId, all_values, checkOut1, shippingcharge, cityNameView,pincodeNameView,
+    public static String addressId, all_values = "", checkOut1, shippingcharge, cityNameView,pincodeNameView,
             schoolNameView,cityidview,firstNameView,lastNameView,phoneNoView,emailidview,address1View,
             address2View,addressid;
     int index;
@@ -218,8 +218,8 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
 
         getCity(cityNameView,pincodeNameView,schoolNameView,cityidview);
 
-        addressInsertMessage = "homeAddress";
-        btn_Save.setText("Edit");
+       // addressInsertMessage = "homeAddress";
+        //btn_Save.setText("Edit");
 
         btn_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -769,6 +769,12 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
                         Toast.makeText(context, statusArray, Toast.LENGTH_SHORT).show();
 
                         dialog.dismiss();
+                        notifyDataSetChanged();
+
+                        if (checkOut1.equals("CheckOut")){
+
+                            CheckOut_Fragment.dialogSelect.dismiss();
+                        }
 
                     } else {
 

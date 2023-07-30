@@ -102,6 +102,13 @@ public class MyOrderDet_Fragment extends Fragment {
                         myOrderRecyclerView.setLayoutManager(linearLayoutManager);
                         myOrderRecyclerView.setAdapter(orderListAdapter);
 
+                    }else{
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("message");
+                        String data = jsonObject.getString("data");
+
+                        Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+
                     }
 
 

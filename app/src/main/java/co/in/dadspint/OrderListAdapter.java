@@ -45,7 +45,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     ArrayList<AddressModel> addressModels = new ArrayList<>();
     Dialog dialogMenu;
     TextView textView;
-    double totalprice;
+    double totalprice = 0.0,price1 = 0.0,quenty = 0.0,d_totalPrice = 0.0;
     String shipping_charge;
 
 
@@ -168,8 +168,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
                                             orderDetails_models.add(details_model);
 
-                                            double price1 = Double.valueOf(price);
-                                            totalprice = price1 + totalprice;
+                                            price1 = Double.valueOf(price);
+                                            quenty = Double.valueOf(qty);
+                                            d_totalPrice = price1 * quenty;
+                                            totalprice = d_totalPrice + totalprice;
                                         }
 
                                         subTotalPrice.setText(String.valueOf(totalprice));
@@ -179,6 +181,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                                         rv_vars.setNestedScrollingEnabled(false);
                                         OrderDetAdapter varad = new OrderDetAdapter(orderDetails_models,context);
                                         rv_vars.setAdapter(varad);
+
+                                        totalprice = 0.0;
+                                        price1 = 0.0;
+                                        quenty = 0.0;
+                                        d_totalPrice = 0.0;
 
                                         for (int j=0;j< jsonArray_address.length();j++){
 

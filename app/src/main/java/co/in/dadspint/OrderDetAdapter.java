@@ -82,11 +82,17 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
         holder.text_ProdectName.setText(productdet.getProductname());
         holder.totalunit.setText("QTY :" + productdet.getQty());
-        holder.totalPrice.setText(", " + productdet.getPrice());
+
+        double getQuenty = Double.valueOf(productdet.getQty());
+        double getPrice = Double.valueOf(productdet.getPrice());
+
+        double totalprice = getPrice * getQuenty;
+
+        holder.totalPrice.setText(", " + totalprice);
 
         holder.text_orderId.setText("Id : " + productdet.getOrder_id());
         holder.text_orderDate.setText("Date :" + productdet.getCreated_date());
-        holder.text_orderStatus.setText("Status :" + productdet.getStatus());
+        //holder.text_orderStatus.setText("Status :" + productdet.getStatus());
         String imageUrl = "https://dadspint.com/uploads/" + productdet.getImg();
         Glide.with(context).load(imageUrl).into(holder.productImage);
 
@@ -102,6 +108,27 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
             holder.btn_cancelOrder.setText("Cancel");
 
+        }
+
+        if (productdet.getStatus().equals("5")){
+
+            holder.text_orderStatus.setText("Order Delivired");
+            holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+
+        } else if (productdet.getStatus().equals("0")) {
+
+            holder.text_orderStatus.setText("New Order");
+            holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.blue600));
+
+        }else if (productdet.getStatus().equals("3")) {
+
+            holder.text_orderStatus.setText("Cancled Order");
+            holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.red));
+
+        }else{
+
+            holder.text_orderStatus.setText("Exchange Order");
+            holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.red));
         }
 
         String cancel_status = String.valueOf(productdet.getCancel_status());

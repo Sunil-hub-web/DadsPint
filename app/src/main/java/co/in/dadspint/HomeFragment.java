@@ -343,6 +343,7 @@ public class HomeFragment extends Fragment {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", user_id);
+                Log.d("userid",user_id);
                 return params;
             }
         };

@@ -39,6 +39,7 @@ public class AppUrl {
     public static final String forgetpassword = baseUrl1+"forgetpassword";
     public static final String Loginauth = baseUrl1+"Loginauth";
     public static final String Insertregister = baseUrl1+"Insertregister";
+    public static final String verify_emailOtp = baseUrl1+"verify_emailOtp";
 
 
 

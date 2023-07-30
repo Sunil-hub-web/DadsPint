@@ -357,7 +357,6 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
         requestQueue.add(stringRequest);
 
     }
-
     public void addWishList(String userId,String ProductId){
 
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -412,6 +411,7 @@ public class SchoolUniformAdapter extends RecyclerView.Adapter<SchoolUniformAdap
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String,String> params = new HashMap<>();
+                params.put("product_id",ProductId);
                 params.put("cust_id",userId);
                 return params;
             }

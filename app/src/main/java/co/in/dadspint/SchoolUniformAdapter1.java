@@ -254,12 +254,10 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
 
 
     }
-
     @Override
     public int getItemCount() {
         return productDataModel.size();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imag_uniform,img_wishlist;
@@ -416,6 +414,7 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String,String> params = new HashMap<>();
+                params.put("product_id",ProductId);
                 params.put("cust_id",userId);
                 return params;
             }
@@ -424,7 +423,6 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
-
     @Override
     public Filter getFilter() {
         return filter1;
@@ -455,7 +453,6 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
             notifyDataSetChanged();
         }
     };
-
     public void filter(CharSequence charSequence){
 
         ArrayList<ProductDataModel> tempArrayList = new ArrayList<ProductDataModel>();
@@ -479,7 +476,6 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
         notifyDataSetChanged();
         tempArrayList.clear();
     }
-
     public void cart_count(String user_id){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {

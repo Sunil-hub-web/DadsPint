@@ -61,9 +61,11 @@ public class OtpVerifactionActivity extends AppCompatActivity {
         contact = getIntent().getStringExtra("contact");
         password = getIntent().getStringExtra("password");
 
+        Log.d("userdetails",fullname+" "+mail+" "+contact+" "+password);
+
         if (message.equals("Register")){
 
-            binding.mobileNumber.setText(emailId);
+            binding.mobileNumber.setText(mail);
 
         }else{
 
@@ -87,6 +89,10 @@ public class OtpVerifactionActivity extends AppCompatActivity {
                         if (otp.equals(sessionManager.getLOGINOTP())){
 
                             userRegisterPage(fullname,contact,mail,password);
+
+                            Log.d("userdetails",fullname+" "+mail+" "+contact+" "+password);
+
+
 
                         }else{
 
@@ -382,7 +388,7 @@ public class OtpVerifactionActivity extends AppCompatActivity {
         progressDialog.setMessage("Register please wait");
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.Insertregister, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.verify_emailOtp, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -405,11 +411,7 @@ public class OtpVerifactionActivity extends AppCompatActivity {
                         String responsecode = jsonObject_message.getString("responsecode");
                         String statusArray = jsonObject_message.getString("status");
 
-                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                        LoginPageFragment loginPageFragment = new LoginPageFragment();
-                        ft.replace(R.id.fram, loginPageFragment, "loginpage");
-                        ft.addToBackStack(null);
-                        ft.commit();
+                        startActivity(new Intent(OtpVerifactionActivity.this,LogiRegisterPage.class));
 
                     } else {
 

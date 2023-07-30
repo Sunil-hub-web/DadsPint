@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,38 +38,41 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import co.in.dadspint.R;
+
 import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CheckOut_Fragment extends Fragment {
+public class CheckOut_Fragment extends Fragment implements View.OnClickListener {
 
-    MaterialButton btn_AddnewAddress, btn_selectAddress, btn_ProceedCheckout,btn_ApplyCoupon;
-    TextView text_ShowAddress, text_subTotalPrice, text_deliveryPrice,text_totalPrice;
-    RecyclerView orderSummaryRecycler,recyclerAddressDetails;
+    MaterialButton btn_AddnewAddress, btn_selectAddress, btn_ProceedCheckout, btn_ApplyCoupon;
+    TextView text_ShowAddress, text_subTotalPrice, text_deliveryPrice, text_totalPrice, showErrorMesg;
+    RecyclerView orderSummaryRecycler, recyclerAddressDetails;
     double totalprice, sales_Price, quanTity, totalAmount = 0.0, shipCharge, taxCharge;
     ArrayList<OrderSummary_ModelClass> viewCartModelArray = new ArrayList<>();
-    LinearLayoutManager linearLayoutManager,linearLayoutManager1;
+    LinearLayoutManager linearLayoutManager, linearLayoutManager1;
     OrderSummaryAdapter orderSummaryAdapter;
     SessionManager sessionManager;
-    Dialog dialog;
+    public static Dialog dialog, dialogSelect;
     Spinner spinner_City, spinner_Pincode, spinner_State;
-    RadioGroup radioGroup;
-    RadioButton radio_cashondelivery,selectedRadioButton;
+    RadioGroup radioGroup, radioGroup1;
+    RadioButton radio_cashondelivery, selectedRadioButton, radio_paywallet, radio_payonline;
 
     String str_FirstName, str_LastName, str_Email, str_MobileNo, str_CityId, str_state, str_Address1, str_Address2,
-            str_PinCodeId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId ="", schoolName,userid,
-            str_ShowAddress = "",addreessid,str_shipping,Name, Email, MobileNo, City, Area, Address, PinCode, addressId,
-            city_id, state_id, state_name, addressInsertMessage,selectPaymentOption;
+            str_PinCodeId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId = "", schoolName, userid,
+            str_ShowAddress = "", addreessid, str_shipping, Name, Email, MobileNo, City, Area, Address, PinCode, addressId,
+            city_id, state_id, selectPayment = "", addressInsertMessage, selectPaymentOption = "", amount;
 
     ArrayList<CityModelClass> arrayListCity = new ArrayList<>();
     ArrayList<PinCodeModel> arrayListPincode = new ArrayList<PinCodeModel>();
@@ -75,6 +80,7 @@ public class CheckOut_Fragment extends Fragment {
     ArrayList<SchoolModelClass> arrayListSchool = new ArrayList<SchoolModelClass>();
     ArrayList<ViewAddressModel> viewAddress_Model = new ArrayList<ViewAddressModel>();
     ViewAddressAdapter viewAddressAdapter;
+    Double cr_balance, dr_balance, crdr_balance, totcr_balance = 0.0, totdr_balance = 0.0;
 
     @Nullable
     @Override
@@ -94,12 +100,21 @@ public class CheckOut_Fragment extends Fragment {
         text_totalPrice = view.findViewById(R.id.text_totalPrice);
         radioGroup = view.findViewById(R.id.radioGroup);
         btn_ApplyCoupon = view.findViewById(R.id.btn_ApplyCoupon);
+        radio_cashondelivery = view.findViewById(R.id.radio_cashondelivery);
+        radio_paywallet = view.findViewById(R.id.radio_paywallet);
+        radio_payonline = view.findViewById(R.id.radio_payonline);
+        showErrorMesg = view.findViewById(R.id.showErrorMesg);
 
         DeshBoardActivity.text_name.setText("CheckOut Page");
 
         sessionManager = new SessionManager(getContext());
         userid = sessionManager.getUSERID();
         showProduct(userid);
+        userwallet(userid);
+
+        radio_cashondelivery.setOnClickListener(this);
+        radio_paywallet.setOnClickListener(this);
+        radio_payonline.setOnClickListener(this);
 
         btn_AddnewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,22 +138,26 @@ public class CheckOut_Fragment extends Fragment {
 
                 int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
 
-                if(text_ShowAddress.getText().toString().trim().equals("")){
+                if (text_ShowAddress.getText().toString().trim().equals("")) {
 
                     Toast.makeText(getContext(), "Select Your address", Toast.LENGTH_SHORT).show();
 
-                } else if (selectedRadioButtonId == -1) {
+                } else if (selectPaymentOption.equals("")) {
 
                     Toast.makeText(getContext(), "Select Payment Option", Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else if (selectPayment.equals("1")) {
 
-                    selectedRadioButton = view.findViewById(selectedRadioButtonId);
-                    selectPaymentOption = selectedRadioButton.getText().toString();
+                    Toast.makeText(getContext(), "click on pay online or cash", Toast.LENGTH_SHORT).show();
 
-                    checkOutOrder(userid,"0","0",selectPaymentOption,addreessid,str_shipping);
+                } else {
 
-                    Log.d("checkoutdetails",userid+""+"0"+""+"0"+""+selectPaymentOption+""+addreessid);
+                    //   selectedRadioButton = view.findViewById(selectedRadioButtonId);
+                    //selectPaymentOption = selectedRadioButton.getText().toString();
+
+                    checkOutOrder(userid, "0", "0", selectPaymentOption, addreessid, str_shipping);
+
+                    Log.d("checkoutdetails", userid + "" + "0" + "" + "0" + "" + selectPaymentOption + "" + addreessid);
 
                 }
             }
@@ -159,14 +178,14 @@ public class CheckOut_Fragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        if (edit_couponecode.getText().toString().trim().equals("")){
+                        if (edit_couponecode.getText().toString().trim().equals("")) {
 
                             Toast.makeText(getContext(), "Enter Your Coupon Code", Toast.LENGTH_SHORT).show();
 
-                        }else{
+                        } else {
 
                             String str_coupon = edit_couponecode.getText().toString().trim();
-                            applyCouponCode(userid,str_coupon);
+                            applyCouponCode(userid, str_coupon);
                         }
                     }
                 });
@@ -186,6 +205,8 @@ public class CheckOut_Fragment extends Fragment {
                 //window.setBackgroundDrawableResource(R.drawable.dialogback);
             }
         });
+
+        //  onRadioButtonClicked(view);
 
         return view;
     }
@@ -233,9 +254,9 @@ public class CheckOut_Fragment extends Fragment {
                             String primary_image = jsonObject_items.getString("primary_image");
                             String variation_names = jsonObject_items.getString("variation_names");
 
-                           OrderSummary_ModelClass modelClass = new OrderSummary_ModelClass(
-                                   product_id,primary_image,product_name,"",Product_price,quantity
-                           );
+                            OrderSummary_ModelClass modelClass = new OrderSummary_ModelClass(
+                                    product_id, primary_image, product_name, "", Product_price, quantity
+                            );
                             viewCartModelArray.add(modelClass);
 
                             sales_Price = Double.valueOf(Product_price);
@@ -335,11 +356,11 @@ public class CheckOut_Fragment extends Fragment {
 
                         StateSpinearAdapter adapter = new StateSpinearAdapter(getContext(), R.layout.spiner_text
                                 , arrayListState);
-                      //  spinner_State.setAdapter(adapter);
+                        //  spinner_State.setAdapter(adapter);
 
                         Log.d("citylist", arrayListCity.toString());
 
-                      //  spinner_State.setSelection(-1, true);
+                        //  spinner_State.setSelection(-1, true);
 
                        /* spinner_State.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -417,6 +438,7 @@ public class CheckOut_Fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
     public void getCity() {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -548,6 +570,7 @@ public class CheckOut_Fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
     public void getPinCode(String cityId) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -687,6 +710,7 @@ public class CheckOut_Fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
     public void getSchool(String cityId) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -732,11 +756,11 @@ public class CheckOut_Fragment extends Fragment {
 
                         SchoolSpinearAdapter adapter = new SchoolSpinearAdapter(getContext(), R.layout.spiner_text
                                 , arrayListSchool);
-                      //  spinner_School.setAdapter(adapter);
+                        //  spinner_School.setAdapter(adapter);
 
                         Log.d("citylist", arrayListCity.toString());
 
-                     //   spinner_School.setSelection(-1, true);
+                        //   spinner_School.setSelection(-1, true);
 
                         /*schoolIdspinner_School.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -826,6 +850,7 @@ public class CheckOut_Fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
     public void addAddressDialog() {
 
         dialog = new Dialog(getContext());
@@ -833,8 +858,8 @@ public class CheckOut_Fragment extends Fragment {
         //dialog.setCancelable(false);
         spinner_City = dialog.findViewById(R.id.spinner_City);
         spinner_Pincode = dialog.findViewById(R.id.spinner_Pincode);
-       // spinner_State = dialog.findViewById(R.id.spinner_State);
-       // spinner_School = dialog.findViewById(R.id.spinner_School);
+        // spinner_State = dialog.findViewById(R.id.spinner_State);
+        // spinner_School = dialog.findViewById(R.id.spinner_School);
 
         EditText edit_firstname = dialog.findViewById(R.id.edit_firstname);
         EditText edit_LastName = dialog.findViewById(R.id.edit_LastName);
@@ -860,10 +885,10 @@ public class CheckOut_Fragment extends Fragment {
 
 
         getCity();
-       // getState();
+        // getState();
 
-       // homeAddress.setBackgroundResource(R.drawable.backgroundcolor);
-       // schoolAddress.setBackgroundResource(R.drawable.textfieldback);
+        // homeAddress.setBackgroundResource(R.drawable.backgroundcolor);
+        // schoolAddress.setBackgroundResource(R.drawable.textfieldback);
 
         addressInsertMessage = "homeAddress";
 
@@ -924,7 +949,7 @@ public class CheckOut_Fragment extends Fragment {
 
                     edit_EmailId.setError("Please Enter Email");
 
-                }else if (!isValidEmail(edit_EmailId.getText().toString().trim())) {
+                } else if (!isValidEmail(edit_EmailId.getText().toString().trim())) {
 
                     edit_EmailId.setError("Enter Valide Email id");
 
@@ -1005,9 +1030,9 @@ public class CheckOut_Fragment extends Fragment {
 
 
     }
+
     public void addAddress_Save(String user_id, String firstname, String lasttname, String address1, String address2,
-                                String city, String state, String zip, String email, String phone, String address_type,
-                                String school_id) {
+                                String city, String state, String zip, String email, String phone, String address_type, String school_id) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Add Address Please Wait.....");
@@ -1034,6 +1059,9 @@ public class CheckOut_Fragment extends Fragment {
                         String statusArray = jsonObject_message.getString("status");
 
                         Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
+
+                        dialog.dismiss();
+                        // viewAddress(user_id);
 
                     } else {
 
@@ -1088,6 +1116,7 @@ public class CheckOut_Fragment extends Fragment {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", user_id);
                 params.put("firstname", firstname);
@@ -1095,25 +1124,28 @@ public class CheckOut_Fragment extends Fragment {
                 params.put("address1", address1);
                 params.put("address2", address2);
                 params.put("city", city_Id);
-                params.put("state", state_Name);
                 params.put("zip", pincode);
                 params.put("email", email);
                 params.put("phone", phone);
                 params.put("address_type", address_type);
                 params.put("school_id", schoolId);
+
+                Log.d("addressparameterlist", params.toString());
+
                 return params;
+
+
             }
         };
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
-
-
     }
-    public void selectAddress(){
 
-        Dialog dialogSelect = new Dialog(getContext());
+    public void selectAddress() {
+
+        dialogSelect = new Dialog(getContext());
         dialogSelect.setContentView(R.layout.selectaddress);
         dialogSelect.setCancelable(false);
 
@@ -1129,13 +1161,13 @@ public class CheckOut_Fragment extends Fragment {
                 str_shipping = viewAddressAdapter.shipping();
                 addreessid = ViewAddressAdapter.addressId;
 
-                Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
 
-                if (str_ShowAddress == null){
+                if (str_ShowAddress.equals("")) {
 
                     Toast.makeText(getActivity(), "Select You Address", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
 
                     text_deliveryPrice.setText(str_shipping);
 
@@ -1162,6 +1194,7 @@ public class CheckOut_Fragment extends Fragment {
 
 
     }
+
     public void viewAddress(String userId) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -1182,6 +1215,8 @@ public class CheckOut_Fragment extends Fragment {
 
                     if (status.equals("200")) {
 
+                        viewAddress_Model.clear();
+
                         String error = jsonObject.getString("error");
                         String messages = jsonObject.getString("messages");
                         JSONObject jsonObject_message = new JSONObject(messages);
@@ -1191,7 +1226,7 @@ public class CheckOut_Fragment extends Fragment {
                         String Address_data = jsonObject_statues.getString("Address_data");
                         JSONArray jsonArray_Address_data = new JSONArray(Address_data);
 
-                        if (jsonArray_Address_data.length() != 0){
+                        if (jsonArray_Address_data.length() != 0) {
 
                             for (int i = 0; i < jsonArray_Address_data.length(); i++) {
 
@@ -1221,12 +1256,12 @@ public class CheckOut_Fragment extends Fragment {
                                 viewAddress_Model.add(viewAddressModel);
                             }
 
-                            linearLayoutManager1 = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-                            viewAddressAdapter = new ViewAddressAdapter(viewAddress_Model,getContext(),"CheckOut");
+                            linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                            viewAddressAdapter = new ViewAddressAdapter(viewAddress_Model, getContext(), "CheckOut");
                             recyclerAddressDetails.setHasFixedSize(true);
                             recyclerAddressDetails.setLayoutManager(linearLayoutManager1);
                             recyclerAddressDetails.setAdapter(viewAddressAdapter);
-                        }else{
+                        } else {
 
                             Toast.makeText(getContext(), "Address Detils Not Found", Toast.LENGTH_SHORT).show();
                         }
@@ -1295,7 +1330,8 @@ public class CheckOut_Fragment extends Fragment {
         requestQueue.add(stringRequest);
 
     }
-    public void checkOutOrder(String user_id, String cupon_code, String cupon_price, String paymentmode, String address_id,String str_shipping){
+
+    public void checkOutOrder(String user_id, String cupon_code, String cupon_price, String paymentmode, String address_id, String str_shipping) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Your Order Placed Please Wait.....");
@@ -1313,7 +1349,7 @@ public class CheckOut_Fragment extends Fragment {
                     String error = jsonObject.getString("error");
                     String messages = jsonObject.getString("messages");
 
-                    if (status.equals("200")){
+                    if (status.equals("200")) {
 
                         JSONObject jsonObject_message = new JSONObject(messages);
                         String responsecode = jsonObject_message.getString("responsecode");
@@ -1321,9 +1357,9 @@ public class CheckOut_Fragment extends Fragment {
 
                         Toast.makeText(getContext(), status_message, Toast.LENGTH_SHORT).show();
 
-                        startActivity(new Intent(getContext(),OrderSuccessFully.class));
+                        startActivity(new Intent(getContext(), OrderSuccessFully.class));
 
-                    }else{
+                    } else {
 
                         JSONObject jsonObject_message = new JSONObject(messages);
                         String responsecode = jsonObject_message.getString("responsecode");
@@ -1345,21 +1381,21 @@ public class CheckOut_Fragment extends Fragment {
 
                 Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
 
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String,String> params = new HashMap<>();
-                params.put("user_id",user_id);
-                params.put("cupon_code",cupon_code);
-                params.put("cupon_price",cupon_price);
-                params.put("paymentmode",paymentmode);
-                params.put("address_id",address_id);
-                params.put("shipping_charge",str_shipping);
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+                params.put("cupon_code", cupon_code);
+                params.put("cupon_price", cupon_price);
+                params.put("paymentmode", paymentmode);
+                params.put("address_id", address_id);
+                params.put("shipping_charge", str_shipping);
 
-                Log.d("parameters",params.toString());
+                Log.d("parameters", params.toString());
                 return params;
             }
         };
@@ -1368,7 +1404,7 @@ public class CheckOut_Fragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    public void applyCouponCode(String userid, String couponcode){
+    public void applyCouponCode(String userid, String couponcode) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Applying coupon please wait");
@@ -1393,8 +1429,19 @@ public class CheckOut_Fragment extends Fragment {
                         JSONObject jsonObject_message = new JSONObject(messages);
                         String responsecode = jsonObject_message.getString("responsecode");
                         String statusArray = jsonObject_message.getString("status");
+                        JSONObject jsonObject1 = new JSONObject(statusArray);
+                        String cuponprice = String.valueOf(jsonObject1.getString("cupon_price"));
+                        String cupon_code = jsonObject1.getString("cupon_code");
 
-                        Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
+                        double d_cuponprice = Double.valueOf(cuponprice);
+                        DecimalFormat dfSharp = new DecimalFormat("#.##");
+                        amount = dfSharp.format(d_cuponprice);
+                        double d_amount = Double.valueOf(amount);
+                        double amountclc = totalAmount - d_amount;
+                        String total_price1 = String.valueOf(amountclc);
+                        text_subTotalPrice.setText(total_price1);
+
+                        dialog.dismiss();
 
                     } else {
 
@@ -1417,16 +1464,18 @@ public class CheckOut_Fragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String,String> params = new HashMap<>();
-                params.put("user_id",userid);
-                params.put("coupon_code",couponcode);
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", userid);
+                params.put("coupon_code", couponcode);
+
+                Log.d("detailsview", userid + ", " + couponcode);
                 return params;
             }
         };
@@ -1450,5 +1499,169 @@ public class CheckOut_Fragment extends Fragment {
         return matcher.matches();
 
         //return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    public void userwallet(String user_id) {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Show Wallet Details Wait.....");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.walletdtls, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusdat = jsonObject_message.getString("status");
+
+                        if (responsecode.equals("00")) {
+
+                            JSONObject jsonObject1_status = new JSONObject(statusdat);
+                            String wallet = jsonObject1_status.getString("wallet");
+                            JSONArray jsonArray_wallet = new JSONArray(wallet);
+
+                            for (int i = 0; i < jsonArray_wallet.length(); i++) {
+
+                                JSONObject jsonObject_wallet = jsonArray_wallet.getJSONObject(i);
+
+                                String wallet_id = jsonObject_wallet.getString("wallet_id");
+                                String user_id = jsonObject_wallet.getString("user_id");
+                                String amount = jsonObject_wallet.getString("wallet_amount");
+                                String payment_type = jsonObject_wallet.getString("wallet_status");
+                                String created_date = jsonObject_wallet.getString("created_date");
+
+                                if (payment_type.equals("1")) {
+
+                                    cr_balance = Double.parseDouble(amount);
+                                    totcr_balance = cr_balance + totcr_balance;
+
+                                    Log.d("paymentdet", cr_balance + "," + totcr_balance);
+
+
+                                } else {
+
+                                    dr_balance = Double.parseDouble(amount);
+                                    totdr_balance = dr_balance + totdr_balance;
+
+                                    Log.d("paymentdet1", dr_balance + "," + totdr_balance);
+
+                                }
+                            }
+
+                            crdr_balance = totcr_balance - totdr_balance;
+
+                            radio_paywallet.setText("Pay Wallet " + "Rs " + String.valueOf(crdr_balance) + " -/");
+
+                            sessionManager.setWalletAmount(crdr_balance.floatValue());
+
+                        } else {
+
+                            Toast.makeText(getContext(), statusdat, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusdat = jsonObject_message.getString("status");
+                        Toast.makeText(getContext(), statusdat, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("cust_id", user_id);
+                Log.d("userid", user_id);
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch (view.getId()) {
+            case R.id.radio_paywallet:
+                if (checked)
+                    selectPaymentOption = "Pay Wallet";
+                // Pirates are the best
+                if (crdr_balance < totalAmount) {
+
+                    showErrorMesg.setVisibility(View.VISIBLE);
+                    showErrorMesg.setText("Wallet Price Is less then total amount so click on pay online or cash");
+
+                    selectPayment = "1";
+                }
+
+                if (radio_cashondelivery.isChecked()) {
+
+                    radio_cashondelivery.setChecked(false);
+
+                } else {
+
+                    radio_payonline.setChecked(false);
+                }
+
+                break;
+            case R.id.radio_cashondelivery:
+                if (checked)
+                    // Ninjas rule
+                    selectPaymentOption = "Cash On Delivery";
+                selectPayment = "";
+                if (radio_paywallet.isChecked()) {
+
+                    radio_paywallet.setChecked(false);
+                    showErrorMesg.setVisibility(View.GONE);
+                }
+
+                break;
+            case R.id.radio_payonline:
+                if (checked)
+
+                    selectPaymentOption = "Pay Online";
+                selectPayment = "";
+                if (radio_paywallet.isChecked()) {
+
+                    radio_paywallet.setChecked(false);
+                    showErrorMesg.setVisibility(View.GONE);
+                }
+
+                break;
+        }
     }
 }

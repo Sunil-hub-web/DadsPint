@@ -3,6 +3,7 @@ package co.in.dadspint;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.material.badge.BadgeDrawable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,7 +100,13 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
 
                 quantity12 = holder.tv_count1.getText().toString().trim();
 
-                if (quantity12.equals("1")){}else{
+                if (quantity12.equals("1")){
+
+                    holder.quentity.setText("QTY : "+quantity12+" x "+"Rs : "+viewcart.getProduct_price());
+
+                }else{
+
+                    holder.quentity.setText("QTY : "+quantity12+" x "+"Rs : "+viewcart.getProduct_price());
 
                     holder.linearLayout(false);
                     quantity12 = holder.tv_count1.getText().toString().trim();
@@ -144,6 +153,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
                 holder.linearLayout(true);
 
                 quantity12 = holder.tv_count1.getText().toString().trim();
+
+                holder.quentity.setText("QTY : "+quantity12+" x "+"Rs : "+viewcart.getProduct_price());
+
                 count_value = Integer.parseInt(quantity12);
                 price12 = viewcart.getProduct_price();
                 productid = viewcart.getProduct_id();
@@ -199,8 +211,19 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
 
                 viewCartModelArray.remove(position);
                 notifyDataSetChanged();
-
                 removeCart(cartId);
+
+                int size = viewCartModelArray.size();
+
+                BadgeDrawable badge = DeshBoardActivity.bottomNavigation.getOrCreateBadge(R.id.cart);//R.id.action_add is menu id
+                badge.setNumber(size);
+                badge.setBackgroundColor(ContextCompat.getColor(context,R.color.bluedrack));
+
+
+
+
+
+
 
                 d_Totalprice = 0.0;
                 d_Totalprice1 = 0.0;
@@ -319,7 +342,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
         requestQueue.add(stringRequest);
 
     }
-
     public void removeCart(String cart_id){
 
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -345,6 +367,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
                         String status_message = jsonObject_message.getString("status");
 
                         Toast.makeText(context, status_message, Toast.LENGTH_SHORT).show();
+
+                        cart_count(userId);
 
                     }else{
 
@@ -382,5 +406,97 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
 
+    }
+    public void cart_count(String user_id){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("cart_count");
+                        JSONObject jsonObject_cart_count = new JSONObject(cart_count);
+                        String total_cart = jsonObject_cart_count.getString("total_cart");
+
+                        int int_total_cart = Integer.parseInt(total_cart);
+
+                        BadgeDrawable badge = DeshBoardActivity.bottomNavigation.getOrCreateBadge(R.id.cart);//R.id.action_add is menu id
+                        badge.setNumber(int_total_cart);
+                        badge.setBackgroundColor(ContextCompat.getColor(context,R.color.bluedrack));
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("cart_count");
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText( context, "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+
+                Log.d("addressparameterlist1111",params.toString());
+
+                return params;
+
+
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
     }
 }
