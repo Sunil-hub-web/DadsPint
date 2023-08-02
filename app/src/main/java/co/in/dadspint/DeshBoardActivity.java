@@ -87,9 +87,12 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         HomeFragment homeFragment = new HomeFragment();
         ft.replace(R.id.framLayout, homeFragment);
-        text_name.setText("Home");
+        text_name.setText("");
         ft.addToBackStack(null);
         ft.commit();
+
+       // text_name.setText("");
+        //text_name.setVisibility(View.GONE);
 
         realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
@@ -173,7 +176,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 ft.addToBackStack(null);
                 ft.commit();
                 text_name.setTextSize(15);
-                text_name.setText("Home Page");
+                text_name.setText("");
                 menu.setVisibility(View.VISIBLE);
                 backimage.setVisibility(View.GONE);
                 image_search.setVisibility(View.VISIBLE);
@@ -315,7 +318,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 ft.addToBackStack(null);
                 ft.commit();
                 text_name.setTextSize(15);
-                text_name.setText("Home Page");
+                text_name.setText("");
                 menu.setVisibility(View.VISIBLE);
                 backimage.setVisibility(View.GONE);
                 image_search.setVisibility(View.VISIBLE);
@@ -335,13 +338,13 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
                     case R.id.myAccount:
 
-                        selectedFragment = new PersonalInformation();
+                        selectedFragment = new MyOrderDet_Fragment();
 
                         //loc.setVisibility(View.GONE);
                         //logo.setVisibility(View.GONE);
                         // search.setVisibility(View.GONE);
                         text_name.setTextSize(18);
-                        text_name.setText("PersonalInformation");
+                        text_name.setText("My Order Details");
                         //text_address.setVisibility(View.GONE);
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, selectedFragment).addToBackStack(null).commit();
@@ -357,7 +360,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                         //logo.setVisibility(View.VISIBLE);
                         // search.setVisibility(View.VISIBLE);
                         text_name.setTextSize(15);
-                        text_name.setText("Home Page");
+                        text_name.setText("");
                         menu.setVisibility(View.VISIBLE);
                         backimage.setVisibility(View.GONE);
                         image_search.setVisibility(View.VISIBLE);
@@ -429,7 +432,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         ft.addToBackStack(null);
         ft.commit();
         text_name.setTextSize(15);
-        text_name.setText("Home Page");
+        //text_name.setText("Home Page");
         menu.setVisibility(View.VISIBLE);
         backimage.setVisibility(View.GONE);
         image_search.setVisibility(View.VISIBLE);
@@ -467,7 +470,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
             }
         } else {
 
-            text_name.setText("Home Page");
+            text_name.setText("");
            /* HomePageActivity.fragmentManager.beginTransaction()
                     .replace(R.id.framLayout,new Homepage(),"HomeFragment").addToBackStack(null).commit();*/
 
@@ -477,7 +480,6 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
         }
     }
-
     public void logout_Condition() {
 
         //Show Your Another AlertDialog
@@ -515,7 +517,6 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         window.setBackgroundDrawableResource(R.drawable.homecard_back1);
 
     }
-
     public void cart_count(String user_id){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {

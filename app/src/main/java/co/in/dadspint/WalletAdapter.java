@@ -37,8 +37,17 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
 
         WalletModel wallet = wallet_Models.get(position);
 
+        if (wallet.getWallet_status().equals("1")){
+
+            holder.wallet_statues.setText(Html.fromHtml("<font color='#FF3700B3'>Wallet Status :<br></font>"+ " Credit"));
+
+        }else{
+
+            holder.wallet_statues.setText(Html.fromHtml("<font color='#FF3700B3'>Wallet Status :<br></font>"+ " Debit"));
+        }
+
         holder.date.setText(Html.fromHtml("<font color='#FF3700B3'>Date/Time :<br></font>"+wallet.getCreated_date()));
-        holder.wallet_amount.setText(Html.fromHtml("<font color='#FF3700B3'>Wallet Amount :<br></font>"+wallet.getWallet_amount()));
+        holder.wallet_amount.setText(Html.fromHtml("<font color='#FF3700B3'>Wallet Amount :<br></font>"+""+"Rs "+wallet.getWallet_amount()));
     }
 
     @Override
@@ -48,13 +57,14 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date,wallet_amount;
+        TextView date,wallet_amount,wallet_statues;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             date = itemView.findViewById(R.id.date);
             wallet_amount = itemView.findViewById(R.id.wallet_amount);
+            wallet_statues = itemView.findViewById(R.id.wallet_statues);
         }
     }
 }

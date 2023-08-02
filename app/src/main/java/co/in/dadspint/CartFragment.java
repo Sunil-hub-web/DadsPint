@@ -43,15 +43,19 @@ import java.util.Map;
 public class CartFragment extends Fragment {
 
     RecyclerView recyclerCartPage;
-    RelativeLayout rel_gotoCheckout,rel_totalprice;
-    public static TextView text_subTotalPrice,text_deliveryPrice,text_totalPrice;
+    RelativeLayout rel_gotoCheckout, rel_totalprice;
+    public static TextView text_subTotalPrice, text_deliveryPrice, text_totalPrice;
     ArrayList<ViewCartModel> viewCartModelArray = new ArrayList<>();
     ViewCartAdapter viewCartAdapter;
     LinearLayoutManager linearLayoutManager;
-    double totalprice, sales_Price, quanTity, totalAmount = 0.0, shipCharge,taxCharge;
+    double totalprice, sales_Price, quanTity, totalAmount = 0.0, shipCharge, taxCharge;
     LinearLayout cartempty;
     SessionManager sessionManager;
     String userId;
+
+    String statuesqty = "0";
+
+    ArrayList<String> qty = new ArrayList<>();
 
 
     @Nullable
@@ -59,7 +63,7 @@ public class CartFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.cart_fragment,container,false);
+        View view = inflater.inflate(R.layout.cart_fragment, container, false);
 
         recyclerCartPage = view.findViewById(R.id.recyclerCartPage);
         rel_gotoCheckout = view.findViewById(R.id.rel_gotoCheckout);
@@ -78,16 +82,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new CheckOut_Fragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.framLayout, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-
-                DeshBoardActivity.menu.setVisibility(View.GONE);
-                DeshBoardActivity.backimage.setVisibility(View.VISIBLE);
-                DeshBoardActivity.image_search.setVisibility(View.GONE);
+                showProduct1(userId);
             }
         });
 
@@ -95,7 +90,7 @@ public class CartFragment extends Fragment {
 
     }
 
-    public void showProduct(String userId){
+    public void showProduct(String userId) {
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Show Product Details Wait ....");
@@ -111,7 +106,7 @@ public class CartFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.getString("status");
 
-                    if (status.equals("200")){
+                    if (status.equals("200")) {
 
                         viewCartModelArray.clear();
 
@@ -124,7 +119,7 @@ public class CartFragment extends Fragment {
 
                         String cart_items = jsonstatues.getString("cart_items");
                         JSONArray jsonArray_item = new JSONArray(cart_items);
-                        for (int i=0;i<jsonArray_item.length();i++){
+                        for (int i = 0; i < jsonArray_item.length(); i++) {
 
                             JSONObject jsonObject_items = jsonArray_item.getJSONObject(i);
 
@@ -140,8 +135,8 @@ public class CartFragment extends Fragment {
                             String variation_names = jsonObject_items.getString("variation_names");
 
                             ViewCartModel viewCartModel = new ViewCartModel(
-                                    cart_id,user_id,product_id,product_name,quantity,Product_price,variation_id,
-                                    product_type,primary_image,variation_names
+                                    cart_id, user_id, product_id, product_name, quantity, Product_price, variation_id,
+                                    product_type, primary_image, variation_names
                             );
                             viewCartModelArray.add(viewCartModel);
 
@@ -155,21 +150,21 @@ public class CartFragment extends Fragment {
 
                         }
 
-                        if(viewCartModelArray.size() == 0){
+                        if (viewCartModelArray.size() == 0) {
 
                             cartempty.setVisibility(View.VISIBLE);
                             rel_gotoCheckout.setVisibility(View.GONE);
                             recyclerCartPage.setVisibility(View.GONE);
                             rel_totalprice.setVisibility(View.GONE);
 
-                        }else {
+                        } else {
 
                             cartempty.setVisibility(View.GONE);
                             rel_gotoCheckout.setVisibility(View.VISIBLE);
                             recyclerCartPage.setVisibility(View.VISIBLE);
                             rel_totalprice.setVisibility(View.VISIBLE);
 
-                            int size =  viewCartModelArray.size();
+                            int size = viewCartModelArray.size();
 
                             String str_size = String.valueOf(size);
 
@@ -180,8 +175,8 @@ public class CartFragment extends Fragment {
                             text_subTotalPrice.setText(total_price);
                             text_totalPrice.setText(total_price);
 
-                            viewCartAdapter = new ViewCartAdapter(viewCartModelArray,getActivity());
-                            linearLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+                            viewCartAdapter = new ViewCartAdapter(viewCartModelArray, getActivity());
+                            linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                             recyclerCartPage.setHasFixedSize(true);
                             recyclerCartPage.setLayoutManager(linearLayoutManager);
                             recyclerCartPage.setAdapter(viewCartAdapter);
@@ -189,7 +184,7 @@ public class CartFragment extends Fragment {
 
                     }
 
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -199,15 +194,121 @@ public class CartFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
-                @Nullable
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
 
-                    Map<String, String> params = new HashMap<>();
-                    params.put("user_id", userId);
-                    return params;
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", userId);
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    public void showProduct1(String userId) {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Show Product Details Wait ....");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.View_cart, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                       // viewCartModelArray.clear();
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
+                        JSONObject jsonstatues = new JSONObject(statusArray);
+
+                        String cart_items = jsonstatues.getString("cart_items");
+                        JSONArray jsonArray_item = new JSONArray(cart_items);
+                        for (int i = 0; i < jsonArray_item.length(); i++) {
+
+                            JSONObject jsonObject_items = jsonArray_item.getJSONObject(i);
+
+                            String cart_id = jsonObject_items.getString("cart_id");
+                            String user_id = jsonObject_items.getString("user_id");
+                            String product_id = jsonObject_items.getString("product_id");
+                            String product_name = jsonObject_items.getString("product_name");
+                            String quantity = jsonObject_items.getString("quantity");
+                            String Product_price = jsonObject_items.getString("Product_price");
+                            String variation_id = jsonObject_items.getString("variation_id");
+                            String product_type = jsonObject_items.getString("product_type");
+                            String primary_image = jsonObject_items.getString("primary_image");
+                            String variation_names = jsonObject_items.getString("variation_names");
+
+                            qty.add(quantity);
+
+                            double d_quentity = Double.valueOf(quantity);
+
+                            if (d_quentity >= 6) {
+
+                                statuesqty = "1";
+                            }
+                        }
+
+                        if (statuesqty.equals("0")) {
+
+                            Fragment fragment = new CheckOut_Fragment();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.framLayout, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+
+                            DeshBoardActivity.menu.setVisibility(View.GONE);
+                            DeshBoardActivity.backimage.setVisibility(View.VISIBLE);
+                            DeshBoardActivity.image_search.setVisibility(View.GONE);
+
+
+                           // Toast.makeText(getActivity(), "product name maximum", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            Toast.makeText(getActivity(), "product quantity maximum cart limit is 5", Toast.LENGTH_SHORT).show();
+
+                            statuesqty = "0";
+
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", userId);
+                return params;
+            }
 
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

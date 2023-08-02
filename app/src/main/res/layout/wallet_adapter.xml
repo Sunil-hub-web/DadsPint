@@ -39,16 +39,41 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/wallet_amount"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sans_bold"
-                android:hint="Amount"
-                android:layout_margin="@dimen/five"
-                android:textColor="@color/blue600"
-                android:textSize="@dimen/textsize"
-                android:layout_below="@+id/radiogroup"/>
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_margin="@dimen/five">
+
+                <TextView
+                    android:id="@+id/wallet_statues"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sans_bold"
+                    android:hint="States"
+                    android:textColor="@color/blue600"
+                    android:textSize="@dimen/twelve_size"
+                    android:layout_below="@+id/radiogroup"/>
+
+                <TextView
+                    android:id="@+id/wallet_amount"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sans_bold"
+                    android:hint="Amount"
+                    android:textColor="@color/blue600"
+                    android:textSize="@dimen/textsize"
+                    android:layout_below="@+id/radiogroup"/>
+
+
+            </LinearLayout>
+
+
+
+
 
             <!--  <TextView
                   android:id="@+id/gymLocation"

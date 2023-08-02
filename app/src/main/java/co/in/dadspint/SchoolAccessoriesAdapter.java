@@ -112,7 +112,7 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
 
         }else {
 
-            holder.addtext1.setText("Select Product");
+            holder.addtext1.setText("Select Option");
         }
 
         holder.relImageClick.setOnClickListener(new View.OnClickListener() {

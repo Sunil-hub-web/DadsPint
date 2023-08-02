@@ -46,7 +46,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     Dialog dialogMenu;
     TextView textView;
     double totalprice = 0.0,price1 = 0.0,quenty = 0.0,d_totalPrice = 0.0;
-    String shipping_charge;
+    String shipping_charge,coupon_amnt;
 
 
     public OrderListAdapter(FragmentActivity activity, ArrayList<OrderListModel> orderListModels) {
@@ -88,6 +88,21 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             holder.btn_statues.setText("Cancled Order");
             holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.red));
 
+        }else if (listModel.getStatus().equals("1")) {
+
+            holder.btn_statues.setText("processing order");
+            holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+
+        }else if (listModel.getStatus().equals("2")) {
+
+            holder.btn_statues.setText("Completed Order");
+            holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+
+        }else if (listModel.getStatus().equals("4")) {
+
+            holder.btn_statues.setText("Out of Delivery");
+            holder.btn_statues.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+
         }else{
 
             holder.btn_statues.setText("Exchange Order");
@@ -112,6 +127,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 RecyclerView rv_vars = dialogMenu.findViewById(R.id.rv_vars);
                 ImageView image_Arrow = dialogMenu.findViewById(R.id.image_Arrow);
                 RelativeLayout btn_dismiss = dialogMenu.findViewById(R.id.btn_dismiss);
+                TextView text_CouponAmount = dialogMenu.findViewById(R.id.text_CouponAmount);
+                TextView text_grandPrice = dialogMenu.findViewById(R.id.text_grandPrice);
+                RelativeLayout rel_CouponAmount = dialogMenu.findViewById(R.id.rel_CouponAmount);
 
                 ProgressDialog progressDialog = new ProgressDialog(context);
                 progressDialog.setMessage("Order Details Details....");
@@ -159,11 +177,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                                             String created_date = jsonObject_datalist.getString("created_date");
                                             String user_id = jsonObject_datalist.getString("user_id");
                                             String cancel_status = jsonObject_datalist.getString("cancel_status");
+                                            String wallet = jsonObject_datalist.getString("wallet");
+                                            String coupon_code = jsonObject_datalist.getString("coupon_code");
+                                            coupon_amnt = jsonObject_datalist.getString("coupon_amnt");
 
 
                                             OrderDetails_Model details_model = new OrderDetails_Model(
                                                     orders_id,productname,variation_id,qty,img,price,shipping_charge,order_id,payment_mode,status1,
-                                                    created_date,user_id,cancel_status
+                                                    created_date,user_id,cancel_status,coupon_code,coupon_amnt,wallet
                                             );
 
                                             orderDetails_models.add(details_model);
@@ -174,8 +195,29 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                                             totalprice = d_totalPrice + totalprice;
                                         }
 
-                                        subTotalPrice.setText(String.valueOf(totalprice));
-                                        shippingCharges.setText(shipping_charge);
+                                        if (coupon_amnt.equals("0")){
+
+                                            double d_shapping = Double.valueOf(shipping_charge);
+                                            double d_totalprice = totalprice+d_shapping;
+
+                                            subTotalPrice.setText(String.valueOf(totalprice));
+                                            text_grandPrice.setText(String.valueOf(d_totalprice));
+                                            shippingCharges.setText(shipping_charge);
+
+
+                                        }else{
+
+                                            double d_couponamount = Double.valueOf(coupon_amnt);
+                                            double totalamount = totalprice - d_couponamount;
+                                            double d_shapping = Double.valueOf(shipping_charge);
+                                            double d_totalprice = totalamount+d_shapping;
+                                            text_grandPrice.setText(String.valueOf(d_totalprice));
+                                            shippingCharges.setText(shipping_charge);
+                                            rel_CouponAmount.setVisibility(View.VISIBLE);
+                                            text_CouponAmount.setText(coupon_amnt);
+                                            subTotalPrice.setText(String.valueOf(totalprice));
+                                        }
+
 
                                         rv_vars.setLayoutManager(new LinearLayoutManager(context));
                                         rv_vars.setNestedScrollingEnabled(false);
@@ -243,8 +285,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 RequestQueue requestQueue = Volley.newRequestQueue(context);
                 requestQueue.add(stringRequest);
-
-
 
                 btn_dismiss.setOnClickListener(new View.OnClickListener() {
                     @Override

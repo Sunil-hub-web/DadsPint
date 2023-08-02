@@ -741,7 +741,11 @@ public class Address_fragment extends Fragment {
 
                     edit_EmailId.setError("Enter Valide Email id");
 
-                }else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() != 10) {
+                }else if (TextUtils.isEmpty(edit_MobileNo.getText())) {
+
+                    edit_MobileNo.setError("mobile number not empty");
+
+                }else if (edit_MobileNo.getText().toString().trim().length() != 10) {
 
                     edit_MobileNo.setError("Provide 10 digit valid mobile number");
 

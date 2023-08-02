@@ -114,7 +114,7 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
 
         } else {
 
-            holder.addtext1.setText("Select Product");
+            holder.addtext1.setText("Select Option");
         }
 
         String imageUrl = "https://dadspint.com/uploads/" + product.getPrimary_image();

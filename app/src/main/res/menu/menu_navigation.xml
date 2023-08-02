@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/myAccount"
-        android:title="MyAccount"
-        android:icon="@drawable/account"/>
+        android:title="MyOrder"
+        android:icon="@drawable/checkout"/>
 
     <item
         android:id="@+id/cart"

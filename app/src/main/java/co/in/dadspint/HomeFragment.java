@@ -80,6 +80,8 @@ public class HomeFragment extends Fragment {
 
         Log.d("ggvyvhvyc",userId);
 
+        DeshBoardActivity.text_name.setText("");
+
         card_SchoolUniform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

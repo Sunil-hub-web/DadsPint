@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ import co.in.dadspint.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.ViewHolder> {
 
@@ -88,7 +91,7 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
                 addressView.getState() + ", " + addressView.getCity_name() +", "+ addressView.getPincode() + "\n" +
                 addressView.getAddress1() + ", " + addressView.getAdress2());
 
-        holder.shoppingCharges.setText("Shopping Charges : " + addressView.getShipping_price());
+        holder.shoppingCharges.setText("shipping charges : " + addressView.getShipping_price());
 
         /*if (checkOut1.equals("")){
 
@@ -245,11 +248,19 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
 
                     edit_EmailId.setError("Please Enter Email");
 
-                } else if (TextUtils.isEmpty(edit_MobileNo.getText()) && edit_MobileNo.getText().toString().trim().length() == 10) {
+                }else if (!isValidEmail(edit_EmailId.getText().toString().trim())) {
+
+                    edit_EmailId.setError("Enter Valide Email id");
+
+                } else if (TextUtils.isEmpty(edit_MobileNo.getText())) {
 
                     edit_MobileNo.setError("Please Enter MobileNumber");
 
-                } else if (TextUtils.isEmpty(edit_Address1.getText())) {
+                } else if (edit_MobileNo.getText().toString().trim().length() != 10) {
+
+                    edit_MobileNo.setError("Please Enter Your 10 digit Mobile No");
+
+                }else if (TextUtils.isEmpty(edit_Address1.getText())) {
 
                     edit_Address1.setError("Please Enter Address");
 
@@ -856,5 +867,20 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+
+    public boolean isValidEmail(final String email) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        //final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
+
+        pattern = Patterns.EMAIL_ADDRESS;
+        matcher = pattern.matcher(email);
+
+        return matcher.matches();
+
+        //return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

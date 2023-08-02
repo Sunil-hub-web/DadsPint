@@ -100,16 +100,18 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
 
                 quantity12 = holder.tv_count1.getText().toString().trim();
 
+                holder.quentity.setText("QTY : "+quantity12+" x "+"Rs : "+viewcart.getProduct_price());
+
                 if (quantity12.equals("1")){
 
                     holder.quentity.setText("QTY : "+quantity12+" x "+"Rs : "+viewcart.getProduct_price());
 
                 }else{
 
-                    holder.quentity.setText("QTY : "+quantity12+" x "+"Rs : "+viewcart.getProduct_price());
-
                     holder.linearLayout(false);
                     quantity12 = holder.tv_count1.getText().toString().trim();
+
+                    holder.quentity.setText("QTY : "+quantity12+" x "+"Rs : "+viewcart.getProduct_price());
 
                     count_value = Integer.parseInt(quantity12);
                     price12 = viewcart.getProduct_price();
@@ -219,12 +221,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
                 badge.setNumber(size);
                 badge.setBackgroundColor(ContextCompat.getColor(context,R.color.bluedrack));
 
-
-
-
-
-
-
                 d_Totalprice = 0.0;
                 d_Totalprice1 = 0.0;
                 d_Totalprice2 = 0.0;
@@ -233,8 +229,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.ViewMo
         });
 
     }
-
-
 
     @Override
     public int getItemCount() {

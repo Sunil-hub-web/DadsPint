@@ -114,7 +114,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
 
         }else {
 
-            holder.addtext1.setText("Select Product");
+            holder.addtext1.setText("Select Option");
         }
 
         holder.relImageClick.setOnClickListener(new View.OnClickListener() {

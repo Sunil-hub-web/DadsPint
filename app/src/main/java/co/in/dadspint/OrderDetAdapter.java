@@ -31,9 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import co.in.dadspint.R;
 
-import com.google.android.material.badge.BadgeDrawable;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -106,7 +104,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
         }else if (productdet.getStatus().equals("3")) {
 
-            holder.btn_cancelOrder.setText("Cancel");
+            holder.btn_cancelOrder.setText("Cancelled");
 
         }
 
@@ -114,16 +112,40 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
             holder.text_orderStatus.setText("Order Delivired");
             holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+            holder.btn_cancelOrder.setVisibility(View.VISIBLE);
+            holder.btn_cancelOrder.setText("Exchange");
 
         } else if (productdet.getStatus().equals("0")) {
 
             holder.text_orderStatus.setText("New Order");
             holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.blue600));
+            holder.btn_cancelOrder.setVisibility(View.VISIBLE);
+            holder.btn_cancelOrder.setText("Cancel");
+
+        }else if (productdet.getStatus().equals("1")) {
+
+            holder.text_orderStatus.setText("processing order");
+            holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+            holder.btn_cancelOrder.setVisibility(View.GONE);
+
+        }else if (productdet.getStatus().equals("2")) {
+
+            holder.text_orderStatus.setText("Completed Order");
+            holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+            holder.btn_cancelOrder.setVisibility(View.GONE);
+
+        }else if (productdet.getStatus().equals("4")) {
+
+            holder.text_orderStatus.setText("Out of Delivery");
+            holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.payment7));
+            holder.btn_cancelOrder.setVisibility(View.GONE);
 
         }else if (productdet.getStatus().equals("3")) {
 
-            holder.text_orderStatus.setText("Cancled Order");
+            holder.text_orderStatus.setText("Cancelled");
             holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.red));
+            holder.btn_cancelOrder.setVisibility(View.VISIBLE);
+            holder.btn_cancelOrder.setText("Cancelled");
 
         }else{
 
@@ -247,18 +269,20 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
                 if (holder.btn_cancelOrder.getText().toString().trim().equals("Cancel")){
 
-                    ordercancle_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id());
+                    ordercancle_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id(),holder.btn_cancelOrder);
+
+                }else if(holder.btn_cancelOrder.getText().toString().trim().equals("Cancelled")){
+
+                    Toast.makeText(context, "Order Already Cancelled", Toast.LENGTH_SHORT).show();
 
                 }else{
 
-                    orderExchange_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id());
+                    orderExchange_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id(),holder.btn_cancelOrder);
                 }
-
             }
         });
 
     }
-
     @Override
     public int getItemCount() {
         return product.size();
@@ -288,7 +312,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
         }
     }
 
-    public void productCancle(String cust_id, String order_id, String orders_id, String message) {
+    public void productCancle(String cust_id, String order_id, String orders_id, String message, TextView btn_cancelOrder) {
 
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cancelling your order please wait");
@@ -317,6 +341,8 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
                         Toast.makeText(context, statusArray, Toast.LENGTH_SHORT).show();
 
                         dialog.dismiss();
+
+                        btn_cancelOrder.setText("Cancelled");
 
                     } else {
 
@@ -363,7 +389,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
 
     }
-    public void ordercancle_Dialog(String cust_id, String order_id, String orders_id) {
+    public void ordercancle_Dialog(String cust_id, String order_id, String orders_id, TextView btn_cancelOrder) {
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -388,12 +414,12 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
                 if (description.getText().toString().trim().equals("")){
 
                     String strmessage = "";
-                    productCancle(cust_id,order_id,orders_id,strmessage);
+                    productCancle(cust_id,order_id,orders_id,strmessage,btn_cancelOrder);
 
                 }else{
 
                     String strmessage = description.getText().toString().trim();
-                    productCancle(cust_id,order_id,orders_id,strmessage);
+                    productCancle(cust_id,order_id,orders_id,strmessage,btn_cancelOrder);
                 }
             }
         });
@@ -408,7 +434,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
         dialog.show();
     }
-    public void orderExchange_Dialog(String cust_id, String order_id, String orders_id) {
+    public void orderExchange_Dialog(String cust_id, String order_id, String orders_id, TextView btn_cancelOrder) {
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -433,12 +459,12 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
                 if (description.getText().toString().trim().equals("")){
 
                     String strmessage = "";
-                    productCancle(cust_id,order_id,orders_id,strmessage);
+                    productCancle(cust_id,order_id,orders_id,strmessage, btn_cancelOrder);
 
                 }else{
 
                     String strmessage = description.getText().toString().trim();
-                    productCancle(cust_id,order_id,orders_id,strmessage);
+                    productCancle(cust_id,order_id,orders_id,strmessage, btn_cancelOrder);
                 }
             }
         });

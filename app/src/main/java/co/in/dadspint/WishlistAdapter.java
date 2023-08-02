@@ -1,5 +1,6 @@
 package co.in.dadspint;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Paint;
@@ -59,12 +60,12 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     @Override
     public WishlistAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.schooluniformpage, parent, false);
+        View view = inflater.inflate(R.layout.wishlist_adapter, parent, false);
         return new WishlistAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WishlistAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WishlistAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         sessionManager = new SessionManager(context);
         userId = sessionManager.getUSERID();
@@ -107,7 +108,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
         } else {
 
-            holder.addtext1.setText("Select Product");
+            holder.addtext1.setText("Select Option");
         }
 
         String imageUrl = "https://dadspint.com/uploads/" + product.getPrimary_image();
@@ -140,7 +141,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 // }
             }
         });
-
         holder.imag_uniform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +168,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 // }
             }
         });
-
         holder.tv_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,7 +181,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 addToCart(userId,productid,quantity,"",price);
             }
         });
-
         holder.tv_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +195,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
             }
         });
-
         holder.lin_addCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,6 +234,15 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             }
         });
 
+        holder.lin_deleteCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                delertWishlist(product.wishlist_id);
+                wishlistModels.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
@@ -250,7 +256,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
         ImageView imag_uniform;
         TextView uniform_name1, restt_price1, restt_price2, tv_minus, tv_count, tv_plus, addtext1,parcentage;
-        LinearLayout lin_addCart, lin_add_cart;
+        LinearLayout lin_addCart, lin_add_cart,lin_deleteCart;
         RelativeLayout relImageClick, addlay1;
 
         public ViewHolder(@NonNull View itemView) {
@@ -269,6 +275,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             imag_uniform = itemView.findViewById(R.id.imag_uniform);
             relImageClick = itemView.findViewById(R.id.relImageClick);
             addlay1 = itemView.findViewById(R.id.addlay1);
+            lin_deleteCart = itemView.findViewById(R.id.lin_deleteCart);
         }
 
         private void linearLayout(Boolean x) {
@@ -348,7 +355,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         requestQueue.add(stringRequest);
 
     }
-
     public void cart_count(String user_id){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {
@@ -440,5 +446,70 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+    public void delertWishlist(String Wishlist_id){
+
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Delete Cart Item Wait....");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.DelertWishlist, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+                    String error = jsonObject.getString("error");
+                    String messages = jsonObject.getString("messages");
+
+                    if (status.equals("200")){
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(context, status_message, Toast.LENGTH_SHORT).show();
+
+                        cart_count(userId);
+
+                    }else{
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(context, status_message, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressDialog.dismiss();
+                Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new HashMap<>();
+                params.put("Wishlist_id",Wishlist_id);
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
     }
 }
