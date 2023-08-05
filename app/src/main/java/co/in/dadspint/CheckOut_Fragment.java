@@ -28,6 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,8 +75,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
     RadioButton radio_cashondelivery, selectedRadioButton, radio_paywallet, radio_payonline;
     String str_FirstName, str_LastName, str_Email, str_MobileNo, str_CityId, str_state, str_Address1, str_Address2,
             str_PinCodeId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId = "", schoolName, userid,
-            str_ShowAddress = "", addreessid, str_shipping, Name, Email, MobileNo, City, Area, Address, PinCode, addressId,
-            city_id, state_id, selectPayment = "", addressInsertMessage, selectPaymentOption = "", amount, cuponprice = "", cupon_code = "";
+            str_ShowAddress = "", addreessid, str_shipping, selectPayment = "", addressInsertMessage, selectPaymentOption = "",
+            amount, cuponprice = "", cupon_code = "",statues_url_sat = "";
 
     ArrayList<CityModelClass> arrayListCity = new ArrayList<>();
     ArrayList<PinCodeModel> arrayListPincode = new ArrayList<PinCodeModel>();
@@ -114,13 +116,12 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
         sessionManager = new SessionManager(getContext());
         userid = sessionManager.getUSERID();
-        showProduct(userid);
-        userwallet(userid);
+        paymentmsg(userid);
 
         radio_cashondelivery.setOnClickListener(this);
         radio_paywallet.setOnClickListener(this);
         radio_payonline.setOnClickListener(this);
-        viewAddress(userid);
+
         btn_AddnewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,11 +133,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         btn_selectAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAddress_Model.size() != 0) {
+
                     selectAddress();
-                } else {
-                    Toast.makeText(getActivity(), "AddAddressDetails", Toast.LENGTH_SHORT).show();
-                }
 
             }
         });
@@ -161,19 +159,47 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                 } else {
 
+                    if (selectPaymentOption.equals("Pay Online")){
+
+                        if (statues_url_sat.equals("")){
+
+                            onlinepayment(userid,cupon_code,cuponprice,text_totalPrice.getText().toString().trim(),"ONLINE",str_shipping,addreessid);
+
+                        }else{
+
+                            if (cupon_code.equals("")) {
+
+                                checkOutOrder(userid, "0", "0", selectPaymentOption, addreessid, str_shipping);
+
+                                Log.d("checkoutdetails", userid + "" + "0" + "" + "0" + "" + selectPaymentOption + "" + addreessid);
+
+                            } else {
+
+                                checkOutOrder(userid, cupon_code, cuponprice, selectPaymentOption, addreessid, str_shipping);
+
+                                Log.d("checkoutdetails", userid + "" + "0" + "" + "0" + "" + selectPaymentOption + "" + addreessid);
+                            }
+                        }
+
+
+                    }else{
+
+                        if (cupon_code.equals("")) {
+
+                            checkOutOrder(userid, "0", "0", selectPaymentOption, addreessid, str_shipping);
+
+                            Log.d("checkoutdetails", userid + "" + "0" + "" + "0" + "" + selectPaymentOption + "" + addreessid);
+
+                        } else {
+
+                            checkOutOrder(userid, cupon_code, cuponprice, selectPaymentOption, addreessid, str_shipping);
+
+                            Log.d("checkoutdetails", userid + "" + "0" + "" + "0" + "" + selectPaymentOption + "" + addreessid);
+                        }
+                    }
+
                     //   selectedRadioButton = view.findViewById(selectedRadioButtonId);
                     //selectPaymentOption = selectedRadioButton.getText().toString();
-
-                    if (cupon_code.equals("")) {
-
-                        checkOutOrder(userid, "0", "0", selectPaymentOption, addreessid, str_shipping);
-                        Log.d("checkoutdetails", userid + "" + "0" + "" + "0" + "" + selectPaymentOption + "" + addreessid);
-
-                    } else {
-
-                        checkOutOrder(userid, cupon_code, cuponprice, selectPaymentOption, addreessid, str_shipping);
-                        Log.d("checkoutdetails", userid + "" + "0" + "" + "0" + "" + selectPaymentOption + "" + addreessid);
-                    }
 
 
                 }
@@ -291,6 +317,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         String total_price = String.valueOf(totalAmount);
 
                         text_subTotalPrice.setText(total_price);
+                        text_totalPrice.setText(total_price);
 
                         orderSummaryAdapter = new OrderSummaryAdapter(getActivity(), viewCartModelArray);
                         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -1082,7 +1109,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
 
                         dialog.dismiss();
-                        // viewAddress(user_id);
+                      //  viewAddress(user_id);
 
                     } else {
 
@@ -1174,15 +1201,21 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
         recyclerAddressDetails = dialogSelect.findViewById(R.id.recyclerAddressDetails);
 
+        viewAddress(userid);
+
         btn_SelectAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewAddress_Model.size() != 0) {
-                    Toast.makeText(getActivity(), "AddAddress", Toast.LENGTH_SHORT).show();
-                } else {
+
                     str_ShowAddress = viewAddressAdapter.addressvalue();
                     str_shipping = viewAddressAdapter.shipping();
                     addreessid = ViewAddressAdapter.addressId;
+
+                String total_price = String.valueOf(totalAmount);
+                Double d_shiping = Double.valueOf(str_shipping);
+                double d_totalamout = d_shiping + totalAmount;
+
+                text_subTotalPrice.setText(String.valueOf(d_totalamout));
 
                     // Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
 
@@ -1204,9 +1237,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         text_totalPrice.setText(str_Totalprice);
                     }
 
-
                     dialogSelect.dismiss();
-                }
 
             }
         });
@@ -1468,9 +1499,11 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                             amount = dfSharp.format(d_cuponprice);
                             double d_amount = Double.valueOf(amount);
                             double amountclc = totalAmount - d_amount;
+                            double str_shipp = Double.valueOf(str_shipping);
+                            double d_totalamount = amountclc + str_shipp;
                             String total_price1 = String.valueOf(amountclc);
                             text_subTotalPrice.setText(String.valueOf(totalAmount));
-                            text_totalPrice.setText(total_price1);
+                            text_totalPrice.setText(String.valueOf(d_totalamount));
 
                             rel_CouponAmount.setVisibility(View.VISIBLE);
                             text_CouponAmount.setText(cuponprice);
@@ -1495,6 +1528,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                             rel_CouponAmount.setVisibility(View.VISIBLE);
                             text_CouponAmount.setText(cuponprice);
+                            text_deliveryPrice.setText(str_shipping);
 
                             dialog.dismiss();
                         }
@@ -1664,7 +1698,6 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
-
     @Override
     public void onClick(View view) {
 
@@ -1721,7 +1754,6 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                 break;
         }
     }
-
     public void cart_count(String user_id) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {
@@ -1814,4 +1846,223 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
+    public void onlinepayment(String cust_id, String CouponCode,String CouponPrice,String grand_total,
+                              String Payment_Mode,String shipping_charge,String address_id) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.onlinepayment, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusurl = jsonObject_message.getString("status");
+
+                      /*  Intent intent = new Intent(getActivity(),WebViewActivity.class);
+                        intent.putExtra("weburl",statusurl);
+                        startActivity(intent);
+*/
+                        Fragment fragment = new WebViewFragment();
+                        Bundle args = new Bundle();
+                        args.putString("weburl", statusurl);
+                        fragment.setArguments(args);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.framLayout, fragment,"WebViewFragment");
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                        statues_url_sat = "1";
+
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("status");
+
+                        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+
+                        statues_url_sat = "";
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("cust_id", cust_id);
+                params.put("CouponCode", CouponCode);
+                params.put("CouponPrice", CouponPrice);
+                params.put("grand-total", grand_total);
+                params.put("Payment_Mode", Payment_Mode);
+                params.put("shipping_charge", shipping_charge);
+                params.put("address_id", address_id);
+
+                Log.d("addressparameterlist", params.toString());
+
+                return params;
+
+
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+    }
+
+    public void paymentmsg(String cust_id) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.paymentmsg, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    if (status.equals("200")) {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusurl = jsonObject_message.getString("status");
+
+                      /*  Intent intent = new Intent(getActivity(),WebViewActivity.class);
+                        intent.putExtra("weburl",statusurl);
+                        startActivity(intent);
+*/
+                        if (statusurl.equals("FAILURE")){
+
+                            showProduct(cust_id);
+                            userwallet(cust_id);
+
+                        }else{
+
+                            Fragment fragment = new HomeFragment();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.framLayout, fragment,"HomeFragment");
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String cart_count = jsonObject_message.getString("status");
+
+                        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("cust_id", cust_id);
+
+                Log.d("addressparameterlist", params.toString());
+
+                return params;
+
+
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+    }
+
 }

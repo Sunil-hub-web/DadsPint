@@ -447,6 +447,9 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
     public void onBackPressed() {
 
         HomeFragment test = (HomeFragment) getSupportFragmentManager().findFragmentByTag("HomeFragment");
+        WebViewFragment fragmentInstance = (WebViewFragment) getSupportFragmentManager().findFragmentByTag("WebViewFragment");
+
+      //  Log.d("fragmentInstance",fragmentInstance.toString());
 
         if (test != null && test.isVisible()) {
 
@@ -468,6 +471,12 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                     }
                 }, 4 * 1000);
             }
+        } else if (fragmentInstance != null) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, new CheckOut_Fragment(), "checkout").commit();
+            realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+            realBack.setVisibility(View.VISIBLE);
+
         } else {
 
             text_name.setText("");

@@ -43,6 +43,8 @@ public class AppUrl {
     public static final String verify_emailOtp = baseUrl1+"verify_emailOtp";
     public static final String DelertWishlist = baseUrl1+"DelertWishlist";
     public static final String BulkMail = baseUrl1+"BulkMail";
+    public static final String onlinepayment = baseUrl1+"onlinepayment";
+    public static final String paymentmsg = baseUrl1+"paymentmsg";
 
 
 

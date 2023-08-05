@@ -100,7 +100,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
         } else if (productdet.getStatus().equals("5")) {
 
-            holder.btn_cancelOrder.setText("Exchange");
+            holder.btn_cancelOrder.setText("Exchanged");
 
         }else if (productdet.getStatus().equals("3")) {
 
@@ -112,8 +112,18 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
             holder.text_orderStatus.setText("Order Delivired");
             holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.payment7));
-            holder.btn_cancelOrder.setVisibility(View.VISIBLE);
-            holder.btn_cancelOrder.setText("Exchange");
+
+            if (productdet.getCancel_status().equals("exchanged")){
+
+                holder.btn_cancelOrder.setVisibility(View.VISIBLE);
+                holder.btn_cancelOrder.setText("Exchanged");
+
+            }else{
+
+                holder.btn_cancelOrder.setVisibility(View.VISIBLE);
+                holder.btn_cancelOrder.setText("Exchange");
+            }
+
 
         } else if (productdet.getStatus().equals("0")) {
 
@@ -151,6 +161,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
             holder.text_orderStatus.setText("Exchange Order");
             holder.text_orderStatus.setTextColor(ContextCompat.getColor(context,R.color.red));
+            holder.btn_cancelOrder.setText("Exchanged");
         }
 
         String cancel_status = String.valueOf(productdet.getCancel_status());
@@ -159,7 +170,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
            // cancel_reason(productdet.orders_id);
             holder.lin_cancleResion.setVisibility(View.VISIBLE);
-            holder.btn_cancelOrder.setText("Canceled");
+            holder.btn_cancelOrder.setText("Cancelled");
             StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cancel_reason, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -250,7 +261,12 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
             requestQueue.add(stringRequest);
 
 
+        }else if(cancel_status.equals("exchanged")){
+
+
         }
+
+
 
         /*str_quantity = productdet.getProductQuantity();
         str_productPrice = productdet.getProductPrice();
@@ -269,15 +285,19 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
                 if (holder.btn_cancelOrder.getText().toString().trim().equals("Cancel")){
 
-                    ordercancle_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id(),holder.btn_cancelOrder);
+                    ordercancle_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id(),holder.btn_cancelOrder,"Cancel");
 
                 }else if(holder.btn_cancelOrder.getText().toString().trim().equals("Cancelled")){
 
                     Toast.makeText(context, "Order Already Cancelled", Toast.LENGTH_SHORT).show();
 
+                }else if(holder.btn_cancelOrder.getText().toString().trim().equals("Exchanged")){
+
+                    Toast.makeText(context, "Order Already Exchanged", Toast.LENGTH_SHORT).show();
+
                 }else{
 
-                    orderExchange_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id(),holder.btn_cancelOrder);
+                    orderExchange_Dialog(productdet.getUser_id(),productdet.getOrder_id(),productdet.getOrders_id(),holder.btn_cancelOrder,"Exchange");
                 }
             }
         });
@@ -312,7 +332,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
         }
     }
 
-    public void productCancle(String cust_id, String order_id, String orders_id, String message, TextView btn_cancelOrder) {
+    public void productCancle(String cust_id, String order_id, String orders_id, String message, TextView btn_cancelOrder, String s) {
 
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cancelling your order please wait");
@@ -342,7 +362,18 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
                         dialog.dismiss();
 
-                        btn_cancelOrder.setText("Cancelled");
+                        Log.d("messagedetails",s);
+
+                        if (s.equals("Cancel")){
+
+                            btn_cancelOrder.setText("Cancelled");
+
+                        }else{
+
+                            btn_cancelOrder.setText("Exchanged");
+                        }
+
+
 
                     } else {
 
@@ -389,7 +420,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
 
     }
-    public void ordercancle_Dialog(String cust_id, String order_id, String orders_id, TextView btn_cancelOrder) {
+    public void ordercancle_Dialog(String cust_id, String order_id, String orders_id, TextView btn_cancelOrder, String message) {
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -414,12 +445,12 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
                 if (description.getText().toString().trim().equals("")){
 
                     String strmessage = "";
-                    productCancle(cust_id,order_id,orders_id,strmessage,btn_cancelOrder);
+                    productCancle(cust_id,order_id,orders_id,strmessage,btn_cancelOrder, message);
 
                 }else{
 
                     String strmessage = description.getText().toString().trim();
-                    productCancle(cust_id,order_id,orders_id,strmessage,btn_cancelOrder);
+                    productCancle(cust_id,order_id,orders_id,strmessage,btn_cancelOrder, message);
                 }
             }
         });
@@ -434,7 +465,7 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
 
         dialog.show();
     }
-    public void orderExchange_Dialog(String cust_id, String order_id, String orders_id, TextView btn_cancelOrder) {
+    public void orderExchange_Dialog(String cust_id, String order_id, String orders_id, TextView btn_cancelOrder, String message) {
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -459,12 +490,12 @@ public class OrderDetAdapter extends RecyclerView.Adapter<OrderDetAdapter.MyView
                 if (description.getText().toString().trim().equals("")){
 
                     String strmessage = "";
-                    productCancle(cust_id,order_id,orders_id,strmessage, btn_cancelOrder);
+                    productCancle(cust_id,order_id,orders_id,strmessage, btn_cancelOrder,message);
 
                 }else{
 
                     String strmessage = description.getText().toString().trim();
-                    productCancle(cust_id,order_id,orders_id,strmessage, btn_cancelOrder);
+                    productCancle(cust_id,order_id,orders_id,strmessage, btn_cancelOrder,message);
                 }
             }
         });

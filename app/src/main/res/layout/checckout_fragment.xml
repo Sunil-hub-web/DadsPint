@@ -387,7 +387,7 @@
                             android:textColor="@color/blue600"
                             android:textSize="@dimen/edittextsize"
                             android:textStyle="bold" />
-                        text_totalPrice
+
                         <TextView
                             android:id="@+id/text_totalPrice"
                             android:layout_width="wrap_content"
