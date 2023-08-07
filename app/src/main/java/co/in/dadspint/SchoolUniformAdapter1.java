@@ -1,5 +1,6 @@
 package co.in.dadspint;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Paint;
@@ -21,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,7 +54,7 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
     int count_value;
     SessionManager sessionManager;
 
-    public SchoolUniformAdapter1(ArrayList<ProductDataModel> productDataModel1, FragmentActivity activity) {
+    public SchoolUniformAdapter1(ArrayList<ProductDataModel> productDataModel1, Activity activity) {
 
         this.productDataModel = productDataModel1;
         this.context = activity;
@@ -97,8 +97,11 @@ public class SchoolUniformAdapter1 extends RecyclerView.Adapter<SchoolUniformAda
                 Double price4 = price6 * 100;
                 DecimalFormat df = new DecimalFormat("#.00");
                 String price5 = df.format(price4);
+                double d_price5 = Double.valueOf(price5);
+                String price7 = String.valueOf(Math.round(d_price5));
 
-                holder.parcentage.setText(price5+" %");
+
+                holder.parcentage.setText(price7+" %");
 
             }else{
 

@@ -58,7 +58,7 @@ public class SingleProductDesc extends AppCompatActivity {
     RecyclerView recyclerAttribute;
     AttributeVaritionAdapter attributeVaritionAdapter;
     SessionManager sessionManager;
-    ImageView backimage;
+    ImageView backimage,img_wishlist;
     ArrayList<String> str_singleProductVariations = new ArrayList<>();
     HashMap<String,String> hash_singleProductVariations = new HashMap<>();
     int count_value;
@@ -87,6 +87,7 @@ public class SingleProductDesc extends AppCompatActivity {
         tv_plus = findViewById(R.id.tv_plus);
         lin_addCart = findViewById(R.id.lin_addCart);
         lin_add_cart = findViewById(R.id.lin_add_cart);
+        img_wishlist = findViewById(R.id.img_wishlist);
         //lin_ByNow = findViewById(R.id.lin_ByNow);
         //backimage = findViewById(R.id.backimage);
 
@@ -189,6 +190,14 @@ public class SingleProductDesc extends AppCompatActivity {
                 DeshBoardActivity.image_search.setVisibility(View.GONE);
             }
         });*/
+
+        img_wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addWishList(userId,productId);
+            }
+        });
 
     }
     public void getSingleProduct(String user_id, String product_id){
@@ -514,7 +523,6 @@ public class SingleProductDesc extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
-
     public void cart_count(String user_id){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {
@@ -603,6 +611,69 @@ public class SingleProductDesc extends AppCompatActivity {
             }
         };
 
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(SingleProductDesc.this);
+        requestQueue.add(stringRequest);
+    }
+    public void addWishList(String userId,String ProductId){
+
+        ProgressDialog progressDialog = new ProgressDialog(SingleProductDesc.this);
+        progressDialog.setMessage("Add To Cart Details....");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.PostWishlist, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+                    String error = jsonObject.getString("error");
+                    String messages = jsonObject.getString("messages");
+
+                    if (status.equals("200")){
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(SingleProductDesc.this, status_message, Toast.LENGTH_SHORT).show();
+
+                    }else{
+
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String status_message = jsonObject_message.getString("status");
+
+                        Toast.makeText(SingleProductDesc.this, status_message, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressDialog.dismiss();
+                Toast.makeText(SingleProductDesc.this, ""+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new HashMap<>();
+                params.put("product_id",ProductId);
+                params.put("cust_id",userId);
+                return params;
+            }
+        };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(SingleProductDesc.this);
         requestQueue.add(stringRequest);

@@ -92,8 +92,9 @@ public class SchoolAccessoriesAdapter extends RecyclerView.Adapter<SchoolAccesso
                 Double price4 = price6 * 100;
                 DecimalFormat df = new DecimalFormat("#.00");
                 String price5 = df.format(price4);
-
-                holder.parcentage.setText(price5+" %");
+                double d_price5 = Double.valueOf(price5);
+                String price7 = String.valueOf(Math.round(d_price5));
+                holder.parcentage.setText(price7+" %");
 
             }else{
 

@@ -258,6 +258,7 @@ public class ProductDetailsFragment extends Fragment {
             productDetailsRecycler.setLayoutManager(gridLayoutManager);
             productDetailsRecycler.setHasFixedSize(true);
             productDetailsRecycler.setAdapter(schoolUniformAdapter);
+
         } else {
             Toast.makeText(getActivity(), "Data Not Found", Toast.LENGTH_SHORT).show();
         }
@@ -352,6 +353,8 @@ public class ProductDetailsFragment extends Fragment {
                     String status = jsonObject.getString("status");
 
                     progressDialog.dismiss();
+
+                    arrayListCity.clear();
 
                     if (status.equals("200")) {
 
@@ -483,6 +486,8 @@ public class ProductDetailsFragment extends Fragment {
                     String status = jsonObject.getString("status");
 
                     progressDialog.dismiss();
+
+                    arrayListSchool.clear();
 
                     if (status.equals("200")) {
 
@@ -622,6 +627,8 @@ public class ProductDetailsFragment extends Fragment {
 
                     progressDialog.dismiss();
 
+                    arrayListClass.clear();
+
                     if (status.equals("200")) {
 
                         String error = jsonObject.getString("error");
@@ -754,70 +761,90 @@ public class ProductDetailsFragment extends Fragment {
                         String messages = jsonObject.getString("messages");
                         JSONObject jsonObject_message = new JSONObject(messages);
                         String responsecode = jsonObject_message.getString("responsecode");
-                        String statusArray = jsonObject_message.getString("status");
 
-                        JSONArray jsonArray_product = new JSONArray(statusArray);
+                        if (responsecode.equals("00")){
 
-                        productDataModel1.clear();
-                        productDataModel2.clear();
-                        productDataModel3.clear();
+                            String statusArray = jsonObject_message.getString("status");
 
-                        if (jsonArray_product.length() != 0) {
+                            JSONArray jsonArray_product = new JSONArray(statusArray);
 
-                            dialog.dismiss();
+                            productDataModel1.clear();
+                            productDataModel2.clear();
+                            productDataModel3.clear();
+                            productDetailsRecycler.setVisibility(View.VISIBLE);
 
-                            for (int i = 0; i < jsonArray_product.length(); i++) {
+                            if (jsonArray_product.length() != 0) {
 
-                                JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
+                                dialog.dismiss();
 
-                                String product_id = jsonObject_product.getString("product_id");
-                                String product_name = jsonObject_product.getString("product_name");
-                                String product_type = jsonObject_product.getString("product_type");
-                                String pschool_id = jsonObject_product.getString("pschool_id");
-                                String pclass_id = jsonObject_product.getString("pclass_id");
-                                String description = jsonObject_product.getString("description");
-                                String brands_id = jsonObject_product.getString("brands_id");
-                                String primary_image = jsonObject_product.getString("primary_image");
-                                String vendor_id = jsonObject_product.getString("vendor_id");
-                                String pcity_id = jsonObject_product.getString("pcity_id");
-                                String trendingg = jsonObject_product.getString("trendingg");
-                                String today_dealing_date_time = jsonObject_product.getString("today_dealing_date_time");
-                                String regular_price = jsonObject_product.getString("regular_price");
-                                String sales_price = jsonObject_product.getString("sales_price");
-                                String stock = jsonObject_product.getString("stock");
-                                String category_1 = jsonObject_product.getString("category_1");
-                                String status1 = jsonObject_product.getString("status");
-                                String prodType = jsonObject_product.getString("prodType");
-                                String created_date = jsonObject_product.getString("created_date");
-                                String updated_date = jsonObject_product.getString("updated_date");
+                                for (int i = 0; i < jsonArray_product.length(); i++) {
 
-                                ProductFilterModel productFilterModel = new ProductFilterModel(
-                                        product_id, product_name, product_type, pschool_id, pclass_id, description, brands_id,
-                                        primary_image, vendor_id, pcity_id, trendingg, today_dealing_date_time, regular_price, sales_price,
-                                        stock, category_1, status1, prodType, created_date, updated_date);
+                                    JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
 
-                                productDataModel3.add(productFilterModel);
+                                    String product_id = jsonObject_product.getString("product_id");
+                                    String product_name = jsonObject_product.getString("product_name");
+                                    String product_type = jsonObject_product.getString("product_type");
+                                    String pschool_id = jsonObject_product.getString("pschool_id");
+                                    String pclass_id = jsonObject_product.getString("pclass_id");
+                                    String description = jsonObject_product.getString("description");
+                                    String brands_id = jsonObject_product.getString("brands_id");
+                                    String primary_image = jsonObject_product.getString("primary_image");
+                                    String vendor_id = jsonObject_product.getString("vendor_id");
+                                    String pcity_id = jsonObject_product.getString("pcity_id");
+                                    String trendingg = jsonObject_product.getString("trendingg");
+                                    String today_dealing_date_time = jsonObject_product.getString("today_dealing_date_time");
+                                    String regular_price = jsonObject_product.getString("regular_price");
+                                    String sales_price = jsonObject_product.getString("sales_price");
+                                    String stock = jsonObject_product.getString("stock");
+                                    String category_1 = jsonObject_product.getString("category_1");
+                                    String status1 = jsonObject_product.getString("status");
+                                    String prodType = jsonObject_product.getString("prodType");
+                                    String created_date = jsonObject_product.getString("created_date");
+                                    String updated_date = jsonObject_product.getString("updated_date");
 
-                            }
+                                    ProductFilterModel productFilterModel = new ProductFilterModel(
+                                            product_id, product_name, product_type, pschool_id, pclass_id, description, brands_id,
+                                            primary_image, vendor_id, pcity_id, trendingg, today_dealing_date_time, regular_price, sales_price,
+                                            stock, category_1, status1, prodType, created_date, updated_date);
+
+                                    productDataModel3.add(productFilterModel);
+
+                                }
 
 
-                            if (productDataModel3.size() != 0) {
+                                if (productDataModel3.size() != 0) {
 
-                                filterProductAdapter = new FilterProductAdapter(productDataModel3, getActivity());
-                                //gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                                gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-                                productDetailsRecycler.setLayoutManager(gridLayoutManager);
-                                productDetailsRecycler.setHasFixedSize(true);
-                                productDetailsRecycler.setAdapter(filterProductAdapter);
+                                    filterProductAdapter = new FilterProductAdapter(productDataModel3, getActivity());
+                                    //gridLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                                    gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+                                    productDetailsRecycler.setLayoutManager(gridLayoutManager);
+                                    productDetailsRecycler.setHasFixedSize(true);
+                                    productDetailsRecycler.setAdapter(filterProductAdapter);
+                                } else {
+                                    Toast.makeText(getActivity(), "Data Not Found", Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
-                                Toast.makeText(getActivity(), "Data Not Found", Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(getActivity(), "Product Details Not Found", Toast.LENGTH_SHORT).show();
                             }
+                        }else{
+                            dialog.dismiss();
+                            String statusArray = jsonObject_message.getString("status");
+                            Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
 
-                        } else {
-
-                            Toast.makeText(getActivity(), "Product Details Not Found", Toast.LENGTH_SHORT).show();
+                            productDetailsRecycler.setVisibility(View.GONE);
                         }
 
+
+                    }else {
+                        dialog.dismiss();
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
+                        Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {

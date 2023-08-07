@@ -41,10 +41,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import co.in.dadspint.R;
 
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.button.MaterialButton;
 
@@ -117,6 +116,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         sessionManager = new SessionManager(getContext());
         userid = sessionManager.getUSERID();
         paymentmsg(userid);
+
 
         radio_cashondelivery.setOnClickListener(this);
         radio_paywallet.setOnClickListener(this);
@@ -210,42 +210,60 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View v) {
 
-                dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.couponapplylayout);
+                if (text_ShowAddress.getText().toString().trim().equals("")) {
 
-                ImageView backimage = dialog.findViewById(R.id.backimage);
-                EditText edit_couponecode = dialog.findViewById(R.id.edit_couponecode);
-                MaterialButton btn_ApplyCoupon = dialog.findViewById(R.id.btn_ApplyCoupon);
+                    Toast.makeText(getContext(), "Select Your address", Toast.LENGTH_SHORT).show();
 
-                btn_ApplyCoupon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                }else{
 
-                        if (edit_couponecode.getText().toString().trim().equals("")) {
+                    dialog = new Dialog(getContext());
+                    dialog.setContentView(R.layout.couponapplylayout);
 
-                            Toast.makeText(getContext(), "Enter Your Coupon Code", Toast.LENGTH_SHORT).show();
+                    ImageView backimage = dialog.findViewById(R.id.backimage);
+                    EditText edit_couponecode = dialog.findViewById(R.id.edit_couponecode);
+                    MaterialButton btn_ApplyCoupon = dialog.findViewById(R.id.btn_ApplyCoupon);
 
-                        } else {
+                    btn_ApplyCoupon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                            String str_coupon = edit_couponecode.getText().toString().trim();
-                            applyCouponCode(userid, str_coupon);
+                            if (text_ShowAddress.getText().toString().trim().equals("")) {
+
+                                Toast.makeText(getContext(), "Select Your address", Toast.LENGTH_SHORT).show();
+
+                            }else{
+
+                                if (edit_couponecode.getText().toString().trim().equals("")) {
+
+                                    Toast.makeText(getContext(), "Enter Your Coupon Code", Toast.LENGTH_SHORT).show();
+
+                                } else {
+
+
+
+                                    String str_coupon = edit_couponecode.getText().toString().trim();
+                                    applyCouponCode(userid, str_coupon);
+                                }
+                            }
+
                         }
-                    }
-                });
+                    });
 
-                backimage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    backimage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        dialog.dismiss();
-                    }
-                });
+                            dialog.dismiss();
+                        }
+                    });
 
 
-                dialog.show();
-                Window window = dialog.getWindow();
-                window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                //window.setBackgroundDrawableResource(R.drawable.dialogback);
+                    dialog.show();
+                    Window window = dialog.getWindow();
+                    window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //window.setBackgroundDrawableResource(R.drawable.dialogback);
+                }
+
             }
         });
 
@@ -336,6 +354,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+
             }
         }) {
             @Nullable
@@ -349,7 +369,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
 
@@ -1213,9 +1233,9 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                 String total_price = String.valueOf(totalAmount);
                 Double d_shiping = Double.valueOf(str_shipping);
-                double d_totalamout = d_shiping + totalAmount;
+               //double d_totalamout = d_shiping + totalAmount;
 
-                text_subTotalPrice.setText(String.valueOf(d_totalamout));
+               // text_subTotalPrice.setText(String.valueOf(d_totalamout));
 
                     // Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
 
@@ -1522,9 +1542,11 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                             amount = dfSharp.format(d_cuponprice);
                             double d_amount = Double.valueOf(amount);
                             double amountclc = totalAmount - d_amount;
+                            double str_shipp = Double.valueOf(str_shipping);
+                            double d_totalamount = amountclc + str_shipp;
                             String total_price1 = String.valueOf(amountclc);
                             text_subTotalPrice.setText(String.valueOf(totalAmount));
-                            text_totalPrice.setText(total_price1);
+                            text_totalPrice.setText(String.valueOf(d_totalamount));
 
                             rel_CouponAmount.setVisibility(View.VISIBLE);
                             text_CouponAmount.setText(cuponprice);
@@ -1543,6 +1565,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         String statusArray = jsonObject_message.getString("status");
 
                         Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
+
+                        dialog.dismiss();
                     }
 
                 } catch (JSONException e) {
@@ -1556,6 +1580,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
             }
         }) {
             @Nullable
@@ -1984,8 +2010,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 */
                         if (statusurl.equals("FAILURE")){
 
-                            showProduct(cust_id);
-                            userwallet(cust_id);
+                            showProduct(userid);
+                            userwallet(userid);
 
                         }else{
 

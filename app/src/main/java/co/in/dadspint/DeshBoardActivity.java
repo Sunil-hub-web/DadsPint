@@ -324,6 +324,8 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
                 image_search.setVisibility(View.VISIBLE);
 
                 binding.bottomNavigation.setSelectedItemId(R.id.home);
+
+               // onBackPressed();
             }
         });
 
@@ -428,7 +430,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         text_name.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         SerachProductFragment serachProductFragment = new SerachProductFragment();
-        ft.replace(R.id.framLayout, serachProductFragment);
+        ft.replace(R.id.framLayout,new SerachProductFragment());
         ft.addToBackStack(null);
         ft.commit();
         text_name.setTextSize(15);
@@ -480,8 +482,8 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         } else {
 
             text_name.setText("");
-           /* HomePageActivity.fragmentManager.beginTransaction()
-                    .replace(R.id.framLayout,new Homepage(),"HomeFragment").addToBackStack(null).commit();*/
+
+          //  HomeFragment.frag.beginTransaction().replace(R.id.framLayout,new Homepage(),"HomeFragment").addToBackStack(null).commit();
 
             getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, new HomeFragment(), "HomeFragment").commit();
             realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
@@ -618,4 +620,13 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         RequestQueue requestQueue = Volley.newRequestQueue(DeshBoardActivity.this);
         requestQueue.add(stringRequest);
     }
+
+/*    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.framLayout);
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+            super.onBackPressed();
+        }
+        super.onBackPressed();
+    }*/
 }
