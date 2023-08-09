@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -40,8 +42,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,6 +68,7 @@ public class Address_fragment extends Fragment {
     ViewAddressAdapter viewAddressAdapter;
     LinearLayoutManager linearLayoutManager;
     SessionManager sessionManager;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -75,6 +80,7 @@ public class Address_fragment extends Fragment {
 
         btn_addAddress = view.findViewById(R.id.btn_addAddress);
         addressRecyclerView = view.findViewById(R.id.addressRecyclerView);
+        swipeRefreshLayout = view.findViewById(R.id.refreshLayout);
 
         sessionManager = new SessionManager(getActivity());
         userId = sessionManager.getUSERID();
@@ -89,6 +95,18 @@ public class Address_fragment extends Fragment {
                 addAddressDialog();
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                viewAddress(userId);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
+
         return view;
     }
 

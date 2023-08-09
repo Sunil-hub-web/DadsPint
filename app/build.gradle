@@ -10,8 +10,8 @@ android {
         applicationId "co.in.dadspint"
         minSdk 24
         targetSdk 33
-        versionCode 4
-        versionName "1.1.2"
+        versionCode 5
+        versionName "1.2.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -65,4 +65,5 @@ dependencies {
     implementation 'com.github.aakira:expandable-layout:1.4.2@aar'
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.1'
     implementation 'us.belka:androidtoggleswitch:1.2.2'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

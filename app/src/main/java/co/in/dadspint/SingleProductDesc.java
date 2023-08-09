@@ -49,7 +49,7 @@ public class SingleProductDesc extends AppCompatActivity {
     ArrayList<SingleProductVariations> singleProductVariations;
     TextView productName,product_decs,regular_price,tv_minus1,tv_count1,tv_plus;
     String product_name,regularprice,description,primary_image,productId,product_Name,userId,
-            productid,quenty,quantity,price,varitionprice;
+            productid,quenty,quantity,price,varitionprice,productiddet;
     public static String salesprice;
     public static TextView sales_price;
     ViewPager2 showImageViewPager2;
@@ -87,7 +87,7 @@ public class SingleProductDesc extends AppCompatActivity {
         tv_plus = findViewById(R.id.tv_plus);
         lin_addCart = findViewById(R.id.lin_addCart);
         lin_add_cart = findViewById(R.id.lin_add_cart);
-        img_wishlist = findViewById(R.id.img_wishlist);
+        img_wishlist = findViewById(R.id.img_wishlist12);
         //lin_ByNow = findViewById(R.id.lin_ByNow);
         //backimage = findViewById(R.id.backimage);
 
@@ -195,7 +195,12 @@ public class SingleProductDesc extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addWishList(userId,productId);
+                Log.d("userdetdd",userId+""+productiddet);
+
+                Toast.makeText(SingleProductDesc.this, ""+userId+""+productiddet, Toast.LENGTH_SHORT).show();
+
+                addWishList(userId,productiddet);
+
             }
         });
 
@@ -240,7 +245,7 @@ public class SingleProductDesc extends AppCompatActivity {
 
                                 JSONObject jsonObject_product = jsonArray_SingleProduct.getJSONObject(0);
 
-                                String product_id = jsonObject_product.getString("product_id");
+                                productiddet = jsonObject_product.getString("product_id");
                                 product_name = jsonObject_product.getString("product_name");
                                 primary_image = jsonObject_product.getString("primary_image");
                                 String vendor_id = jsonObject_product.getString("vendor_id");
@@ -404,7 +409,11 @@ public class SingleProductDesc extends AppCompatActivity {
                 Map<String,String> params = new HashMap<>();
                 params.put("user_id",user_id);
                 params.put("product_id",product_id);
+
+                Log.d("userdetails",params.toString());
                 return params;
+
+
             }
         };
 
@@ -671,6 +680,9 @@ public class SingleProductDesc extends AppCompatActivity {
                 Map<String,String> params = new HashMap<>();
                 params.put("product_id",ProductId);
                 params.put("cust_id",userId);
+
+                Log.d("userdetails1",params.toString());
+
                 return params;
             }
         };

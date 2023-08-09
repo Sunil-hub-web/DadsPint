@@ -52,7 +52,7 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
     ActivityDeshBoardBinding binding;
 
     public static TextView nav_MyOrder, text_name, nav_Profile, nav_MyAddress, nav_Home,
-            nav_Logout, nav_Name, nav_MobileNo, nav_Wallet, nav_ContactUs,nav_PrivacyPolicy,nav_TermsConditions;
+            nav_Logout, nav_Name, nav_MobileNo, nav_Wallet, nav_ContactUs,nav_PrivacyPolicy,nav_TermsConditions,nav_BulkOrder;
 
     public static ImageView backimage, menu, image_search;
     SessionManager sessionManager;
@@ -110,12 +110,36 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
         nav_ContactUs = header.findViewById(R.id.nav_ContactUs);
         nav_PrivacyPolicy = header.findViewById(R.id.nav_PrivacyPolicy);
         nav_TermsConditions = header.findViewById(R.id.nav_TermsConditions);
+        nav_BulkOrder = header.findViewById(R.id.nav_BulkOrder);
 
         nav_Name.setText(sessionManager.getUSERNAME());
         nav_MobileNo.setText("+91 " + sessionManager.getMOBILENO());
 
         userId = sessionManager.getUSERID();
         cart_count(userId);
+
+        nav_BulkOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.MyDrawer.closeDrawer(GravityCompat.START);
+                //loc.setVisibility(View.GONE);
+                //text_address.setVisibility(View.GONE);
+                //  search.setVisibility(View.GONE);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                BlukOrderFragment blukOrderFragment = new BlukOrderFragment();
+                ft.replace(R.id.framLayout, blukOrderFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                text_name.setTextSize(18);
+                text_name.setText("Bulk Order");
+
+                menu.setVisibility(View.GONE);
+                backimage.setVisibility(View.VISIBLE);
+                image_search.setVisibility(View.GONE);
+            }
+        });
 
         nav_Profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,22 +334,22 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View v) {
 
-                binding.MyDrawer.closeDrawer(GravityCompat.START);
-                text_name.setVisibility(View.VISIBLE);
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                HomeFragment homepage = new HomeFragment();
-                ft.replace(R.id.framLayout, homepage, "HomeFragment");
-                ft.addToBackStack(null);
-                ft.commit();
-                text_name.setTextSize(15);
-                text_name.setText("");
-                menu.setVisibility(View.VISIBLE);
-                backimage.setVisibility(View.GONE);
-                image_search.setVisibility(View.VISIBLE);
+//                binding.MyDrawer.closeDrawer(GravityCompat.START);
+//                text_name.setVisibility(View.VISIBLE);
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                HomeFragment homepage = new HomeFragment();
+//                ft.replace(R.id.framLayout, homepage, "HomeFragment");
+//                ft.addToBackStack(null);
+//                ft.commit();
+//                text_name.setTextSize(15);
+//                text_name.setText("");
+//                menu.setVisibility(View.VISIBLE);
+//                backimage.setVisibility(View.GONE);
+//                image_search.setVisibility(View.VISIBLE);
+//
+//                binding.bottomNavigation.setSelectedItemId(R.id.home);
 
-                binding.bottomNavigation.setSelectedItemId(R.id.home);
-
-               // onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -485,9 +509,11 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
           //  HomeFragment.frag.beginTransaction().replace(R.id.framLayout,new Homepage(),"HomeFragment").addToBackStack(null).commit();
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, new HomeFragment(), "HomeFragment").commit();
-            realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-            realBack.setVisibility(View.VISIBLE);
+//            getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, new HomeFragment(), "HomeFragment").commit();
+//            realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+//            realBack.setVisibility(View.VISIBLE);
+
+            super.onBackPressed();
 
         }
     }

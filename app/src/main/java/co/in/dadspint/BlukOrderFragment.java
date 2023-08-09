@@ -71,15 +71,15 @@ public class BlukOrderFragment extends Fragment {
 
                 } else if (TextUtils.isEmpty(binding.editProductDetails.getText())) {
 
-                    binding.editMobileNo.setError("Please enter product details");
+                    binding.editProductDetails.setError("Please enter product details");
 
-                } else if (binding.description.getText().toString().trim().length() != 10) {
+                } else if (binding.description.getText().toString().trim().equals("")) {
 
-                    binding.editMobileNo.setError("Please enter message");
+                    binding.description.setError("Please enter message");
 
-                }else if (binding.editUentity.getText().toString().trim().length() != 10) {
+                }else if (binding.editUentity.getText().toString().trim().equals("")) {
 
-                    binding.editMobileNo.setError("Please enter Quentity");
+                    binding.editUentity.setError("Please enter Quentity");
 
                 } else {
                     BlukOrder(

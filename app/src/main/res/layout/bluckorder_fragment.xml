@@ -32,17 +32,16 @@
             android:padding="@dimen/twelve"></EditText>
 
         <EditText
-            android:id="@+id/edit_MobileNo"
+            android:id="@+id/edit_uentity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
             android:background="@drawable/textfieldback"
             android:hint="Quentity"
             android:inputType="number"
-            android:maxLength="10"
             android:padding="@dimen/twelve"></EditText>
         <EditText
-            android:id="@+id/edit_uentity"
+            android:id="@+id/edit_MobileNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"

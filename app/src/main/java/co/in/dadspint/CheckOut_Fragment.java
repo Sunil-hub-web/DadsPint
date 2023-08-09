@@ -41,6 +41,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import co.in.dadspint.R;
 
 import com.android.volley.toolbox.Volley;
@@ -75,7 +76,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
     String str_FirstName, str_LastName, str_Email, str_MobileNo, str_CityId, str_state, str_Address1, str_Address2,
             str_PinCodeId, city_Id, city_Name, pincodeId, pincode, state_Id, state_Name, schoolId = "", schoolName, userid,
             str_ShowAddress = "", addreessid, str_shipping, selectPayment = "", addressInsertMessage, selectPaymentOption = "",
-            amount, cuponprice = "", cupon_code = "",statues_url_sat = "";
+            amount, cuponprice = "", cupon_code = "", statues_url_sat = "";
 
     ArrayList<CityModelClass> arrayListCity = new ArrayList<>();
     ArrayList<PinCodeModel> arrayListPincode = new ArrayList<PinCodeModel>();
@@ -116,6 +117,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         sessionManager = new SessionManager(getContext());
         userid = sessionManager.getUSERID();
         paymentmsg(userid);
+        viewAddress1(userid);
 
 
         radio_cashondelivery.setOnClickListener(this);
@@ -134,8 +136,14 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View v) {
 
+                if (viewAddress_Model.size() != 0){
+
                     selectAddress();
 
+                }else{
+
+                    Toast.makeText(getActivity(), "Please Add Your Address The Select", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -159,13 +167,13 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                 } else {
 
-                    if (selectPaymentOption.equals("Pay Online")){
+                    if (selectPaymentOption.equals("Pay Online")) {
 
-                        if (statues_url_sat.equals("")){
+                        if (statues_url_sat.equals("")) {
 
-                            onlinepayment(userid,cupon_code,cuponprice,text_totalPrice.getText().toString().trim(),"ONLINE",str_shipping,addreessid);
+                            onlinepayment(userid, cupon_code, cuponprice, text_totalPrice.getText().toString().trim(), "ONLINE", str_shipping, addreessid);
 
-                        }else{
+                        } else {
 
                             if (cupon_code.equals("")) {
 
@@ -182,7 +190,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         }
 
 
-                    }else{
+                    } else {
 
                         if (cupon_code.equals("")) {
 
@@ -214,7 +222,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                     Toast.makeText(getContext(), "Select Your address", Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else {
 
                     dialog = new Dialog(getContext());
                     dialog.setContentView(R.layout.couponapplylayout);
@@ -231,14 +239,13 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                                 Toast.makeText(getContext(), "Select Your address", Toast.LENGTH_SHORT).show();
 
-                            }else{
+                            } else {
 
                                 if (edit_couponecode.getText().toString().trim().equals("")) {
 
                                     Toast.makeText(getContext(), "Enter Your Coupon Code", Toast.LENGTH_SHORT).show();
 
                                 } else {
-
 
 
                                     String str_coupon = edit_couponecode.getText().toString().trim();
@@ -354,7 +361,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -1129,7 +1136,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
 
                         dialog.dismiss();
-                      //  viewAddress(user_id);
+                        //  viewAddress(user_id);
 
                     } else {
 
@@ -1227,15 +1234,23 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View v) {
 
+                addreessid = ViewAddressAdapter.addressId;
+
+                if (addreessid.equals("")){
+
+                    Toast.makeText(getActivity(), "SelectAddress", Toast.LENGTH_SHORT).show();
+
+                }else{
+
                     str_ShowAddress = viewAddressAdapter.addressvalue();
                     str_shipping = viewAddressAdapter.shipping();
-                    addreessid = ViewAddressAdapter.addressId;
 
-                String total_price = String.valueOf(totalAmount);
-                Double d_shiping = Double.valueOf(str_shipping);
-               //double d_totalamout = d_shiping + totalAmount;
 
-               // text_subTotalPrice.setText(String.valueOf(d_totalamout));
+                    String total_price = String.valueOf(totalAmount);
+                    Double d_shiping = Double.valueOf(str_shipping);
+                    //double d_totalamout = d_shiping + totalAmount;
+
+                    // text_subTotalPrice.setText(String.valueOf(d_totalamout));
 
                     // Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
 
@@ -1258,6 +1273,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                     }
 
                     dialogSelect.dismiss();
+
+                }
 
             }
         });
@@ -1734,9 +1751,12 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.radio_paywallet:
                 if (checked)
+
                     selectPaymentOption = "Pay Wallet";
-                // Pirates are the best
-                if (crdr_balance < totalAmount) {
+                String totalvalue = text_totalPrice.getText().toString().trim();
+                double d_totalvalue = Double.valueOf(totalvalue);
+                // Pirates are the bes
+                if (crdr_balance < d_totalvalue) {
 
                     showErrorMesg.setVisibility(View.VISIBLE);
                     showErrorMesg.setText("Wallet Price Is less then total amount so click on pay online or cash");
@@ -1747,10 +1767,12 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                 if (radio_cashondelivery.isChecked()) {
 
                     radio_cashondelivery.setChecked(false);
+                    radio_paywallet.setChecked(true);
 
                 } else {
 
                     radio_payonline.setChecked(false);
+                    radio_paywallet.setChecked(true);
                 }
 
                 break;
@@ -1761,7 +1783,14 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                 selectPayment = "";
                 if (radio_paywallet.isChecked()) {
 
+                    radio_cashondelivery.setChecked(true);
                     radio_paywallet.setChecked(false);
+                    showErrorMesg.setVisibility(View.GONE);
+
+                } else if (radio_payonline.isChecked()) {
+
+                    radio_cashondelivery.setChecked(true);
+                    radio_payonline.setChecked(false);
                     showErrorMesg.setVisibility(View.GONE);
                 }
 
@@ -1774,12 +1803,20 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                 if (radio_paywallet.isChecked()) {
 
                     radio_paywallet.setChecked(false);
+                    radio_payonline.setChecked(true);
+                    showErrorMesg.setVisibility(View.GONE);
+
+                }else if (radio_cashondelivery.isChecked()) {
+
+                    radio_payonline.setChecked(true);
+                    radio_cashondelivery.setChecked(false);
                     showErrorMesg.setVisibility(View.GONE);
                 }
 
                 break;
         }
     }
+
     public void cart_count(String user_id) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.cart_count, new Response.Listener<String>() {
@@ -1873,8 +1910,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         requestQueue.add(stringRequest);
     }
 
-    public void onlinepayment(String cust_id, String CouponCode,String CouponPrice,String grand_total,
-                              String Payment_Mode,String shipping_charge,String address_id) {
+    public void onlinepayment(String cust_id, String CouponCode, String CouponPrice, String grand_total,
+                              String Payment_Mode, String shipping_charge, String address_id) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.onlinepayment, new Response.Listener<String>() {
             @Override
@@ -1902,7 +1939,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         fragment.setArguments(args);
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.framLayout, fragment,"WebViewFragment");
+                        fragmentTransaction.replace(R.id.framLayout, fragment, "WebViewFragment");
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
 
@@ -2008,17 +2045,17 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                         intent.putExtra("weburl",statusurl);
                         startActivity(intent);
 */
-                        if (statusurl.equals("FAILURE")){
+                        if (statusurl.equals("FAILURE")) {
 
                             showProduct(userid);
                             userwallet(userid);
 
-                        }else{
+                        } else {
 
                             Fragment fragment = new HomeFragment();
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.framLayout, fragment,"HomeFragment");
+                            fragmentTransaction.replace(R.id.framLayout, fragment, "HomeFragment");
                             fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
                         }
@@ -2089,6 +2126,137 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
+    }
+
+    public void viewAddress1(String userId) {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("View Address Please Wait.....");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppUrl.view_address, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+
+                    progressDialog.dismiss();
+
+                    if (status.equals("200")) {
+
+                        viewAddress_Model.clear();
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
+                        JSONObject jsonObject_statues = new JSONObject(statusArray);
+                        String Address_data = jsonObject_statues.getString("Address_data");
+                        JSONArray jsonArray_Address_data = new JSONArray(Address_data);
+
+                        if (jsonArray_Address_data.length() != 0) {
+
+                            for (int i = 0; i < jsonArray_Address_data.length(); i++) {
+
+                                JSONObject jsonObject_Address_data = jsonArray_Address_data.getJSONObject(i);
+
+                                String address_id = jsonObject_Address_data.getString("address_id");
+                                String user_id = jsonObject_Address_data.getString("user_id");
+                                String first_name = jsonObject_Address_data.getString("first_name");
+                                String last_name = jsonObject_Address_data.getString("last_name");
+                                String address_type = jsonObject_Address_data.getString("address_type");
+                                String school_id = jsonObject_Address_data.getString("school_id");
+                                String school_name = jsonObject_Address_data.getString("school_name");
+                                String pincode = jsonObject_Address_data.getString("pincode");
+                                String email = jsonObject_Address_data.getString("email");
+                                String number = jsonObject_Address_data.getString("number");
+                                String address1 = jsonObject_Address_data.getString("address1");
+                                String adress2 = jsonObject_Address_data.getString("adress2");
+                                String city_id = jsonObject_Address_data.getString("city_id");
+                                String city_name = jsonObject_Address_data.getString("city_name");
+                                String shipping_price = jsonObject_Address_data.getString("shipping_price");
+
+                                ViewAddressModel viewAddressModel = new ViewAddressModel(
+                                        address_id, user_id, first_name, last_name, address_type, school_id, school_name, "state", pincode,
+                                        email, number, address1, adress2, city_id, city_name, shipping_price
+                                );
+
+                                viewAddress_Model.add(viewAddressModel);
+                            }
+
+                        } else {
+
+                            Toast.makeText(getContext(), "Address Detils Not Found", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+
+                        String error = jsonObject.getString("error");
+                        String messages = jsonObject.getString("messages");
+                        JSONObject jsonObject_message = new JSONObject(messages);
+                        String responsecode = jsonObject_message.getString("responsecode");
+                        String statusArray = jsonObject_message.getString("status");
+
+                        Toast.makeText(getActivity(), statusArray, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                progressDialog.dismiss();
+
+                Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
+
+/*                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    Toast.makeText(getApplicationContext(), "Please check Internet Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Log.d("successresponceVolley", "" + error.networkResponse.statusCode);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        try {
+                            String jError = new String(networkResponse.data);
+                            JSONObject jsonError = new JSONObject(jError);
+
+                            String data = jsonError.getString("msg");
+                            Toast.makeText(LoginPage.this, data, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("successresponceVolley", "" + e);
+                        }
+
+
+                    }
+
+                }*/
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", userId);
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+
     }
 
 }

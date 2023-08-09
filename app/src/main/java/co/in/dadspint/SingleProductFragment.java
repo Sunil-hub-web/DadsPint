@@ -88,7 +88,7 @@ public class SingleProductFragment extends Fragment {
       //  lin_ByNow = view.findViewById(R.id.lin_ByNow);
        // backimage = view.findViewById(R.id.backimage);
         dots_container = view.findViewById(R.id.dots_container);
-        img_wishlist = view.findViewById(R.id.img_wishlist);
+        img_wishlist = view.findViewById(R.id.img_wishlist12);
 
         productId = getArguments().getString("productId");
         product_Name = getArguments().getString("productName");
@@ -633,6 +633,7 @@ public class SingleProductFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String,String> params = new HashMap<>();
+                params.put("product_id",ProductId);
                 params.put("cust_id",userId);
                 return params;
             }

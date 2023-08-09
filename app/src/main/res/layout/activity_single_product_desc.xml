@@ -76,7 +76,7 @@
                     android:orientation="horizontal"></LinearLayout>
 
                 <ImageView
-                    android:id="@+id/img_wishlist"
+                    android:id="@+id/img_wishlist12"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
                     android:layout_alignParentRight="true"

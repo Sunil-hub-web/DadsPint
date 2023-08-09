@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -33,13 +35,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import co.in.dadspint.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +50,7 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
 
     ArrayList<ViewAddressModel> viewAddress_Model = new ArrayList<ViewAddressModel>();
     Context context;
-    public static String addressId, all_values = "", checkOut1, shippingcharge, cityNameView,pincodeNameView,
+    public static String addressId = "", all_values = "", checkOut1, shippingcharge, cityNameView,pincodeNameView,
             schoolNameView,cityidview,firstNameView,lastNameView,phoneNoView,emailidview,address1View,
             address2View,addressid;
     int index;
@@ -281,7 +280,7 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
                     str_CityId = city_Id;
 
                     addAddress_Save(addressid, str_FirstName, str_LastName, str_Address1, str_Address2, str_CityId, state_Name,
-                            str_PinCodeId, str_Email, str_MobileNo, "1", schoolId);
+                            str_PinCodeId, str_Email, str_MobileNo, "1", schoolId,v);
                 }
 
             }
@@ -751,7 +750,8 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
     }
 
     public void addAddress_Save(String user_id, String firstname, String lasttname, String address1, String address2,
-                                String city, String state, String zip, String email, String phone, String address_type, String school_id) {
+                                String city, String state, String zip, String email, String phone, String address_type,
+                                String school_id, View v) {
 
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Edit Address Please Wait.....");
@@ -785,6 +785,7 @@ public class ViewAddressAdapter extends RecyclerView.Adapter<ViewAddressAdapter.
                         if (checkOut1.equals("CheckOut")){
 
                             CheckOut_Fragment.dialogSelect.dismiss();
+
                         }
 
                     } else {

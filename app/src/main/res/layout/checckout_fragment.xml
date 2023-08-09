@@ -147,6 +147,17 @@
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen"
                 android:orientation="horizontal"
                 android:weightSum="2"
@@ -171,8 +182,7 @@
                     android:textColor="@color/blue600"
                     android:textSize="@dimen/edittextsize"/>
 
-
-            </RadioGroup>
+            </LinearLayout>
 
             <RadioButton
                 android:id="@+id/radio_paywallet"
