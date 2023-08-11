@@ -82,6 +82,10 @@ public class HomeFragment extends Fragment {
 
         DeshBoardActivity.text_name.setText("");
 
+        DeshBoardActivity.menu.setVisibility(View.VISIBLE);
+        DeshBoardActivity.backimage.setVisibility(View.GONE);
+        DeshBoardActivity.image_search.setVisibility(View.VISIBLE);
+
         card_SchoolUniform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -86,10 +86,11 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         HomeFragment homeFragment = new HomeFragment();
-        ft.replace(R.id.framLayout, homeFragment);
+        ft.replace(R.id.framLayout, homeFragment,"HomeFragment");
         text_name.setText("");
         ft.addToBackStack(null);
         ft.commit();
+
 
        // text_name.setText("");
         //text_name.setVisibility(View.GONE);
@@ -505,15 +506,23 @@ public class DeshBoardActivity extends AppCompatActivity implements NavigationVi
 
         } else {
 
-            text_name.setText("");
+            //text_name.setText("");
 
           //  HomeFragment.frag.beginTransaction().replace(R.id.framLayout,new Homepage(),"HomeFragment").addToBackStack(null).commit();
 
-//            getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, new HomeFragment(), "HomeFragment").commit();
-//            realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-//            realBack.setVisibility(View.VISIBLE);
+
 
             super.onBackPressed();
+
+            if (test != null){
+
+            //    getSupportFragmentManager().beginTransaction().replace(R.id.framLayout, new HomeFragment(), "HomeFragment").commit();
+                realBack.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                realBack.setVisibility(View.VISIBLE);
+               // menu.setVisibility(View.VISIBLE);
+              //  backimage.setVisibility(View.GONE);
+             //   image_search.setVisibility(View.VISIBLE);
+            }
 
         }
     }

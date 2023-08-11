@@ -180,6 +180,11 @@ public class CartFragment extends Fragment {
                             recyclerCartPage.setHasFixedSize(true);
                             recyclerCartPage.setLayoutManager(linearLayoutManager);
                             recyclerCartPage.setAdapter(viewCartAdapter);
+
+                            sales_Price = 0.0;
+                            quanTity = 0.0;
+                            totalprice = 0.0;
+                            totalAmount = 0.0;
                         }
 
                     }

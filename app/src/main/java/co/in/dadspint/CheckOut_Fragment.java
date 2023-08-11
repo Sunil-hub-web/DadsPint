@@ -297,6 +297,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
 
                     if (status.equals("200")) {
 
+                        viewCartModelArray.clear();
+
                         String error = jsonObject.getString("error");
                         String messages = jsonObject.getString("messages");
                         JSONObject jsonObject_message = new JSONObject(messages);
@@ -1759,7 +1761,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                 if (crdr_balance < d_totalvalue) {
 
                     showErrorMesg.setVisibility(View.VISIBLE);
-                    showErrorMesg.setText("Wallet Price Is less then total amount so click on pay online or cash");
+                    showErrorMesg.setText("Wallet value is less than total amount. Please proceed with  pay online or Cash on delivery");
 
                     selectPayment = "1";
                 }
