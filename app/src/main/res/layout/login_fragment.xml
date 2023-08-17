@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:id="@+id/lin_otp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -112,6 +112,35 @@
                             android:textSize="@dimen/edittextsize" />
 
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <CheckBox
+                            android:id="@+id/termsconditions"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_marginRight="@dimen/ten"
+                            android:fontFamily="@font/sans_regular">
+
+                        </CheckBox>
+
+                        <TextView
+                            android:id="@+id/text_teramcondition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/termsconditions"
+                            android:fontFamily="@font/sans_regular"
+                            android:textColor="@color/blue600"
+                            android:textSize="15dp">
+
+                        </TextView>
+
+                    </RelativeLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_sendOTP"

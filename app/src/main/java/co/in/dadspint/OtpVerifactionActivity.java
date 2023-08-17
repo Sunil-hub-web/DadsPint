@@ -92,16 +92,23 @@ public class OtpVerifactionActivity extends AppCompatActivity {
 
                             Log.d("userdetails",fullname+" "+mail+" "+contact+" "+password);
 
-
-
                         }else{
 
                             Toast.makeText(OtpVerifactionActivity.this, "Otp is invalide", Toast.LENGTH_SHORT).show();
                         }
                     }else{
 
-                        Toast.makeText(OtpVerifactionActivity.this, otp, Toast.LENGTH_SHORT).show();
-                        otpVerifaction(mobileNo, otp);
+                        if (otp.equals(sessionManager.getLOGINOTP())){
+
+                            Toast.makeText(OtpVerifactionActivity.this, otp, Toast.LENGTH_SHORT).show();
+                            otpVerifaction(mobileNo, otp);
+
+                        }else{
+
+                            Toast.makeText(OtpVerifactionActivity.this, "Otp is invalide", Toast.LENGTH_SHORT).show();
+                        }
+
+
                     }
 
 

@@ -78,6 +78,8 @@ public class CartFragment extends Fragment {
 
         showProduct(userId);
 
+        DeshBoardActivity.text_name.setText("My Cart");
+
         rel_gotoCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

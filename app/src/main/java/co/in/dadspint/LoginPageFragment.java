@@ -2,13 +2,16 @@ package co.in.dadspint;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,9 +48,10 @@ public class LoginPageFragment extends Fragment {
     Button btn_signin,btn_sendOTP;
     SessionManager sessionManager;
     EditText edit_MobileNo,edit_Password,edit_EmailId;
-    TextView text_signUp,text_ClickHere,loginOTP,emailIdPassword;
+    TextView text_signUp,text_ClickHere,loginOTP,emailIdPassword,text_teramcondition;
     LinearLayout lin_otp,lin_emailId;
     boolean numeric;
+    CheckBox termsconditions;
 
     @Nullable
     @Override
@@ -68,6 +72,8 @@ public class LoginPageFragment extends Fragment {
         emailIdPassword = view.findViewById(R.id.emailIdPassword);
         lin_otp = view.findViewById(R.id.lin_otp);
         lin_emailId = view.findViewById(R.id.lin_emailId);
+        termsconditions = view.findViewById(R.id.termsconditions);
+        text_teramcondition = view.findViewById(R.id.text_teramcondition);
 
         sessionManager = new SessionManager(getActivity());
 
@@ -75,6 +81,10 @@ public class LoginPageFragment extends Fragment {
         emailIdPassword.setBackgroundResource(R.drawable.textfieldback);
         lin_otp.setVisibility(View.VISIBLE);
 
+        String checkBox_html = "<font color=#FF6200EE>Read our   </font>";
+        termsconditions.setText(Html.fromHtml(checkBox_html));
+        text_teramcondition.setText("Terms & Conditions");
+        text_teramcondition.setPaintFlags(text_teramcondition.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         loginOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +181,11 @@ public class LoginPageFragment extends Fragment {
 
                     edit_MobileNo.setError("Provide 10 digit valid mobile number");
 
-                }  else if (edit_MobileNo.getText().toString().trim().length() == 10) {
+                }else if (!termsconditions.isChecked()) {
+
+                    Toast.makeText(getActivity(), "Please Click Terms & Conditions", Toast.LENGTH_SHORT).show();
+
+                } else if (edit_MobileNo.getText().toString().trim().length() == 10) {
 
                     String mobileNo = edit_MobileNo.getText().toString().trim();
 

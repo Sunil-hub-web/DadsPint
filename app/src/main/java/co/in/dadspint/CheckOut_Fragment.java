@@ -136,14 +136,8 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View v) {
 
-                if (viewAddress_Model.size() != 0){
+                selectAddress();
 
-                    selectAddress();
-
-                }else{
-
-                    Toast.makeText(getActivity(), "Please Add Your Address The Select", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -1236,46 +1230,54 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View v) {
 
-                addreessid = ViewAddressAdapter.addressId;
+                if (viewAddress_Model.size() != 0) {
 
-                if (addreessid.equals("")){
+                    addreessid = ViewAddressAdapter.addressId;
 
-                    Toast.makeText(getActivity(), "SelectAddress", Toast.LENGTH_SHORT).show();
+                    if (addreessid.equals("")) {
 
-                }else{
-
-                    str_ShowAddress = viewAddressAdapter.addressvalue();
-                    str_shipping = viewAddressAdapter.shipping();
-
-
-                    String total_price = String.valueOf(totalAmount);
-                    Double d_shiping = Double.valueOf(str_shipping);
-                    //double d_totalamout = d_shiping + totalAmount;
-
-                    // text_subTotalPrice.setText(String.valueOf(d_totalamout));
-
-                    // Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
-
-                    if (str_ShowAddress.equals("")) {
-
-                        Toast.makeText(getActivity(), "Select You Address", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "SelectAddress", Toast.LENGTH_SHORT).show();
 
                     } else {
 
-                        text_deliveryPrice.setText(str_shipping);
+                        str_ShowAddress = viewAddressAdapter.addressvalue();
+                        str_shipping = viewAddressAdapter.shipping();
 
-                        String str_price = text_subTotalPrice.getText().toString().trim();
-                        double d_price = Double.valueOf(str_price);
-                        double d_shipping = Double.valueOf(str_shipping);
-                        double d_Total = d_price + d_shipping;
-                        String str_Totalprice = String.valueOf(d_Total);
 
-                        text_ShowAddress.setText(str_ShowAddress);
-                        text_totalPrice.setText(str_Totalprice);
+                        String total_price = String.valueOf(totalAmount);
+                        Double d_shiping = Double.valueOf(str_shipping);
+                        //double d_totalamout = d_shiping + totalAmount;
+
+                        // text_subTotalPrice.setText(String.valueOf(d_totalamout));
+
+                        // Toast.makeText(getActivity(), str_ShowAddress, Toast.LENGTH_SHORT).show();
+
+                        if (str_ShowAddress.equals("")) {
+
+                            Toast.makeText(getActivity(), "Select You Address", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            text_deliveryPrice.setText(str_shipping);
+
+                            String str_price = text_subTotalPrice.getText().toString().trim();
+                            double d_price = Double.valueOf(str_price);
+                            double d_shipping = Double.valueOf(str_shipping);
+                            double d_Total = d_price + d_shipping;
+                            String str_Totalprice = String.valueOf(d_Total);
+
+                            text_ShowAddress.setText(str_ShowAddress);
+                            text_totalPrice.setText(str_Totalprice);
+                        }
+
+                        dialogSelect.dismiss();
                     }
 
-                    dialogSelect.dismiss();
+                } else {
 
+                    Toast.makeText(getActivity(), "Please Add Your Address The Address", Toast.LENGTH_SHORT).show();
+
+                    dialogSelect.dismiss();
                 }
 
             }
@@ -1743,6 +1745,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
     @Override
     public void onClick(View view) {
 
@@ -1808,7 +1811,7 @@ public class CheckOut_Fragment extends Fragment implements View.OnClickListener 
                     radio_payonline.setChecked(true);
                     showErrorMesg.setVisibility(View.GONE);
 
-                }else if (radio_cashondelivery.isChecked()) {
+                } else if (radio_cashondelivery.isChecked()) {
 
                     radio_payonline.setChecked(true);
                     radio_cashondelivery.setChecked(false);
